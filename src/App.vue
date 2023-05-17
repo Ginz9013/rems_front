@@ -18,5 +18,5 @@ export default {
   <FooterView />
 </template>
 
-<style scoped>
+<style>
 </style>
