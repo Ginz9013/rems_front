@@ -35,5 +35,12 @@ export default {
             <button class="btn btn-primary px-5" type="button" id="button-addon2">検索</button>
         </div>
 </template>
-<style>
+<style lang="scss" scoped>
+.input-group{
+//     position: relative;
+//     top: 10%;
+//     left: 50%;
+//     transform: translate(-50% , -50%);
+//     width: 70vw;
+}
 </style>
