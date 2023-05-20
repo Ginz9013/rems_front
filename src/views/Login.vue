@@ -29,7 +29,7 @@ export default {
         <p>請由外部綁定 v-if 作為顯示切換，並 props 傳入標題字串，@close綁定視窗右上角取消事件</p>
         <p></p>
         <button @click="switchModal">Open Modal</button>
-        <ModalView v-if="modalShow" :title="'test info'" @close="closeModal">
+        <ModalView v-if="modalShow" :title="'test info'" @close="switchModal">
             <div>
                 <h2>此處可自行撰寫</h2>
             </div>
