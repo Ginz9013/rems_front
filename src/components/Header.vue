@@ -1,57 +1,47 @@
 <script>
 import { RouterLink } from 'vue-router';
+export default {
+    data() {
+        return {
+            location: 0
+        }
+    },
+    methods: {
+        switchLocation(locoNum) {
+            this.location = locoNum;
+        },
+        logout() {
+            this.$router.push("/");
+        }
+    }
+}
 </script>
 <template>
-    <header class="bg-primary p-4 d-flex justify-content-between px-5">
-        <RouterLink to="./homepage">
+    <header class="bg-primary px-4 pt-4 d-flex justify-content-between align-items-end px-5">
+        <RouterLink to="/homepage" class="mb-4">
             <img src="" alt="LOGO">
         </RouterLink>
-        <!-- <div class="btn-group btn-group-lg" role="group" aria-label="Basic radio toggle button group"> -->
-        <div class="posi">
-            <RouterLink to="./Property">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="on" checked>
-                <label class="btn btn-outline-light" for="btnradio1">物件</label>
-            </RouterLink>
+        
+        <!-- Nav Bar -->
+        <nav class="d-flex">
+            <RouterLink to="/bukken" @click="switchLocation(1)" class="navBtn" :class="{target: location === 1}">物件</RouterLink>    
+            <RouterLink to="/kashinushi" @click="switchLocation(2)" class="navBtn" :class="{target: location === 2}">貸主</RouterLink>    
+            <RouterLink to="/karinushi" @click="switchLocation(3)" class="navBtn" :class="{target: location === 3}">借主</RouterLink>    
+            <RouterLink to="/keiyaku" @click="switchLocation(4)" class="navBtn" :class="{target: location === 4}">契約</RouterLink>    
+        </nav>
 
-            <RouterLink to="./homepage">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="on">
-                <label class="btn btn-outline-light" for="btnradio2">貸主</label>
-            </RouterLink>
-
-            <RouterLink to="./homepage">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="on">
-                <label class="btn btn-outline-light" for="btnradio3">借主</label>
-            </RouterLink>
-
-            <RouterLink to="./login">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="on">
-                <label class="btn btn-outline-light" for="btnradio4">契約</label>
-            </RouterLink>
-            </div>
-        <button class="btn btn-outline-light">ログアウト</button>
+        <button class="btn btn-outline-light mb-4" @click="logout">ログアウト</button>
     </header>
 </template>
 <style lang="scss" scoped>
-.posi{
-    position: absolute;
-    top: 37px;
-    left: 20%;
-
-    .btn {
-        width: 15vw;
-        height: 50px;
-        background-color: primary;
-        // color: white;
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        border-radius: 10px 10px 0px 0px;
+    .navBtn {
+        color: white;
+        padding: 8px 42px;
+        text-decoration: none;
     }
-    
-}
-.btn:active {
-    background-color: light;
-    color: black;
-}
-    
+    .target {
+        background-color: white;
+        color: #084279;
+        border-radius: 6px 6px 0 0;
+    }
 </style>

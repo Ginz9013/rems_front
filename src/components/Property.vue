@@ -51,28 +51,13 @@ export default {
                    <span class="visually-hidden">Next</span>
                </button>
            </div>
-        </div>
+
+       </div>
 
         
     </div>
 </template>
 
 <style lang="scss" scoped>
-.box{
-    // position: absolute;
-    align-items: center;
-    justify-content: center;
-    margin: 0px 20%;
-    
-    width: 60%;
-    height: 500px;
-}
-.id{
-    margin: 50px  300px  0px  300px;
-}
 
-.carousel-inner img{
-width: 100%;
-height: 300px;
-}
 </style>
