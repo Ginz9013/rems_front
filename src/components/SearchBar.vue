@@ -37,10 +37,10 @@ export default {
 </template>
 <style lang="scss" scoped>
 .input-group{
-//     position: relative;
-//     top: 10%;
-//     left: 50%;
-//     transform: translate(-50% , -50%);
-//     width: 70vw;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    width: 70vw;
 }
 </style>
