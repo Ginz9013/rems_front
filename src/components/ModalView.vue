@@ -5,7 +5,7 @@ export default {
     methods: {
         // 請綁訂一個 @close 作為右上角取消按鈕的方法
         closeModal() {
-            this.$emmit("close");
+            this.$emit("close");
         }
     }
 }
