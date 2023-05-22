@@ -1,24 +1,12 @@
 <script>
-import SearchView from "../components/PropertyModalView.vue"
 
 export default {
-    components:{
-        SearchView
-    },
     // 請傳入一個 title 字串作為標題顯示
     props: ["title"],
     methods: {
         // 請綁訂一個 @close 作為右上角取消按鈕的方法
-        closeModal() {
+        closeSubModal() {
             this.$emit("close");
-        },
-        switchSubModal() {
-            this.subModalShow = !this.subModalShow;
-        }
-    },
-    data(){
-        return{
-            subModalShow: false,
         }
     }
 }
@@ -26,7 +14,7 @@ export default {
 <template>
     <div class="modal-view">
         <div class="card">
-            <div class="closeBtn" @click="closeModal"></div>
+            <div class="closeBtn" @click="closeSubModal"></div>
             <h2>{{ title }}</h2>
             <hr class="line">
             <slot></slot>
