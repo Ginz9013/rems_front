@@ -3,7 +3,8 @@ import { RouterLink } from 'vue-router';
 export default {
     data() {
         return {
-            location: 0
+            location: 0,
+            isLogPage: false
         }
     },
     methods: {
@@ -18,7 +19,7 @@ export default {
 </script>
 <template>
     <header class="bg-primary px-4 pt-4 d-flex justify-content-between align-items-end px-5">
-        <RouterLink to="/homepage" class="mb-4">
+        <RouterLink to="/home" class="mb-4">
             <img src="" alt="LOGO">
         </RouterLink>
         
