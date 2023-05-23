@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
-import TenantDetailPage from "../views/TenantDetailPage.vue";
+import TenantDetailPageView from "../views/TenantDetailPage.vue"
+import TenantPageView from "../views/TenantPage.vue"
+import TextView from "../views/Text.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,12 +11,20 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: LoginView
-    },
-    {
-      path: '/TenantDetailPage',
+    },{
+      path: '/TenantDetailPage/:getid',
       name: 'TenantDetailPage',
-      component: TenantDetailPage
-    },
+      component: TenantDetailPageView,
+      props: true
+    },{
+      path: '/karinushi',
+      name: 'TenantPage',
+      component: TenantPageView
+    },{
+      path: '/Text',
+      name: 'Text',
+      component: TextView
+    }
   ]
 })
 

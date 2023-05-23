@@ -15,7 +15,7 @@ export default {
 <template>
   <HeaderView />
   <RouterView />
-  <FooterView />
+ <FooterView />
 </template>
 
 <style>

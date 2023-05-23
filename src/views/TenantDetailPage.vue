@@ -11,9 +11,8 @@ export default {
     data() {
         return {
             modalShow: false,
-            isShow: false,
-            alllandlord:[],
-            selectedLandlord: null,
+            isShow: true,
+            alllandlord:[]
         }
     },
     methods: {
@@ -23,8 +22,9 @@ export default {
         change() {
             this.isShow = !this.isShow; //F/T相反
         },
-        detailpage(){
-
+        getLandlord(){
+            let alllandlord=[];
+            console.log(this.getid);
             return fetch('http://localhost:8080/get_Landlord', {
 
             method: 'POST',
@@ -32,19 +32,44 @@ export default {
             'Content-Type': 'application/json'       
             },
             body: JSON.stringify({
-                landlord_id:this.getid
+                "landlord_id":this.getid
             })
             })
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                this.alllandlord = data.landlordList;
-                console.log(getid);                        
+                alllandlord =data;
+                this.alllandlord=alllandlord;
+                console.log(alllandlord.firstName);                        
                 })
             .catch((error) => {
                 console.error(error);
             })
-        }
+        },
+        // updatedlandlord() {
+        //     return fetch('http://localhost:8080/get_Landlord', {
+
+        //         method: 'POST',
+        //         headers: {
+        //         'Content-Type': 'application/json'       
+        //         },
+        //         body: JSON.stringify({
+        //             "landlord_id":1
+        //         })
+        //         })
+        //         .then((res) => res.json())
+        //         .then((data) => {
+        //             console.log(data);
+        //             this.alllandlord = data.landlordList;
+        //             console.log(getid);                        
+        //             })
+        //         .catch((error) => {
+        //             console.error(error);
+        //         })
+        // },
+    },
+    mounted(){
+        this.getLandlord()
     }
 }
 </script>
@@ -56,74 +81,80 @@ export default {
         border-color: rgb(100, 165, 3);
         border-style: solid;">借主情報</h1>
         </div>
-        <div  >
+        <div>
             <div class="flex">
                 <p class="phead">姓</p>
                 <p class="pdot">:</p>
-                <input v-show="isShow" type="text" class="twiinput"  >
-                <p v-if="isShow" class="">{{selectedLandlord.firstName}}</p>
+                <p v-if="isShow" class="readding">{{alllandlord.firstName }}</p>
+                <input v-else type="text" class="twiinput">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">名</p>
                 <p class="pdot2">:</p>
-                <input v-show="isShow" type="text" class="twiinput2">
-                <p v-if="isShow"></p>
+                <p v-if="isShow" class="readding2">{{alllandlord.lastName }}</p>
+                <input v-else type="text" class="twiinput2">
             </div>
             <div class="flex">
                 <p class="phead">セイ</p>
                 <p class="pdot">:</p>
-                <input v-show="isShow" type="text" class="twiinput">
-                <p v-if="isShow"></p>
+                <p v-if="isShow" class="readding">{{alllandlord.firstNameKana }}</p>
+                <input v-else type="text" class="twiinput">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">メイ</p>
                 <p class="pdot2">:</p>
-                <input v-show="isShow" type="text" class="twiinput2">
-                <p v-if="isShow"></p>
+                <p v-if="isShow" class="readding2">{{alllandlord.lastNameKana }}</p>
+                <input v-else type="text" class="twiinput2">
             </div>
             <div class="flex">
                 <p class="phead">生年月日</p>
                 <p class="pdot">:</p>
-                <input v-show="isShow" type="date" class="twiinput">
-                <p v-if="isShow"></p>
+                <p v-if="isShow" class="readding">{{alllandlord.birthDate }}</p>
+                <input v-else type="date" class="twiinput">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">電話番号</p>
                 <p class="pdot2">:</p>
-                <input v-show="isShow" type="number" class="twiinput2">
-                <p v-if="isShow"></p>
+                <p v-if="isShow" class="readding2">{{alllandlord.phone }}</p>
+                <input v-else type="number" class="twiinput2">
             </div>
             <div class="flex">
                 <p class="phead">マイナンバー</p>
                 <p class="pdot">:</p>
-                <input v-show="isShow" type="number" class="twiinput">
+                <p v-if="isShow" class="readding">{{alllandlord.myNumber }}</p>
+                <input v-else type="number" class="twiinput">
 
                 <p style="height: 20px;"></p>
                 <p class="pfooter">免許番号</p>
                 <p class="pdot2">:</p>
-                <input v-show="isShow" type="number" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{alllandlord.license }}</p>
+                <input v-else type="number" class="twiinput2">
             </div>
             <div class="flex">
                 <p class="phead">住所</p>
                 <p class="pdot">:</p>
                 <p style="height: 20px;"></p>
-                <input v-show="isShow" type="text" class="soloinput">
+                <p v-if="isShow" class="readding">{{alllandlord.address }}</p>
+                <input v-else type="text" class="soloinput">
             </div>
             <div class="flex">
                 <p class="phead">Email</p>
                 <p class="pdot">:</p>
                 <p style="height: 20px;"></p>
-                <input v-show="isShow" type="email" class="soloinput">
+                <p v-if="isShow" class="readding">{{alllandlord.email }}</p>
+                <input v-else type="email" class="soloinput">
             </div>
             <div class="flex">
                 <p class="phead">支払方法</p>
                 <p class="pdot">:</p>
-                <input v-show="isShow" type="text" class="twiinput">
+                <p v-if="isShow" class="readding">text</p>
+                <input v-else type="text" class="twiinput">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">口座番号</p>
                 <p class="pdot2">:</p>
-                <input v-show="isShow" type="number" class="twiinput2">
+                <p v-if="isShow" class="readding2">text</p>
+                <input v-else type="number" class="twiinput2">
             </div>
             <div class="flex" style="width: 615px;">
-                <button @click="change" type="button" class="btnL">情 報 更 新</button>
-
+                <button @click="change" v-if="isShow" type="button" class="btnL">情 報 更新</button>
+                <button @click="change" v-else type="button" class="btnL">情 報 確 認</button>
                 <p style="height: 20px;"></p>
                 <button type="button" class="btnR">物 件 追 加</button>
             </div>
@@ -231,6 +262,28 @@ export default {
         border-style: solid;
     }
 
+    .readding {
+        position: absolute;
+        left: 120px;
+        height: 25px;
+        width: 150px;
+        border: 0;
+        border-bottom: 1px;
+        border-color: rgb(100, 165, 3);
+        border-style: solid;
+    }
+
+    .readding2 {
+        position: absolute;
+        left: 465px;
+        height: 25px;
+        width: 150px;
+        border: 0;
+        border-bottom: 1px;
+        border-color: rgb(100, 165, 3);
+        border-style: solid;
+    }
+
     .a {
         position: absolute;
         left: 465px;
@@ -258,5 +311,4 @@ export default {
     width: 100%;
     height: 1px;
     background-color: rgb(100, 165, 3);
-}
-</style>
+}</style>

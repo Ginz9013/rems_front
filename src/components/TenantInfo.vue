@@ -23,20 +23,20 @@ export default {
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
-            this.alllandlord = data.landlordList;
-            // this.alllandlord.forEach((element)=>{
-            //     let landlordIdStr = element.landlordId.toString();
-            //     console.log(landlordIdStr);
-            //     element.landlordId = landlordIdStr;
-            // })                         
+            this.alllandlord = data.landlordList;                                   
             })
         .catch((error) => {
             console.error(error);
         })
     },
     passLandlordId(input, landlordId) {
-        this.$emit("getid",landlordId); // 触发传递给父组件的事件，传递房东ID
+        this.$emit("getid",landlordId);
         console.log(input.target);
+        console.log(landlordId);
+        this.$router.push({
+        name: 'TenantDetailPage',
+        params: { getid: landlordId }
+        });
     }
     
   },
@@ -48,12 +48,10 @@ export default {
   }
 }
 </script>
-
 <template>
-    <div class="bodyArea">         
+
         <div class="infoBox" v-for="landlord in alllandlord" :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
-            <div class="w-100 h-100"></div>
-            <div class="flexArea" >
+            <div class="flexArea">
                 <div class="nameGroup">
                     <p class="kana" >{{landlord.firstNameKana}}</p>
                     <p class="name">{{landlord.firstName}}</p>
@@ -82,8 +80,7 @@ export default {
                 </div>
             </div>
         </div>
-        
-    </div>
+
 </template>
   
 <style lang="scss" scoped>
