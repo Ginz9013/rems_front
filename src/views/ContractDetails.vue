@@ -21,11 +21,15 @@ export default {
       addrent: '',
       addDeadline: '',
       addStatus: '',
+      // 顯示入金資訊
       type: null,
       date: null,
       deadline: null,
       amount: null,
-      status: null
+      status: null,
+      // addContractDetail
+      count: null,
+      rent: null,
     }
   },
   methods: {
@@ -42,7 +46,22 @@ export default {
       this.addModal = !this.addModal
     },
     addContractDetail() {
-      fetch('https://localhost:8080/add_contractDetail_info')
+
+      this.addModal = !this.addModal
+
+      let body = {
+        count: this.count,
+        rent: this.rent,
+        contractID: this.contractId,
+      }
+      
+      fetch('http://localhost:8080/add_contractDetail_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+        })
         .then((response) => {
           return response.json()
         })
@@ -151,22 +170,10 @@ export default {
                 type="number"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
-                id=""
+                v-model="rent"
               />
             </dt>
           </div>
-          <dl class="row d-flex justify-content-center">
-            <dt class="col-sm-3 text-primary">契約開始時間</dt>
-            <dt class="col-sm-1 text-primary">：</dt>
-            <dt class="col-sm-6">
-              <input
-                type="date"
-                aria-describedby="inputGroup-sizing-sm"
-                class="form-control"
-                id=""
-              />
-            </dt>
-          </dl>
           <dl class="row d-flex justify-content-center">
             <dt class="col-sm-3 text-primary">期限</dt>
             <dt class="col-sm-1 text-primary">：</dt>
@@ -175,7 +182,7 @@ export default {
                 type="number"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
-                id=""
+                v-model="count"
               />
             </dt>
           </dl>

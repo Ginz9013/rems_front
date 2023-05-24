@@ -10,13 +10,25 @@ export default {
   // ],
   data() {
     return {
-      ContractList: []
+      // selectContract
+      ContractList: [],
+      // selectContractDetail
+      infoList:[],
+      contractId: 1,
+      property: "",
+      landlord: "",
+      tenant: "",
+      giftMoney: "",
+      deposit: "",
+      startDate: "",
+      endDate:"",
     }
   },
   methods: {
     switchURL() { 
         console.log("hi")
         this.$router.push("/keiyaku/info")
+        this.selectContractDetail()
     },
     selectContract() {
       fetch('http://localhost:8080/getAllContracts', {})
@@ -27,7 +39,35 @@ export default {
           console.log(data)
           this.ContractList = data.contractResponse
         })
+    },
+    selectContractDetail(){
+
+      let body = {
+        contractID: this.contractId,
+      }
+
+      fetch('http://localhost:8080/FindContractDetailsData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+        })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+          this.property = data.pProperty_name
+          this.landlord = data.lFirst_name + data.lLast_name
+          this.tenant = data.tFirst_name + data.tLast_name
+          this.giftMoney = data.pKey_money
+          this.deposit = data.pDeposit
+          this.startDate = data.cdStart_year + data.cdStart_month + data.cdStart_day
+          this.endDate = data.cdEnd_year + data.cdEnd_month + data.cdEnd_day
+        })
     }
+
   },
   mounted() {
     
