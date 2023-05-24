@@ -26,7 +26,7 @@ export default {
         <nav class="d-flex">
             <RouterLink to="/bukken" @click="switchLocation(1)" class="navBtn" :class="{target: location === 1}">物件</RouterLink>    
             <RouterLink to="/kashinushi" @click="switchLocation(2)" class="navBtn" :class="{target: location === 2}">貸主</RouterLink>    
-            <RouterLink to="/karinushi" @click="switchLocation(3)" class="navBtn" :class="{target: location === 3}">借主</RouterLink>    
+            <RouterLink to="/contract" @click="switchLocation(3)" class="navBtn" :class="{target: location === 3}">借主</RouterLink>    
             <RouterLink to="/contract-details" @click="switchLocation(4)" class="navBtn" :class="{target: location === 4}">契約</RouterLink>    
         </nav>
 
