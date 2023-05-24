@@ -12,16 +12,53 @@ export default {
             name1 :'',
             name2 :'',
             name3 :'',
+            name4 :'',
             name5 :'',
+            response:[],
+            response2:"",
+            rentalStatus:"",
 
             modalShow: false,
-            isShow:true,
+            isShow:false,
             btnShow:true
         }
     },
     methods: {
+        getPropertyByPropertyId(){
+            
+            this.isShow = !this.isShow
+            this.btnShow = !this.btnShow
+            const body = {
+                "propertyId":1
+            }
+
+            fetch("http://localhost:8080/get_property_by_property_id",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json",
+            },
+            body:JSON.stringify(body)
+        })
+        .then(function(response){
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            this.response2 = data.propertyList[0];
+            console.log(data.propertyList[0].propertyId);
+        })
+        .catch(err =>console.log(err))
+            
+            
+
+        },
         switchModal() {
             this.modalShow = !this.modalShow;
+        },
+        changeShow2(){
+            this.isShow = !this.isShow
+            this.btnShow = !this.btnShow
+
         },
         changeShow(){
             this.isShow = !this.isShow
@@ -46,16 +83,19 @@ export default {
         .then(function(response){
             return response.json();
         })
-        .then(function(data){
+        .then((data) => {
             console.log(data);
-            console.log(name1)
+            this.response = data;
+            console.log(this.response.message);
 
+            alert('更新物件：' + this.response.message);
         })
         .catch(err =>console.log(err))
         }
     }
     ,
     mounted(){
+        this.getPropertyByPropertyId();
        
     }
 };
@@ -94,8 +134,8 @@ export default {
            </div>
            <p> </p>
 
-           <button v-if="btnShow" class="btn btn-primary mb-4" @click="changeShow">更新資料</button>
-           <button v-else class="btn btn-primary mb-4" @click="changeShow">確認更新</button>
+           <button v-if="btnShow" class="btn btn-primary mb-4" @click="changeShow">確認更新</button>
+           <button v-else class="btn btn-primary mb-4" @click="changeShow2">更新資料</button>
            <!-- <button class="btn">更新</button> -->
 
         </div>
@@ -113,18 +153,19 @@ export default {
                         <p>賃料</p>
                         <p>禮金</p>
                         <p>敷金</p>
-                        <p>管理費</p>
+                        <p>上傳圖片</p>
                     </div>
                     <div class="bbb2">
-                        <p>物件</p>
-                        <p>物件2</p>
-                        <p>物件3</p>
-                        <p>物件4</p>
-                        <p>物件5</p>
-                        <p>物件6</p>
-                        <p>物件7</p>
-                        <p>物件8</p>
-                        <p>物件9</p>
+                        <p>{{ response2.propertyId }}</p>
+                        <p>{{response2.prefecture}}</p>
+                        <p>{{response2.district}}</p>
+                        <p>{{response2.address}}</p>
+                        <p>{{response2.rentalStatus}}</p>
+                        <p>{{response2.rentalPrice}}</p>
+                        <p>{{response2.keyMoney}}</p>
+                        <p>{{response2.deposit}}</p>
+                        <p>{{response2.imageBytesString}}</p>
+                        <p>-</p>
                     </div>
                 </div>
                 <div class="aaa">
@@ -140,15 +181,15 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>物件</p>
-                        <p>物件2</p>
-                        <p>物件3</p>
-                        <p>物件4</p>
-                        <p>物件5</p>
-                        <p>物件6</p>
-                        <p>物件7</p>
-                        <p>物件8</p>
-                        <p>物件9</p>
+                        <p>賃主姓名</p>
+                        <p>借主姓名</p>
+                        <p>{{response2.type}}</p>
+                        <p>{{response2.layout}}</p>
+                        <p>{{response2.propertyFloors}}</p>
+                        <p>{{response2.floorNumber}}</p>
+                        <p>{{response2.buildYear}}</p>
+                        <p>{{response2.exclusiveArea}}</p>
+                        <p>{{response2.remarks}}</p>
 
                     </div>
                 </div>
@@ -173,28 +214,28 @@ export default {
                         <p>賃料</p>
                         <p>禮金</p>
                         <p>敷金</p>
-                        <p>管理費</p>
+                        <p>上傳圖片</p>
 
                     </div>
                     <div class="bbb2">
-                        <p>物件</p>
-                        <p>物件2</p>
-                        <p>物件3</p>
-                        <p>物件4</p>
+                        <p>{{ response2.propertyId }}</p>
+                        <p>{{response2.prefecture}}</p>
+                        <p>{{response2.district}}</p>
+                        <p>{{response2.address}}</p>
                         <div class="yes">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                <label class="form-check-label" for="inlineRadio1">已出租</label>
-                                </div>
                                 <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                <label class="form-check-label" for="inlineRadio2">未出租</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true" v-model="rentalStatus">
+                                    <label class="form-check-label" for="inlineRadio1" >已出租</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false" v-model="rentalStatus">
+                                    <label class="form-check-label" for="inlineRadio2">未出租</label>
+                                </div>
                             </div>
-                        </div>
                         <input type="number" v-model="name1">
                         <input type="number" v-model="name2">
                         <input type="number" v-model="name3">
-                        <input type="number">
+                        <input type="number" v-model="name4">
                     
                     </div>
                 </div>
@@ -211,14 +252,14 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>物件</p>
-                        <p>物件2</p>
-                        <p>物件3</p>
-                        <p>物件4</p>
-                        <p>物件5</p>
-                        <p>物件6</p>
-                        <p>物件7</p>
-                        <p>物件8</p>
+                        <p>賃主姓名</p>
+                        <p>借主姓名</p>
+                        <p>{{response2.type}}</p>
+                        <p>{{response2.layout}}</p>
+                        <p>{{response2.propertyFloors}}</p>
+                        <p>{{response2.floorNumber}}</p>
+                        <p>{{response2.buildYear}}</p>
+                        <p>{{response2.exclusiveArea}}</p>
                         <input type="text" v-model="name5">
 
                     </div>

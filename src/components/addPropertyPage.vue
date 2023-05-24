@@ -10,23 +10,34 @@ export default {
     data() {
         return {
             modalShow: false,
+            selectedOption:'',
+            response:[]
             
         }
     },
     methods: {
-        switchModal() {
+        
+        // handleSelection(event) {
+        //     this.selectedOption = event.target.value;
+        // },
+        switchModal(){
+            this.modalShow = !this.modalShow;
+        },
+        switchModal2() {
             this.modalShow = !this.modalShow;
 
             const body = {
+                            //這一段的值要接前一份的值
                             "propertyId":1676,
                             "landlordId": 2,
+                            //以上
                             "prefecture": this.prefecture,
                             "district": this.district,
                             "address": this.address,
                             "propertyName": this.propertyName,
-                            "rentalStatus": true,
-                            "type": 1,
-                            "layout": 2,
+                            "rentalStatus": this.rentalStatus,
+                            "type": this.selectedOptionType,
+                            "layout":  this.selectedOptionLayout,
                             "propertyFloors": this.propertyFloors,
                             "floorNumber": this.floorNumber,
                             "buildYear": this.buildYear,
@@ -34,7 +45,7 @@ export default {
                             "rentalPrice": this.rentalPrice,
                             "keyMoney": this.keyMoney,
                             "deposit": this.deposit,
-                            "imageBytesString":123,
+                            "imageBytesString":this.imageBytesString,
                             "remarks": this.remarks,
 
                         }
@@ -49,13 +60,38 @@ export default {
         .then(function(response){
             return response.json();
         })
-        .then(function(data){
+        .then(function(data) {
             console.log(data);
-            console.log(name1)
+            this.response = data;
+            console.log(this.response.message);
 
-        })
+            alert('新增物件：' + this.response.message);
+
+            if(this.response.message === 'successful' ){
+                this.prefecture = "",
+                this.district = "",
+                this.address = "",
+                this.propertyName = "",
+                this.rentalStatus = "",
+                this.selectedOptionType = "",
+                this.selectedOptionLayout = "",
+                this.propertyFloors = "",
+                this.floorNumber = "",
+                this.buildYear = "",
+                this.exclusiveArea = "",
+                this.rentalPrice = "",
+                this.keyMoney = "",
+                this.deposit = "",
+                this.imageBytesString = "",
+                this.remarks = ""
+
+                    }
+        }.bind(this))
+
+        
         .catch(err =>console.log(err))
         }
+        
         
     }
 }
@@ -83,25 +119,25 @@ export default {
                                 <p>備考</p>
                             </div>
                         <div class="bbb2">
-                            <input type="text" v-model="propertyName">
-                            <input type="text" v-model="prefecture">
-                            <input type="text" v-model="district">
-                            <input type="text" v-model="address">
+                            <div><input type="text" v-model="propertyName"></div>
+                            <div><input type="text" v-model="prefecture"></div>
+                            <div><input type="text" v-model="district"></div>
+                            <div> <input type="text" v-model="address"></div>
                             <div class="yes">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" v-model="rentalStatus">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio1" >已出租</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" v-model="rentalStatus">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio2">未出租</label>
                                 </div>
                             </div>
-                            <input type="number" v-model="rentalPrice">
-                            <input type="number" v-model="keyMoney">
-                            <input type="number" v-model="deposit">
-                            <input type="url" v-model="imageBytesString">
-                            <input type="text" v-model="remarks">
+                            <div><input type="number" v-model="rentalPrice"></div>
+                            <div><input type="number" v-model="keyMoney"></div>
+                            <div><input type="number" v-model="deposit"></div>
+                            <div><input type="url" v-model="imageBytesString"></div>
+                            <div><input type="text" v-model="remarks"></div>
                         </div>
                     </div>
                     <div class="aaa">
@@ -118,20 +154,20 @@ export default {
                             <p>專有面積</p>
                         </div>
                         <div class="bbb2">
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
-                            <input type="text">
+                            <p>賃主姓</p>
+                            <p>賃主名</p>
+                            <p>借主姓</p>
+                            <p>借主名</p>
                             <div class="box">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                    <option selected>種目</option>
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedOptionType">
+                                    <!-- <option selected>種目</option> -->
                                     <option value="0">アパート</option>
                                     <option value="1">マンション</option>
                                     <option value="2">一戶建て</option>
                                 </select>
                             </div>
                             <div class="box">
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedOptionLayout">
                                     <option selected>間取り</option>
                                     <option value="0">ワンルーム</option>
                                     <option value="1">1K</option>
@@ -146,17 +182,16 @@ export default {
                                     <option value="10">4R</option>
                                 </select>
                             </div>
-                            <input type="number" v-model="propertyFloors">
-                            <input type="number" v-model="floorNumber">
-                            <input type="number" v-model="buildYear">
-                            <input type="number" v-model="exclusiveArea">
-                            
+                            <div><input type="number" v-model="propertyFloors"></div>
+                            <div><input type="number" v-model="floorNumber"></div>
+                            <div><input type="number" v-model="buildYear"></div>
+                            <div><input type="number" v-model="exclusiveArea"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- <button v-if="btnShow" class="btn btn-primary mb-4" @click="changeShow">更新資料</button> -->
-            <button class="btn btn-primary mb-4" @click="switchModal">新增物件資料</button>
+            <button class="btn btn-primary mb-4" @click="switchModal2">新增物件資料</button>
             
         </ModalView>
     </div>
