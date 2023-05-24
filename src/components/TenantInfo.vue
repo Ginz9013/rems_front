@@ -94,6 +94,8 @@ export default {
     padding: 30px;
     display: flex;
     margin: 5px 60px;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .nameGroup {
