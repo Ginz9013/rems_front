@@ -212,13 +212,13 @@ export default {
         </div>
         <!-- <button @click="switchAndClear" type="button">addcontract</button> -->
         <addContrcat v-if="modalShow" :title="'契 約 追 加'" @close="switchModal">
-            <div class="addPayment">
+            <div class="addContract">
                 <dl class="row d-flex justify-content-center">
                     <dt class="col-sm-2 text-primary">物件名</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6">
                         <input v-bind:value="get.property_name" type="text" aria-describedby="inputGroup-sizing-sm"
-                            class="form-control" placeholder="シティスパイア新富町">
+                            class="form-control">
                     </dt>
                     <dt @click="switchSubModal" style="position: absolute; top: 98px; left: 56vw;"><button
                             type="button">検索</button></dt>
@@ -228,55 +228,55 @@ export default {
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6">
                         <input v-bind:value="get.landlord_name" type="text" aria-describedby="inputGroup-sizing-sm"
-                            class="form-control" placeholder="田中 理惠">
+                            class="form-control">
                     </dt>
                 </dl>
                 <dl class="row d-flex justify-content-center">
                     <dt class="col-sm-2 text-primary">借主名</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6"><input v-bind:value="fullname" type="text" aria-describedby="inputGroup-sizing-sm"
-                            class="form-control" placeholder="新垣 結依"></dt>
+                            class="form-control"></dt>
                 </dl>
                 <dl class="row d-flex justify-content-center">
                     <dt class="col-sm-2 text-primary">礼金</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6"><input v-bind:value="get.key_money" type="number"
-                            aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder=""></dt>
+                            aria-describedby="inputGroup-sizing-sm" class="form-control"></dt>
                 </dl>
                 <dl class="row d-flex justify-content-center ">
                     <dt class="col-sm-2 text-primary">敷金</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6"><input v-bind:value="get.deposit" type="number"
-                            aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder=""></dt>
+                            aria-describedby="inputGroup-sizing-sm" class="form-control"></dt>
                 </dl>
                 <dl class="row d-flex justify-content-center ">
                     <dt class="col-sm-2 text-primary">賃料</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6"><input v-bind:value="get.rental_price" type="number"
-                            aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder=""></dt>
+                            aria-describedby="inputGroup-sizing-sm" class="form-control"></dt>
                 </dl>
                 <dl class="row d-flex justify-content-center ">
                     <dt class="col-sm-2 text-primary">契約開始日</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6">
-                        <input type="date" aria-describedby="inputGroup-sizing-sm" class="form-control" placeholder="">
+                        <input type="date" aria-describedby="inputGroup-sizing-sm" class="form-control">
                     </dt>
                 </dl>
                 <dl class="row d-flex justify-content-center ">
                     <dt class="col-sm-2 text-primary">期限</dt>
                     <dt class="col-sm-1 text-primary">：</dt>
                     <dt class="col-sm-6"><input type="date" aria-describedby="inputGroup-sizing-sm" class="form-control"
-                            placeholder=""></dt>
+                            ></dt>
                 </dl>
                 <div class="d-flex justify-content-center">
                     <button @click="switchModal" type="button" class="btn btn-primary px-5">確認</button>
                 </div>
             </div>
             <PropertySearch v-if="subModalShow" :title="'查詢物件'" @close="switchSubModal">
-                <div class="addPayment">
+                <div class="addContract">
                     <SearchBar :searchCondition="['物件', '借主', '契約コード']" />
                     <div class="list">
-                        <div class="addPayment">
+                        <div class="addContract">
                             <Child @click="switchSubModal" @button-click="handleButtonClick"
                                 v-for="property in propertyData" v-bind:key="property.property_id"
                                 v-bind:property="property" />
@@ -291,7 +291,7 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
-.addPayment {
+.addContract {
     width: 60vw;
     height: 80vh;
 
