@@ -12,7 +12,6 @@ export default {
             modalShow: false,
             selectedOption:'',
             response:[]
-            
         }
     },
     methods: {
@@ -27,28 +26,25 @@ export default {
             this.modalShow = !this.modalShow;
 
             const body = {
-                            //這一段的值要接前一份的值
-                            "propertyId":1676,
-                            "landlordId": 2,
-                            //以上
-                            "prefecture": this.prefecture,
-                            "district": this.district,
-                            "address": this.address,
-                            "propertyName": this.propertyName,
-                            "rentalStatus": this.rentalStatus,
-                            "type": this.selectedOptionType,
-                            "layout":  this.selectedOptionLayout,
-                            "propertyFloors": this.propertyFloors,
-                            "floorNumber": this.floorNumber,
-                            "buildYear": this.buildYear,
-                            "exclusiveArea": this.exclusiveArea,
-                            "rentalPrice": this.rentalPrice,
-                            "keyMoney": this.keyMoney,
-                            "deposit": this.deposit,
-                            "imageBytesString":this.imageBytesString,
-                            "remarks": this.remarks,
-
-                        }
+        "propertyId":1676,
+        "landlordId": 2,
+        "prefecture": this.prefecture,
+        "district":  this.district,
+        "address": this.address,
+        "propertyName":this.propertyName,
+        "rentalStatus":this.rentalStatus,
+        "type": this.selectedOptionType,
+        "layout": this.selectedOptionLayout,
+        "propertyFloors": this.propertyFloors,
+        "floorNumber": this.floorNumber,
+        "buildYear": this.buildYear,
+        "exclusiveArea":this.exclusiveArea,
+        "rentalPrice": this.rentalPrice,
+        "keyMoney": this.keyMoney,
+        "deposit": this.deposit,
+        "imageBytesString":this.imageBytesString,
+        "remarks": this.remarks
+}
 
             fetch("http://localhost:8080/add_property",{
             method:"POST",
@@ -116,7 +112,6 @@ export default {
                                 <p>禮金</p>
                                 <p>敷金</p>
                                 <p>上傳圖片</p>
-                                <p>備考</p>
                             </div>
                         <div class="bbb2">
                             <div><input type="text" v-model="propertyName"></div>
@@ -136,31 +131,29 @@ export default {
                             <div><input type="number" v-model="rentalPrice"></div>
                             <div><input type="number" v-model="keyMoney"></div>
                             <div><input type="number" v-model="deposit"></div>
-                            <div><input type="url" v-model="imageBytesString"></div>
-                            <div><input type="text" v-model="remarks"></div>
+
+                            <!-- 圖片的格式先用text 如果改成url格式好像有問題 -->
+                            <div><input type="text" v-model="imageBytesString"></div>
                         </div>
                     </div>
                     <div class="aaa">
                         <div class="bbb1">
                             <p>賃主姓</p>
                             <p>賃主名</p>
-                            <p>借主姓</p>
-                            <p>借主名</p>
                             <p>物件種目</p>
                             <p>間取り</p>
                             <p>建物階層數</p>
                             <p>所在層</p>
                             <p>築年數</p>
                             <p>專有面積</p>
+                            <p>備考</p>
                         </div>
                         <div class="bbb2">
                             <p>賃主姓</p>
                             <p>賃主名</p>
-                            <p>借主姓</p>
-                            <p>借主名</p>
                             <div class="box">
                                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedOptionType">
-                                    <!-- <option selected>種目</option> -->
+                                    <option selected>種目</option>
                                     <option value="0">アパート</option>
                                     <option value="1">マンション</option>
                                     <option value="2">一戶建て</option>
@@ -186,6 +179,7 @@ export default {
                             <div><input type="number" v-model="floorNumber"></div>
                             <div><input type="number" v-model="buildYear"></div>
                             <div><input type="number" v-model="exclusiveArea"></div>
+                            <div><input type="text" v-model="remarks"></div>
                         </div>
                     </div>
                 </div>

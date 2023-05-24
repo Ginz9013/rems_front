@@ -29,7 +29,7 @@ export default {
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
-                "propertyId":1
+                "propertyId":1715
             }
 
             fetch("http://localhost:8080/get_property_by_property_id",{
@@ -156,7 +156,7 @@ export default {
                         <p>上傳圖片</p>
                     </div>
                     <div class="bbb2">
-                        <p>{{ response2.propertyId }}</p>
+                        <p>{{ response2.propertyName }}</p>
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
@@ -165,7 +165,7 @@ export default {
                         <p>{{response2.keyMoney}}</p>
                         <p>{{response2.deposit}}</p>
                         <p>{{response2.imageBytesString}}</p>
-                        <p>-</p>
+                        <!-- <p>-</p> -->
                     </div>
                 </div>
                 <div class="aaa">
