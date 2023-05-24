@@ -1,18 +1,21 @@
 <script >
 export default {
+    props:[      
+    "dataFromPage"
+        ],
     components: {
   },
   data() {
     return {
       alllandlord: [],
-      alllandlordIdStr: []
+      
            
     }
   },
   methods: {
     getpost() {
 
-        return fetch('http://localhost:8080/show_All_Landlord', {
+        fetch('http://localhost:8080/show_All_Landlord', {
 
         method: 'POST',
         headers: {
@@ -41,10 +44,11 @@ export default {
     
   },
   created(){
-    this.getpost();
+    
   },
   mounted(){
     
+    this.getpost();
   }
 }
 </script>
@@ -94,6 +98,8 @@ export default {
     padding: 30px;
     display: flex;
     margin: 5px 60px;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .nameGroup {
@@ -147,6 +153,6 @@ p {
 
 .info {
     margin-top: -12px;
-    margin-left: 70px;
+    margin-left: 30px;
 }
 </style>

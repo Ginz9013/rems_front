@@ -1,11 +1,61 @@
 <script>
+import detail  from "../components/TenantInfo.vue"
 export default {
     // 請帶入搜尋條件陣列，名稱: searchCondition ，下拉選單會自動帶入
-    props: ["searchCondition"],
+    props: [
+        "searchCondition",
+        "emitPush"
+],
+    components: {
+        detail
+    },
     data() {
         return {
             placeholderString : null,
+            search:"",
+            result:[],
+            textAAA:123
         }
+    },
+    methods:{
+        // 搜尋
+        search_Landlord(){
+            let textAAA=123
+            let resultArr=[]
+            console.log(this.search)
+             fetch('http://localhost:8080/search_Landlord', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'       
+                },
+                body: JSON.stringify({
+                    "search":this.search,
+                   
+                    })
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);                                    
+                    resultArr = data.landlordList; 
+                    console.log(resultArr)
+                    this.result=resultArr[0].firstName
+                    console.log(this.result); 
+                    
+                    this.push();                         
+                    })
+                .catch((error) => {
+                    console.error(error);
+                })
+
+                
+                console.log(this.result); 	
+
+        },
+        push(textAAA){
+            console.log('AAA');
+            this.$emit("emitresultPush",textAAA)
+        }
+
     },
     mounted() {
         // 組搜索欄位 placeholder 字串
@@ -23,7 +73,7 @@ export default {
 </script>
 <template>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" :placeholder="placeholderString" aria-label="Recipient's username" aria-describedby="button-addon2">
+            <input type="text" class="form-control" :placeholder="placeholderString" aria-label="Recipient's username" aria-describedby="button-addon2" v-model="search">
 
             <!-- 下拉選單區 -->
             <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{ searchCondition[0] }}</button>
@@ -32,7 +82,7 @@ export default {
             </ul>
             <!-- 下拉選單區 -->
 
-            <button class="btn btn-primary px-5" type="button" id="button-addon2">検索</button>
+            <button class="btn btn-primary px-5" type="button" id="button-addon2" @click="search_Landlord">検索</button>
         </div>
 </template>
 <style>

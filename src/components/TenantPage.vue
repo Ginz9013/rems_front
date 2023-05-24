@@ -1,12 +1,12 @@
 <script >
-import SearchBar from "../components/SearchBar.vue";
+import SearchBarView from "./SearchBar.vue";
 import ModalView from "../components/ModalView.vue";
-
-export default {
-
+import TenantInfo from "../components/TenantInfo.vue";
+export default {    
     components: {
-        SearchBar,
-        ModalView
+        SearchBarView,
+        ModalView,
+        TenantInfo
     },
     data() {
         return {
@@ -23,16 +23,18 @@ export default {
                     birth_date:"",
                     address:"",
                     payment:"",
-                    payment_account:""
+                    payment_account:"",
+            resultA:null
+            
         }
     },
     methods: {
         switchModal() {
             this.modalShow = !this.modalShow;
         },
+        //新增
         addTenantInfo() {
          fetch('http://localhost:8080/add_Landlord', {
-
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'       
@@ -60,17 +62,39 @@ export default {
                 .catch((error) => {
                     console.error(error);
                 })
-        }
-    }
+        },
+        catchsearchbar(textAAA) {
+            console.log(textAAA);
+            console.log(CCC);
+            this.resultA=textAAA;
+            
+           
+        },
+        catchResultForB(data) {
+      // 将数据传递给子组件B
+      this.$refs.childComponent.setData(data);
+    },
+
+    
+        
+        
+    },
+    mounted() {
+           
+            
+    },
 }
 </script>
 
 <template>
+    
     <div class="bodyArea">
-        <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar" />
-
+        <!-- <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar"  v-on:emitresultPush="catchsearchbar" v-bind:resultA="resultA"/> -->
+        <SearchBarView v-on:emitresultPush="catchsearchbar" v-bind:resultA="resultA"/>
+        
         <button @click="switchModal" class="tenantAddBtn">借主追加</button>
 
+        <TenantInfo :dataFromPage="result" @emitresultPushB="catchResultForB"/>
         <ModalView v-if="modalShow" :title="'借主追加'" @close="switchModal">
             <div class="field">
                 <div class="flex">
