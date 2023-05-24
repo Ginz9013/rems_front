@@ -80,8 +80,8 @@ export default {
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 300px;
-    height: 400px;
+    // width: 300px;
+    // height: 400px;
     // background-color: aqua;
     position: relative;
     top: 50%;
