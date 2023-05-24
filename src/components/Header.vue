@@ -18,7 +18,7 @@ export default {
 </script>
 <template>
     <header class="bg-primary px-4 pt-4 d-flex justify-content-between align-items-end px-5">
-        <RouterLink to="/homepage" class="mb-4">
+        <RouterLink to="/home" class="mb-4">
             <img src="" alt="LOGO">
         </RouterLink>
         
@@ -26,8 +26,8 @@ export default {
         <nav class="d-flex">
             <RouterLink to="/bukken" @click="switchLocation(1)" class="navBtn" :class="{target: location === 1}">物件</RouterLink>    
             <RouterLink to="/kashinushi" @click="switchLocation(2)" class="navBtn" :class="{target: location === 2}">貸主</RouterLink>    
-            <RouterLink to="/contract" @click="switchLocation(3)" class="navBtn" :class="{target: location === 3}">借主</RouterLink>    
-            <RouterLink to="/contract-details" @click="switchLocation(4)" class="navBtn" :class="{target: location === 4}">契約</RouterLink>    
+            <RouterLink to="/karinushi" @click="switchLocation(3)" class="navBtn" :class="{target: location === 3}">借主</RouterLink>    
+            <RouterLink to="/Keiyaku" @click="switchLocation(4)" class="navBtn" :class="{target: location === 4}">契約</RouterLink>    
         </nav>
 
         <button class="btn btn-outline-light mb-4" @click="logout">ログアウト</button>

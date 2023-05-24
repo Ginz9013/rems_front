@@ -1,4 +1,5 @@
 <script>
+import { RouterLink } from 'vue-router';
 export default {
   components: {},
   // props: [
@@ -13,6 +14,10 @@ export default {
     }
   },
   methods: {
+    switchURL() { 
+        console.log("hi")
+        this.$router.push("/keiyaku/info")
+    },
     selectContract() {
       fetch('http://localhost:8080/getAllContracts', {})
         .then((response) => {
@@ -25,6 +30,7 @@ export default {
     }
   },
   mounted() {
+    
     this.selectContract()
   }
 }
@@ -33,6 +39,7 @@ export default {
   <div
     v-for="item in ContractList"
     v-bind:key="item.id"
+    @click="switchURL"
     class="d-flex+ justify-content-center border border-secondary mt-3"
     style="width: 600px; height: 130px">
 
@@ -43,3 +50,5 @@ export default {
 </template>
 
 <style lang="scss" scoped></style>
+<!-- @click="switchURL" -->
+<!-- <img src="../views/ContractDetails.vue" alt=""> -->
