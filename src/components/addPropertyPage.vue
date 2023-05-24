@@ -7,6 +7,7 @@ export default {
         SearchBar,
         ModalView
     },
+    
     data() {
         return {
             modalShow: false,
@@ -26,7 +27,8 @@ export default {
             this.modalShow = !this.modalShow;
 
             const body = {
-        "propertyId":1676,
+                //進入頁面要帶的值1715
+        "propertyId":1715,
         "landlordId": 2,
         "prefecture": this.prefecture,
         "district":  this.district,

@@ -35,7 +35,7 @@ const router = createRouter({
       // 契約首頁
       path: '/keiyaku',
       name: 'keiyaku',
-      // component:,
+      component:addPropperty,
     },
     {
       // 契約詳細頁面(包含歷史契約)
