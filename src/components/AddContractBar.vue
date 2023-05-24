@@ -14,7 +14,7 @@ export default {
       ContractList: [],
       // selectContractDetail
       infoList:[],
-      contractId: 1,
+      contractId: "",
       property: "",
       landlord: "",
       tenant: "",
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods: {
-    switchURL() { 
+    switchURL(contractId) { 
         console.log("hi")
         this.$router.push("/keiyaku/info")
         this.selectContractDetail()
@@ -58,6 +58,7 @@ export default {
         })
         .then((data) => {
           console.log(data)
+          this.contractId = data.contract_id
           this.property = data.pProperty_name
           this.landlord = data.lFirst_name + data.lLast_name
           this.tenant = data.tFirst_name + data.tLast_name
@@ -66,7 +67,11 @@ export default {
           this.startDate = data.cdStart_year + data.cdStart_month + data.cdStart_day
           this.endDate = data.cdEnd_year + data.cdEnd_month + data.cdEnd_day
         })
-    }
+    },
+    selectInfo(){
+      this.$emit("contractInfo",this.contractId)
+    
+    },
 
   },
   mounted() {

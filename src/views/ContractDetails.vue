@@ -1,13 +1,14 @@
 <script>
 import SearchBar from '../components/SearchBar.vue'
 import ModalView from '../components/ModalView.vue'
-// import AddPaymentBar from "../components/AddPaymentBar.vue";
+import AddContractBar from '../components/AddContractBar.vue'
+
 
 export default {
   components: {
     SearchBar,
-    ModalView
-    // AddPaymentBar
+    ModalView,
+    AddContractBar,
   },
   data() {
     return {
@@ -15,7 +16,7 @@ export default {
       delectModal: false,
       reviseModal: false,
       addModal: false,
-      contractId: 1,
+      contractId: '',
       addType: '',
       addDate: '',
       addrent: '',
@@ -30,6 +31,7 @@ export default {
       // addContractDetail
       count: null,
       rent: null,
+      // 
     }
   },
   methods: {
@@ -107,7 +109,10 @@ export default {
           this.amount = data.infoMap.amount
           this.status = data.infoMap.payment_status
         })
-    }
+    },
+    getSelectInfo(contractId){
+      this.contractId = contractId
+    },
   },
   mounted() {}
 }
