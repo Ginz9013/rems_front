@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
-import SearchHouse from "../views/SearchHouse.vue"
 import HomeView from "../views/Home.vue";
 import ContractDetailsView from "../views/ContractDetails.vue";
 import ContractView from "../views/Contract.vue";
@@ -36,13 +35,7 @@ const router = createRouter({
       // 契約首頁
       path: '/keiyaku',
       name: 'keiyaku',
-      // component:,
-    },
-    {
-      // 契約詳細頁面(包含歷史契約)
-      path: '/keiyaku/info',
-      name: 'keiyakuInfo',
-      // component:,
+      component: ContractView,
     },
     {
       // 契約詳細頁面(包含歷史契約)
