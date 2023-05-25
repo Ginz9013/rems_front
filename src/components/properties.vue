@@ -1,12 +1,14 @@
 <script>
-import SearchBar from "../components/SearchBar.vue";
+import { RouterLink } from 'vue-router'
+import SearchProperty from "../components/SearchProperty.vue";
 export default {
     components: {
-        SearchBar,
+        SearchProperty,
     },
     data() {
         return {
             propertySearch: [],
+            infoList:[{}]
 
         }
     },
@@ -30,9 +32,17 @@ export default {
                     this.propertySearch = data.propertyList;
                 })
         },
-        onSearchResult(result) {
-      this.searchResult = result;
-    },
+         switchURL(event, infoList) {
+      console.log(event)
+      console.log(infoList)
+      //this.$router.push("/keiyaku/info")
+
+      this.$router.push({
+        name: 'bukkenInfo',
+        params: { property_id: infoList }
+      })
+    }
+
     },
     mounted() {
         this.getALL();
@@ -43,7 +53,7 @@ export default {
 </script>
 
 <template >
-    <div v-for="item in propertySearch" class="properties">
+    <div v-for="item in propertySearch" class="properties"  @click="switchURL($event, item.property_id)">
         <div class="flex">
             <div class="img">圖片</div>
             <div class="name">

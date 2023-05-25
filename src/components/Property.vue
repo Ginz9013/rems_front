@@ -1,13 +1,14 @@
 <script>
-import SearchBar from "./SearchBar.vue";
+import SearchProperty from "./SearchProperty.vue";
 import ModalView from "./ModalView.vue";
 import ContractItem from "./ContractItem.vue";
 
 export default {
-    components: {
-        SearchBar,
+    components: {    
         ModalView,
-        ContractItem
+        ContractItem,
+        SearchProperty,
+
     },
     data() {
         return {
