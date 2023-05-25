@@ -60,8 +60,9 @@ export default {
         <div>
             <p>{{ item.end_year }}/{{ item.end_month }}/{{ item.end_day }}</p>
         </div>
+        
         <div>
-        <p>連結</p>
+        <p>連結</p> <!-- 我想讓現行契約顯示"契約中"，歷史契約顯示"歷史契約" -->
         </div>
     </div>
 </template>

@@ -11,11 +11,11 @@ export default {
     },
     data() {
         return {
-            name1 :'',
-            name2 :'',
-            name3 :'',
-            name4 :'',
-            name5 :'',
+            rentalPrice :'',
+            keyMoney :'',
+            deposit :'',
+            imageBytesString :'',
+            remarks :'',
             response:[],
             response2:"",
             rentalStatus:"",
@@ -30,11 +30,14 @@ export default {
         }
     },
     methods: {
+
+        //抓ID給畫面選染資訊
         getPropertyByPropertyId(){
             
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
+                //接上一頁傳進來的物件ID
                 "propertyId":1
             }
 
@@ -87,17 +90,20 @@ export default {
             this.btnShow = !this.btnShow
 
         },
+
+        //更新物件資訊
         changeShow(){
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
-                "propertyId":1674,
+                //也是接上一頁傳進來的ID
+                "propertyId":1,
 
-                "rentalPrice": this.name1,
-                "keyMoney":this.name2,
-                "deposit": this.name3,
+                "rentalPrice": this.rentalPrice,
+                "keyMoney":this.keyMoney,
+                "deposit": this.deposit,
                 "propertyImage": "http://example.com/image.jpg",
-                "remarks": this.name5,
+                "remarks": this.remarks,
             }
 
             fetch("http://localhost:8080/update_property",{
@@ -259,10 +265,10 @@ export default {
                                     <label class="form-check-label" for="inlineRadio2">未出租</label>
                                 </div>
                             </div>
-                        <input type="number" v-model="name1">
-                        <input type="number" v-model="name2">
-                        <input type="number" v-model="name3">
-                        <input type="number" v-model="name4">
+                        <input type="number" v-model="rentalPrice">
+                        <input type="number" v-model="keyMoney">
+                        <input type="number" v-model="deposit">
+                        <input type="number" v-model="imageBytesString">
                     
                     </div>
                 </div>
@@ -287,7 +293,7 @@ export default {
                         <p>{{response2.floorNumber}}</p>
                         <p>{{response2.buildYear}}</p>
                         <p>{{response2.exclusiveArea}}</p>
-                        <input type="text" v-model="name5">
+                        <input type="text" v-model="remarks">
 
                     </div>
                 </div>
