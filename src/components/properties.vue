@@ -6,39 +6,8 @@ export default {
     },
     data() {
         return {
-            propertiesList: [],
-            infoList:[{
-                propertyId:null,
-                propertyName:null,
-                prefecture:null,
-                district:null,
-                rentalStatus:null,
-                rentalPrice:null,
-                keyMoney:null,
-                deposit:null,
-                type:null,
-                layout:null,
-                propertyFloors:null,
-                floorNumber:null,
-                buildYear:null,
-                exclusiveArea:null,
-                remarks:null,
-            }],
-                propertyId:null,
-                propertyName:null,
-                prefecture:null,
-                district:null,
-                rentalStatus:null,
-                rentalPrice:null,
-                keyMoney:null,
-                deposit:null,
-                type:null,
-                layout:null,
-                propertyFloors:null,
-                floorNumber:null,
-                buildYear:null,
-                exclusiveArea:null,
-                remarks:null,
+            propertySearch: [],
+
         }
     },
     methods: {
@@ -58,19 +27,11 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertySearch = data.propertyList;
                 })
         },
-        switchURL(event, infoList) {
-      console.log(event)
-      console.log(infoList)
-    
-
-      this.$router.push({
-        name: 'bukkenInfo',
-        params: { property_id: infoList }
-      })
-      this.selectPropertyDetail()
+        onSearchResult(result) {
+      this.searchResult = result;
     },
     },
     mounted() {
@@ -82,7 +43,7 @@ export default {
 </script>
 
 <template >
-    <div v-for="item in propertiesList" class="properties">
+    <div v-for="item in propertySearch" class="properties">
         <div class="flex">
             <div class="img">圖片</div>
             <div class="name">

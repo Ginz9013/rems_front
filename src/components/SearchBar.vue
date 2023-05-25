@@ -5,9 +5,9 @@ export default {
     data() {
         return {
             placeholderString: null,
-            selectedValue: this.searchCondition[0],
+            selectedValue: "",
             searchValue: "",
-            propertiesList: []
+            propertySearch: []
         }
     },
     methods: {
@@ -49,7 +49,8 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertySearch = data.propertyList;
+                    
                 })
         },
         searchLandlordName(value) {
@@ -69,7 +70,7 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertySearch = data.propertyList;
                 })
         },
         searchTenantName(value) {
@@ -89,7 +90,7 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertySearch = data.propertyList;
                 })
         },
         searchContractId(value) {
@@ -109,7 +110,7 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertySearch = data.propertyList;                 
                 })
         },
     },
@@ -121,8 +122,7 @@ export default {
             }
             return item + " / "
         }).join("")
-
-
+        this.selectedValue = this.searchCondition[0];
     }
 }
 </script>
