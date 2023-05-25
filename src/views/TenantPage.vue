@@ -163,124 +163,106 @@ export default {
 
 <style lang="scss" scoped>
 .bodyArea {
-    // margin: 20px 300px 20px 300px;
-    width: 800px;
-    margin: 0 auto;
-}
-
-.modalArea{
-    width: 100%;
+  margin: 20px 300px 20px 300px;
 }
 
 .field {
-    // margin-left: 24vw;
-    // margin-right: 24vw;
-    width: 50vw;
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    position: relative;
-
-    .flex {
-        text-align: center;
-        justify-content: center;
-        display: flex;
-    }
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
 }
 
-.tenantAddBtn {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    padding: 9px 21px;
-    border: 0px solid #45ab71;
-    border-radius: 9px;
-    background: #45ab71;
-    color: #ffffff;
-    text-decoration: none;
+.flex {
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
-.confirmToAddBtn {
-    width: 10vw;
-    position: absolute;
-    left: 260px;
-    top: 300px;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    padding: 9px 21px;
-    border: 0px solid #692bff;
-    border-radius: 9px;
-    background: #692bff;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.SearchBar {
-    margin: 1rem;
-    width: 50vw;
-}
-
-.phead {
-    position: absolute;
-    left: 0;
-}
-
+.phead,
 .pfooter {
-    position: absolute;
-    left: 345px;
+  margin: 0;
+  width: 100px;
 }
 
-.pdot {
-    position: absolute;
-    left: 100px;
-}
-
+.pdot,
 .pdot2 {
-    position: absolute;
-    left: 445px;
-
+  margin: 0;
+  width: 10px;
 }
 
 .twiinput {
-    position: absolute;
-    left: 120px;
-    height: 25px;
-    width: 150px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
 }
 
 .twiinput2 {
-    position: absolute;
-    left: 465px;
-    height: 25px;
-    width: 150px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
-}
-
-.a {
-    position: absolute;
-    left: 465px;
-    height: 25px;
-    width: 150px;
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
 }
 
 .soloinput {
-    position: absolute;
-    left: 120px;
-    height: 25px;
-    width: 495px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
+  height: 25px;
+  width: 495px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
+}
+
+.tenantAddBtn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #B8D26E;
+  border-radius: 9px;
+  background: #B8D26E;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.tenantAddBtn:hover {
+  background: #A3BD56;
+}
+
+.tenantAddBtn:active {
+  background: #91A944;
+}
+
+.confirmToAddBtn {
+  width: 10vw;
+  margin-left: 40%;
+  margin-top: 2%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #1962A7;
+  border-radius: 9px;
+  background: #1962A7;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.confirmToAddBtn:hover {
+  background: #0F4C91;
+}
+
+.confirmToAddBtn:active {
+  background: #084476;
+}
+
+.SearchBar {
+  margin: 1rem;
+  width: 50vw;
 }
 </style>

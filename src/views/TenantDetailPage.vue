@@ -171,7 +171,7 @@ export default {
             <div class="flex" style="width: 615px;">
                 <button @click="isShow ? change() : upDate()" type="button" class="btnL"> {{ isShow ? "情 報 更新" : "情 報 確 認" }}</button>
                 <p style="height: 20px;"></p>
-                <button type="button" class="btnR">物 件 追 加</button>
+                <button type="button" class="btnR">契 約 追 加</button>
             </div>
 
             <div>

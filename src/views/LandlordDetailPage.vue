@@ -195,152 +195,107 @@ export default {
     </div>
 </template>
 <style lang="scss" scoped>
-.field {
-    margin: -20px 25% ;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    position: relative;
-    .flex {
-        text-align: center;
-        justify-content: center;
-        display: flex;
-
-        .btnL {
-            width: 150px;
-            height: 40px;
-            font-size: large;
-            position: absolute;
-            left: 12px;
-            color: white;
-            border-radius: 10px;
-            background-color: #0e4e8a;
-            border: 0px solid #0e4e8a
-        }
-
-        .btnR {
-            width: 150px;
-            height: 40px;
-            font-size: large;
-            position: absolute;
-            left: 455px;
-            color: white;
-            border-radius: 10px;
-            background-color: rgb(100, 165, 3);
-            border: 0px solid rgb(100, 165, 3);
-        }
-    }
-
-
-
-    .phead {
-        position: absolute;
-        left: 0;
-    }
-
-    .pfooter {
-        position: absolute;
-        left: 345px;
-        white-space: nowrap;
-
-
-    }
-
-    .pdot {
-        position: absolute;
-        left: 100px;
-    }
-
-    .pdot2 {
-        position: absolute;
-        left: 445px;
-
-    }
-
-    .twiinput {
-        position: absolute;
-        left: 120px;
-        height: 25px;
-        width: 150px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
-
-    .twiinput2 {
-        position: absolute;
-        left: 465px;
-        height: 25px;
-        width: 150px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
-
-    .readding {
-        position: absolute;
-        left: 120px;
-        height: 25px;
-        width: 150px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
-
-    .readding2 {
-        position: absolute;
-        left: 465px;
-        height: 25px;
-        width: 150px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
-
-    .soloreadding {
-        position: absolute;
-        left: 120px;
-        height: 25px;
-        width: 495px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
-
-    .a {
-        position: absolute;
-        left: 465px;
-        height: 25px;
-        width: 150px;
-    }
-
-    .soloinput {
-        position: absolute;
-        left: 120px;
-        height: 25px;
-        width: 495px;
-        border: 0;
-        border-bottom: 1px;
-        border-color: rgb(100, 165, 3);
-        border-style: solid;
-    }
+.bodyArea {
+  margin: 20px 300px 20px 300px;
 }
 
-.twiinput::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 100%;
-    height: 1px;
-    background-color: rgb(100, 165, 3);
+.field {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.flex {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+
+.phead,
+.pfooter {
+  margin: 0;
+  width: 100px;
+}
+
+.pdot,
+.pdot2 {
+  margin: 0;
+  width: 10px;
+}
+
+.twiinput {
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
+}
+
+.twiinput2 {
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
+}
+
+.soloinput {
+  height: 25px;
+  width: 495px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
+}
+
+.tenantAddBtn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #B8D26E;
+  border-radius: 9px;
+  background: #B8D26E;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.tenantAddBtn:hover {
+  background: #A3BD56;
+}
+
+.tenantAddBtn:active {
+  background: #91A944;
+}
+
+.confirmToAddBtn {
+  width: 10vw;
+  margin-left: 40%;
+  margin-top: 2%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #1962A7;
+  border-radius: 9px;
+  background: #1962A7;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.confirmToAddBtn:hover {
+  background: #0F4C91;
+}
+
+.confirmToAddBtn:active {
+  background: #084476;
+}
+
+.SearchBar {
+  margin: 1rem;
+  width: 50vw;
 }
 </style>

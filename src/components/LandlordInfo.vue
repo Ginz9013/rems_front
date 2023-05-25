@@ -93,25 +93,32 @@ export default {
 </template>
   
 <style lang="scss" scoped>
-
-
+.wrap{
+ max-width: 800px;
+ margin: 0 auto;
+}
 .infoBox {
+    box-sizing: border-box;
+//     width: 100%;
+//  height: 200px;
     width: 515px;
     height: 90px;
     border: 2px solid #1962A7;
     border-radius: 6px;
     padding: 30px;
     display: flex;
-    margin: 5px 60px;
+    margin: 20px 60px;
     flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
 }
+
 
 .nameGroup {
     display: flex;
     flex-direction: column;
     margin: -2px 4px -2px 4px;
-    
+
 }
 
 .flexArea {
@@ -131,7 +138,7 @@ export default {
 
 .kana {
     font-size: small;
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
 
 p {
@@ -159,5 +166,6 @@ p {
 .info {
     margin-top: -12px;
     margin-left: 30px;
+
 }
 </style>
