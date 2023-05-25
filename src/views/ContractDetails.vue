@@ -185,8 +185,8 @@ export default {
           this.infoList.giftMoney = data.pKey_money
           this.infoList.deposit = data.pDeposit
           this.infoList.rent = data.rent
-          this.infoList.startDate = data.cdStart_year + data.cdStart_month + data.cdStart_day
-          this.infoList.endDate = data.cdEnd_year + data.cdEnd_month + data.cdEnd_day
+          this.infoList.startDate = data.cdStart_year +"-"+ data.cdStart_month +"-"+ data.cdStart_day
+          this.infoList.endDate = data.cdEnd_year +"-"+ data.cdEnd_month +"-"+ data.cdEnd_day
           console.log(this.infoList)
         })
     }
@@ -449,12 +449,12 @@ export default {
   <div class="contractDetail-area mb-6">
     <h4 class="fw-bolder text-center mt-5 text-primary">詳細契約リスト</h4>
     <hr class="border border-secondary border-2" />
-    <div class="row ms-6" v-for="(item, index) in contractDate" v-bind:key="index">
+    <dl class="row ms-6" v-for="(item, index) in contractDate" v-bind:key="index">
       <dt class="col-sm-2">契約開始時間</dt>
       <dt class="col-sm-1">：</dt>
       <dt class="col-sm-5">{{ item }}</dt>
       <dt class="col-sm-2">{{ resoult[index] }}</dt>
-    </div>
+    </dl>
   </div>
 </template>
 <style scoped>

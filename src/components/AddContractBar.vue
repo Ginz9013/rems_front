@@ -2,37 +2,23 @@
 import { RouterLink } from 'vue-router'
 export default {
   components: {},
-  // props: [
-  //     "house",
-  //     "landlord",
-  //     "tenant"
-
-  // ],
   data() {
     return {
       // selectContract
       ContractList: [],
       // selectContractDetail
-      infoList: [{
-        property: null,
-        landlord: null,
-        tenant: null,
-        giftMoney: null,
-        deposit: null,
-        rent: null,
-        startDate: null,
-        endDate: null
-        
-      }],
-      // contractID: null,
-      // property: null,
-      // landlord: null,
-      // tenant: null,
-      // giftMoney: null,
-      // deposit: null,
-      // rent: null,
-      // startDate: null,
-      // endDate: null
+      infoList: [
+        {
+          property: null,
+          landlord: null,
+          tenant: null,
+          giftMoney: null,
+          deposit: null,
+          rent: null,
+          startDate: null,
+          endDate: null
+        }
+      ]
     }
   },
   methods: {
@@ -40,15 +26,13 @@ export default {
     switchURL(event, contractId) {
       console.log(event)
       console.log(contractId)
-      console.log(this.infoList);
+      console.log(this.infoList)
       //this.$router.push("/keiyaku/info")
 
       this.$router.push({
         name: 'keiyaku_info',
         params: { contract_id: contractId }
       })
-      // this.selectContractDetail()
-      // this.$emit('contract_data', this.infoList)
     },
     selectContract() {
       fetch('http://localhost:8080/getAllContracts', {})
@@ -60,34 +44,7 @@ export default {
           this.ContractList = data.contractResponse
         })
     },
-    // selectContractDetail() {
-    //   let body = {
-    //     "contractID": contractId
-    //   }
 
-    //   fetch('http://localhost:8080/FindContractDetailsData', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(body)
-    //   })
-    //     .then((response) => {
-    //       return response.json()
-    //     })
-    //     .then((data) => {
-    //       console.log(data)
-    //       this.infoList.contractId = data.contract_id;
-    //       this.infoList.property = data.pProperty_name;
-    //       this.infoList.landlord = data.lFirst_name + data.lLast_name;
-    //       this.infoList.tenant = data.tFirst_name + data.tLast_name;
-    //       this.infoList.giftMoney = data.pKey_money;
-    //       this.infoList.deposit = data.pDeposit;
-    //       this.infoList.rent = data.rent;
-    //       this.infoList.startDate = data.cdStart_year + data.cdStart_month + data.cdStart_day;
-    //       this.infoList.endDate = data.cdEnd_year + data.cdEnd_month + data.cdEnd_day;
-    //     })
-    // },
     selectInfo() {
       this.$emit('contractInfo', this.contractId)
     }
@@ -113,5 +70,3 @@ export default {
 </template>
 
 <style lang="scss" scoped></style>
-<!-- @click="switchURL" -->
-<!-- <img src="../views/ContractDetails.vue" alt=""> -->
