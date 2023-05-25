@@ -43,7 +43,7 @@ export default {
 
 
             this.$router.push({
-                name: 'TenantDetailPage',
+                name: 'LandlordDetailPage',
                 params: { getid: landlordId }
             })
 

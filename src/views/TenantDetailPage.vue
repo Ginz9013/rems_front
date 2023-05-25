@@ -164,7 +164,7 @@ export default {
                 <button @click="change" v-if="isShow" type="button" class="btnL">情 報 更新</button>
                 <button @click="change" v-else type="button" class="btnL">情 報 確 認</button>
                 <p style="height: 20px;"></p>
-                <button type="button" class="btnR">物 件 追 加</button>
+                <button type="button" class="btnR">契 約 追 加</button>
             </div>
 
             <div>
@@ -203,29 +203,33 @@ export default {
         justify-content: center;
         display: flex;
 
-        .btnL {
-            width: 150px;
-            height: 40px;
-            font-size: large;
-            position: absolute;
-            left: 12px;
-            color: white;
-            border-radius: 10px;
-            background-color: #0e4e8a;
-            border: 0px solid #0e4e8a
-        }
+        .btnL, .btnR {
+  width: 150px;
+  height: 40px;
+  font-size: large;
+  position: absolute;
+  color: white;
+  border-radius: 10px;
+  border: 0px solid;
+}
 
-        .btnR {
-            width: 150px;
-            height: 40px;
-            font-size: large;
-            position: absolute;
-            left: 455px;
-            color: white;
-            border-radius: 10px;
-            background-color: rgb(100, 165, 3);
-            border: 0px solid rgb(100, 165, 3);
-        }
+.btnL {
+  left: 12px;
+  background-color: #1962A7;
+}
+
+.btnR {
+  left: 455px;
+  background-color: #B8D26E;
+}
+
+.btnL:hover, .btnR:hover {
+  opacity: 0.8;
+}
+
+.btnL:active, .btnR:active {
+  opacity: 0.6;
+}
     }
 
     .phead {
