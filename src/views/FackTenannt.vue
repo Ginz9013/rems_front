@@ -42,30 +42,6 @@ export default {
                 key_money: 2,
                 deposit: 3
 
-            },
-            {
-                property_id: 2,
-                property_name: "我愛螺旋完蛋了2",
-                adress: "你屁股後面1",
-                rental_price: 9487,
-                build_year: 0,
-                landlord_name: "阿部高和",
-                tenant_name: "野獸前輩",
-                key_money: 2,
-                deposit: 3,
-
-            },
-            {
-                img: "../../public/dessert_img/Rectangle 2.png",
-                property_id: 3,
-                property_name: "我愛螺旋完蛋了3",
-                adress: "你屁股後面2",
-                rental_price: 9487,
-                build_year: 0,
-                landlord_name: "阿部高和",
-                tenant_name: "野獸前輩",
-                key_money: 2,
-                deposit: 3,
             }],
             startObject: null,
             year: null,
@@ -274,7 +250,7 @@ export default {
             </div>
             <PropertySearch v-if="subModalShow" :title="'查詢物件'" @close="switchSubModal">
                 <div class="addContract">
-                    <SearchBar :searchCondition="['物件', '借主', '契約コード']" />
+                    <SearchBar :conditionList="['物件','借主', '契約コード']" @searchResponse="getInfo" />
                     <div class="list">
                         <div class="addContract">
                             <Child @click="switchSubModal" @button-click="handleButtonClick"
@@ -296,6 +272,7 @@ export default {
     height: 80vh;
 
     .list {
+        margin-top: 15%;
         justify-content: center;
         text-align: center;
         width: 50vw;
