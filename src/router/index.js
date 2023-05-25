@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
-import SearchHouse from "../views/SearchHouse.vue"
+// import SearchHouse from "../views/SearchHouse.vue"
 import HomeView from "../views/Home.vue";
 import FackView from "../views/FackTenannt.vue"
+import FackCView from "../views/FackContract.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,7 +36,7 @@ const router = createRouter({
       // 契約首頁
       path: '/keiyaku',
       name: 'keiyaku',
-      // component:,
+      component:FackCView,
     },
     {
       // 契約詳細頁面(包含歷史契約)
