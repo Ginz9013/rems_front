@@ -3,20 +3,20 @@ import SearchBar from '../components/SearchBar.vue'
 import ModalView from '../components/ModalView.vue'
 import AddContractBar from '../components/AddContractBar.vue'
 
-
 export default {
   components: {
     SearchBar,
     ModalView,
-    AddContractBar,
+    AddContractBar
   },
+  props: ['contract_id'],
   data() {
     return {
       modalShow: false,
       delectModal: false,
       reviseModal: false,
       addModal: false,
-      contractId: '',
+      // contractId: '',
       addType: '',
       addDate: '',
       addrent: '',
@@ -31,7 +31,22 @@ export default {
       // addContractDetail
       count: null,
       rent: null,
-      // 
+      // selectcontractdetail
+      infoList: [
+        {
+          property: null,
+          landlord: null,
+          tenant: null,
+          giftMoney: null,
+          deposit: null,
+          rent: null,
+          startDate: null,
+          endDate: null
+        }
+      ],
+      contractDate: [],
+      // 判斷契約時間結果的陣列
+      resoult: []
     }
   },
   methods: {
@@ -48,22 +63,21 @@ export default {
       this.addModal = !this.addModal
     },
     addContractDetail() {
-
       this.addModal = !this.addModal
 
       let body = {
         count: this.count,
         rent: this.rent,
-        contractID: this.contractId,
+        contractID: this.contractId
       }
-      
+
       fetch('http://localhost:8080/add_contractDetail_info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-        })
+      })
         .then((response) => {
           return response.json()
         })
@@ -110,11 +124,77 @@ export default {
           this.status = data.infoMap.payment_status
         })
     },
-    getSelectInfo(contractId){
-      this.contractId = contractId
+    getContractDetail() {
+      let body = {
+        contractID: this.contract_id
+      }
+
+      fetch('http://localhost:8080/select_contract_detail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+          this.contractDate = data.contractDetailList
+
+          const nowDate = new Date()
+          // 迭代 contractDetailList 進行判斷
+          for (let i = 0; i < data.contractDetailList.length; i++) {
+            const dateRange = data.contractDetailList[i].split('~')
+            const endDate = new Date(dateRange[1])
+
+            if (endDate > nowDate) {
+              console.log('結束日期大於目前時間')
+              this.resoult[i] = '契約中'
+            } else {
+              console.log('結束日期小於或等於目前時間')
+              this.resoult[i] = '終了'
+            }
+          }
+        })
     },
+
+    selectContractDetail() {
+      let body = {
+        contractID: this.contract_id
+      }
+
+      fetch('http://localhost:8080/FindContractDetailsData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+
+          this.infoList.contractId = data.contract_id
+          this.infoList.property = data.pProperty_name
+          this.infoList.landlord = data.lFirst_name + data.lLast_name
+          this.infoList.tenant = data.tFirst_name + data.tLast_name
+          this.infoList.giftMoney = data.pKey_money
+          this.infoList.deposit = data.pDeposit
+          this.infoList.rent = data.rent
+          this.infoList.startDate = data.cdStart_year + data.cdStart_month + data.cdStart_day
+          this.infoList.endDate = data.cdEnd_year + data.cdEnd_month + data.cdEnd_day
+          console.log(this.infoList)
+        })
+    }
   },
-  mounted() {}
+
+  mounted() {
+    this.selectContractDetail(), this.getContractDetail()
+  }
 }
 </script>
 <template>
@@ -124,42 +204,46 @@ export default {
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">物件名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.property }}</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">貸主名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.landlord }}</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">借主名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.tenant }}</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">礼金</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">
+        {{ infoList.giftMoney * infoList.rent }}
+      </dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">敷金</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">
+        {{ infoList.deposit * infoList.rent }}
+      </dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">賃料</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.rent }}</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">契約開始時間</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.startDate }}</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">契約終了時間</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.endDate }}</dt>
     </dl>
     <div class="d-flex justify-content-center">
       <button @click="addSwitch" type="button" class="btn btn-primary mx-5 fw-bolder m-3">
@@ -362,15 +446,15 @@ export default {
     </dl>
   </div>
 
-  <div class="contractDetail-area">
+  <div class="contractDetail-area mb-6">
     <h4 class="fw-bolder text-center mt-5 text-primary">詳細契約リスト</h4>
     <hr class="border border-secondary border-2" />
-    <dl class="row ms-6">
+    <div class="row ms-6" v-for="(item, index) in contractDate" v-bind:key="index">
       <dt class="col-sm-2">契約開始時間</dt>
       <dt class="col-sm-1">：</dt>
-      <dt class="col-sm-5">2023-05-20</dt>
-      <dt class="col-sm-2">契約中</dt>
-    </dl>
+      <dt class="col-sm-5">{{ item }}</dt>
+      <dt class="col-sm-2">{{ resoult[index] }}</dt>
+    </div>
   </div>
 </template>
 <style scoped>

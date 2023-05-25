@@ -42,9 +42,10 @@ const router = createRouter({
     },
     {
       // 契約詳細頁面(包含歷史契約)
-      path: '/Keiyaku/info',
+      path: '/Keiyaku/info/:contract_id',
       name: 'keiyaku_info',
       component: ContractDetailsView,
+      props:true
     },
     {
       // 貸主首頁
