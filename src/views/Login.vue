@@ -5,7 +5,7 @@ import ModalView from "../components/ModalView.vue";
 
 export default {
     components: {
-        SearchBar,
+        SearchProperty,
         ModalView
     },
     data() {
