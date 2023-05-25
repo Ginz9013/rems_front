@@ -43,10 +43,6 @@ export default {
           <label class="form-check-label" for="CheckChecked">入金なし</label>
         </div>
 
-        <div class="form-check d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" value="" id="CheckChecked" checked />
-          <label class="form-check-label" for="CheckChecked">全部</label>
-        </div>
       </div>
       <div>
         <AddContractBar />

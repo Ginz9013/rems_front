@@ -185,8 +185,9 @@ export default {
           this.infoList.giftMoney = data.pKey_money
           this.infoList.deposit = data.pDeposit
           this.infoList.rent = data.rent
-          this.infoList.startDate = data.cdStart_year +"-"+ data.cdStart_month +"-"+ data.cdStart_day
-          this.infoList.endDate = data.cdEnd_year +"-"+ data.cdEnd_month +"-"+ data.cdEnd_day
+          this.infoList.startDate =
+            data.cdStart_year + '-' + data.cdStart_month + '-' + data.cdStart_day
+          this.infoList.endDate = data.cdEnd_year + '-' + data.cdEnd_month + '-' + data.cdEnd_day
           console.log(this.infoList)
         })
     }
@@ -251,8 +252,8 @@ export default {
       </button>
       <ModalView v-if="addModal" :title="'契約の更新手続き'" @close="addSwitch">
         <div class="" style="height: 300px; width: 550px">
-          <div class="row d-flex justify-content-center">
-            <dt class="col-sm-3 text-primary">賃料</dt>
+          <div class="row d-flex justify-content-center mt-5">
+            <dt class="col-sm-2 text-primary">賃料</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
               <input
@@ -263,8 +264,8 @@ export default {
               />
             </dt>
           </div>
-          <dl class="row d-flex justify-content-center">
-            <dt class="col-sm-3 text-primary">期限</dt>
+          <div class="row d-flex justify-content-center mt-5">
+            <dt class="col-sm-2 text-primary">期限</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
               <input
@@ -274,8 +275,8 @@ export default {
                 v-model="count"
               />
             </dt>
-          </dl>
-          <div class="d-flex justify-content-center">
+          </div>
+          <div class="d-flex justify-content-center mt-5">
             <button @:click="addContractDetail" type="button" class="btn btn-primary px-5">
               確認
             </button>
@@ -289,11 +290,11 @@ export default {
       >
         解約する
       </button>
-      <ModalView v-if="delectModal" :title="'契約の削除'" @close="delectSwitch">
+      <ModalView v-if="delectModal" :title="'契約の解約'" @close="delectSwitch">
         <div style="height: 150px; width: 350px">
-          <h4>この契約を削除しますか？</h4>
-          <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-danger px-5 fw-bolder text-white">削除</button>
+          <h4 class="mt-3 text-center">この契約を解約しますか？</h4>
+          <div class="d-flex justify-content-center mt-5">
+            <button type="button" class="btn btn-danger px-5 fw-bolder text-white">解約</button>
           </div>
         </div>
       </ModalView>
@@ -307,21 +308,27 @@ export default {
         入金追加
       </button>
       <ModalView v-if="modalShow" :title="'入金情報'" @close="switchModal">
-        <div class="addPayment">
-          <dl class="row d-flex justify-content-center">
+        <div class="addPayment mt-5">
+          <div class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金種類</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <input
+              <select class="form-select" aria-label="Default select example">
+                <option selected>賃料 / 礼金 / 敷金</option>
+                <option value="0">賃料</option>
+                <option value="1">礼金</option>
+                <option value="2">敷金</option>
+              </select>
+              <!-- <input
                 type="text"
                 v-model="addType"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
                 placeholder="賃料/礼金/敷金"
-              />
+              /> -->
             </dt>
-          </dl>
-          <dl class="row d-flex justify-content-center">
+          </div>
+          <div class="row d-flex justify-content-center mt-3">
             <dt class="col-sm-2 text-primary">支払期限</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -332,8 +339,8 @@ export default {
                 class="form-control"
               />
             </dt>
-          </dl>
-          <dl class="row d-flex justify-content-center">
+          </div>
+          <div class="row d-flex justify-content-center mt-3">
             <dt class="col-sm-2 text-primary">入金額</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -344,8 +351,8 @@ export default {
                 class="form-control"
               />
             </dt>
-          </dl>
-          <dl class="row d-flex justify-content-center">
+          </div>
+          <div class="row d-flex justify-content-center mt-3">
             <dt class="col-sm-2 text-primary">入金日：</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -356,21 +363,27 @@ export default {
                 class="form-control"
               />
             </dt>
-          </dl>
-          <dl class="row d-flex justify-content-center">
+          </div>
+          <div class="row d-flex justify-content-center mt-3">
             <dt class="col-sm-2 text-primary">入金状態</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <input
+              <select class="form-select" aria-label="Default select example">
+                <option selected>あり / 確認中 / なし</option>
+                <option value="0">なし</option>
+                <option value="1">確認中</option>
+                <option value="2">あり</option>
+              </select>
+              <!-- <input
                 v-model="addStatus"
                 type="text"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
                 placeholder="あり/確認中/なし"
-              />
+              /> -->
             </dt>
-          </dl>
-          <div class="d-flex justify-content-center">
+          </div>
+          <div class="d-flex justify-content-center mt-6">
             <button @click="addPayment" type="button" class="btn btn-primary px-5">確認</button>
           </div>
         </div>
