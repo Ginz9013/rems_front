@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
+//home不需要
 // import Homepage from "../views/Homepage.vue";
-import Property from "../components/Property.vue";
+import Property from "../components/property.vue";
 import addPropperty from "../components/addPropertyPage.vue"
 
 import SearchHouse from "../views/SearchHouse.vue";
