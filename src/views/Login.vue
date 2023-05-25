@@ -1,11 +1,9 @@
 <script>
 import { RouterLink } from 'vue-router';
-import SearchBar from "../components/SearchBar.vue";
 import ModalView from "../components/ModalView.vue";
 
 export default {
     components: {
-        SearchProperty,
         ModalView
     },
     data() {
