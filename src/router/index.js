@@ -3,11 +3,12 @@ import LoginView from "../views/Login.vue";
 import HomeView from "../views/Home.vue";
 import ContractDetailsView from "../views/ContractDetails.vue";
 import ContractView from "../views/Contract.vue";
+import LandlordPage from "../views/LandlordPage.vue";
+import LandlordDetailPage from "../views/LandlordDetailPage.vue";
+import TenantPage from "../views/TenantPage.vue";
+import TenantDetailPage from "../views/TenantDetailPage.vue";
 
-//home不需要
-// import Homepage from "../views/Homepage.vue";
 import Property from "../components/property.vue";
-import addPropperty from "../components/addPropertyPage.vue"
 
 import SearchHouse from "../views/SearchHouse.vue";
 const router = createRouter({
@@ -54,25 +55,27 @@ const router = createRouter({
       // 貸主首頁
       path: '/kashinushi',
       name: 'kashinushi',
-      // component: ,
+      component: LandlordPage,
     },
     {
       // 貸主詳細頁面(含修改)
-      path: '/kashinushi/info',
+      path: '/kashinushi/info/:getLandlordId',
       name: 'kashinushiInfo',
-      // component:
+      component: LandlordDetailPage,
+      props: true
     },
     {
       // 借主首頁
       path: '/karinushi',
       name: 'karinushi',
-      // component: 
+      component: TenantPage
     },
     {
       // 借主詳細頁面(含修改)
-      path: '/karinushi/info',
+      path: '/karinushi/info/:getTenantId',
       name: 'karinushiInfo',
-      // component:
+      component: TenantDetailPage,
+      props: true
     }
   ]
 })
