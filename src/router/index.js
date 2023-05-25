@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
 import SearchHouse from "../views/SearchHouse.vue"
 import HomeView from "../views/Home.vue";
+import ContractDetailsView from "../views/ContractDetails.vue";
+import ContractView from "../views/Contract.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +43,13 @@ const router = createRouter({
       path: '/keiyaku/info',
       name: 'keiyakuInfo',
       // component:,
+    },
+    {
+      // 契約詳細頁面(包含歷史契約)
+      path: '/Keiyaku/info/:contract_id',
+      name: 'keiyaku_info',
+      component: ContractDetailsView,
+      props:true
     },
     {
       // 貸主首頁

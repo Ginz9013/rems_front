@@ -2,10 +2,38 @@
 export default {
     // 請傳入一個 title 字串作為標題顯示
     props: ["title"],
+    data() {
+        return {
+            rent: null,
+            managementFee: null,
+            startingTime: null,
+            timeLimit: null,
+        }
+    },
     methods: {
         // 請綁訂一個 @close 作為右上角取消按鈕的方法
         closeModal() {
             this.$emit("close");
+        },
+        addExpenseList() {
+            // const existList = JSON.parse(localStorage.getItem("expense-list"))
+
+            // let newList = existList !== null ? existList : [];
+
+            // const newItem = {
+            //     rent: this.rent,
+            //     managementFee: this.managementFee,
+            //     startingTime:this.startingTime,
+            //     timeLimit:this.timeLimit
+            // }
+            
+            // newList.push(newItem);
+
+            // localStorage.setItem("expense-list", JSON.stringify(newList));
+
+            // this.$emit("switch");
+            // this.$emit("updateList", newItem);
+            // this.$emit("updateBalance")
         }
     }
 }
