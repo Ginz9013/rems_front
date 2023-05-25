@@ -109,79 +109,78 @@ export default {
 </template>
   
 <style lang="scss" scoped>
-.wrap{
- max-width: 800px;
- margin: 0 auto;
-}
-.infoBox {
-    box-sizing: border-box;
-//     width: 100%;
-//  height: 200px;
-    width: 515px;
-    height: 90px;
-    border: 2px solid #1962A7;
-    border-radius: 6px;
-    padding: 30px;
-    display: flex;
-    margin: 20px 60px;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
+.wrap {
+  max-width: 100%;
+  padding: 2vw;
+  box-sizing: border-box;
 }
 
+.infoBox {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  border: 2px solid #1962A7;
+  border-radius: 6px;
+  padding: 2vw;
+  margin-bottom: 2vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Added */
+  align-items: center; /* Added */
+  flex-wrap: wrap; /* Added */
+}
 
 .nameGroup {
-    display: flex;
-    flex-direction: column;
-    margin: -2px 4px -2px 4px;
-
+  display: flex;
+  flex-direction: column;
+  margin: 0.5vw;
+  flex-basis: 45%; /* Added */
 }
 
 .flexArea {
-    display: flex;
-    margin-top: -15px;
-    margin-left: 30px;
+  display: flex;
+  margin-top: -1.5vw;
+  margin-left: 3vw;
 }
 
 .name {
-    font-size: 20px;
+  font-size: 2.5vw;
 }
 
 .flex {
-    display: flex;
-    margin: -10px;
+  display: flex;
+  margin: -1vw;
 }
 
 .kana {
-    font-size: small;
-    margin-bottom: 5px;
+  font-size: 1.8vw;
+  margin-bottom: 1vw;
 }
 
 p {
-    color: #084279;
-    font-size: 14px;
+  color: #084279;
+  font-size: 1.5vw;
 }
 
 .black {
-    color: #000;
-
+  color: #000;
 }
 
 .colon {
-    margin-left: 5px;
+  margin-left: 0.7vw;
 }
 
 .colon2 {
-    margin-left: 25px;
+  margin-left: 3vw;
 }
 
 .content {
-    margin: 0 10px;
+  margin: 0 1.5vw;
 }
 
 .info {
-    margin-top: -12px;
-    margin-left: 30px;
-
+  margin-top: -1.2vw;
+  margin-left: 3.5vw;
+  flex-basis: 45%; /* Added */
 }
 </style>
