@@ -2,16 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
 import TenantDetailPageView from "../views/TenantDetailPage.vue"
 import TenantPageView from "../views/TenantPage.vue"
-import TextView from "../views/Text.vue"
+import LandlordPageView from "../views/LandlordPage.vue"
+import LandlordDetilPageView from "../views/LandlordDetilPage.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  
-    //   path: '/TenantDetailPage/:getid',
-    //   name: 'TenantDetailPage',
-    //   component: TenantDetailPageView,
-    //   props: true
-    // },{
   routes: [
     {
       // 登入頁面
@@ -53,13 +48,14 @@ const router = createRouter({
       // 貸主首頁
       path: '/kashinushi',
       name: 'kashinushi',
-      //component: ,
+      component: LandlordPageView
     },
     {
       // 貸主詳細頁面(含修改)
-      path: '/kashinushi/info',
+      path: '/kashinushi/info/:getLandlordId',
       name: 'kashinushiInfo',
-      // component:
+      component:LandlordDetilPageView,
+      props: true
     },
     {
       // 借主首頁
@@ -69,7 +65,7 @@ const router = createRouter({
     },
     {
       // 借主詳細頁面(含修改)
-      path: '/karinushi/info/:getid',
+      path: '/karinushi/info/:getTenantId',
       name: 'karinushiInfo',
       component:TenantDetailPageView,
       props: true

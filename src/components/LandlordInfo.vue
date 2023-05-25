@@ -1,32 +1,31 @@
 <script >
 export default {
     props:[      
-            "tenantsearchResult"
+            "searchResult"
         ],
     components: {
-    },
-
-    data() {
+  },
+  data() {
     return {
-      Tenants: [],
+      landlords: [],
     }
   },
   //如果搜尋有新的值
   watch:{
-        "tenantsearchResult":function(){
-            this.Tenant=this.tenantsearchResult
+        "searchResult":function(){
+            this.landlords=this.searchResult
         }
     },
   methods: {    
     //顯示所有資料
     getpost() {
-        fetch('http://localhost:8080/getAllTenants', {
+        fetch('http://localhost:8080/show_All_Landlord', {
       })
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
-            this.Tenants = data; 
-            console.log(this.Tenants);    
+            this.landlords = data.landlordList; 
+            console.log(this.landlords);    
                       
             })
         .catch((error) => {
@@ -39,13 +38,13 @@ export default {
         
     },   
     //點下後轉換網頁
-    passTenantId(input, tenantId) {
-        console.log(123);
-        console.log(tenantId);
+    passLandlordId(input, landlordId) {
+        console.log(input.target);
+        console.log(landlordId);
         //轉址帶ID
         this.$router.push({
-        name: 'karinushiInfo',
-        params: { getTenantId: tenantId }
+        name: 'kashinushiInfo',
+        params: { getLandlordId: landlordId }
         });
     }
 
@@ -60,17 +59,15 @@ export default {
 }
 </script>
 <template>
-    <div class="wrap">
-        <div class="infoBox" v-for="Tenant in Tenants"   :key="Tenants.tenantId" :value="Tenants.tenantId" @click="passTenantId($event, Tenant.tenantId)">           
+        <div class="infoBox" v-for="landlord in landlords"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">
-
-                    <p class="kana">{{ Tenant.firstNameKana }}</p>
-                    <p class="name">{{ Tenant.firstName }}</p>
+                    <p class="kana" >{{landlord.firstNameKana}}</p>
+                    <p class="name">{{landlord.firstName}}</p>
                 </div>
                 <div class="nameGroup">
-                    <p class="kana">{{ Tenant.lastNameKana }}</p>
-                    <p class="name">{{ Tenant.lastName }}</p>
+                    <p class="kana">{{landlord.lastNameKana}}</p>
+                    <p class="name">{{landlord.lastName}}</p>
                 </div>
             </div>
 
@@ -78,51 +75,43 @@ export default {
                 <div class="flex">
                     <p class="black">電話番號</p>
                     <p class="colon">:</p>
-                    <p class="content">{{ Tenant.phone }}</p>
+                    <p class="content">{{landlord.phone}}</p>
                 </div>
                 <div class="flex">
                     <p class="black">Email</p>
                     <p class="colon2">:</p>
-                    <p class="content">{{ Tenant.email }}</p>
+                    <p class="content">{{landlord.email}}</p>
                 </div>
                 <div class="flex">
                     <p class="black">マイナンバー／免許番号</p>
                     <p class="content">:</p>
-                    <p>{{ Tenant.myNumber }}</p>
+                    <p>{{landlord.myNumber}}</p>
                 </div>
             </div>
-
         </div>
-    </div>
+
 </template>
   
 <style lang="scss" scoped>
-.wrap{
- max-width: 800px;
- margin: 0 auto;
-}
+
+
 .infoBox {
-    box-sizing: border-box;
-//     width: 100%;
-//  height: 200px;
     width: 515px;
     height: 90px;
     border: 2px solid #1962A7;
     border-radius: 6px;
     padding: 30px;
     display: flex;
-    margin: 20px 60px;
+    margin: 5px 60px;
     flex-direction: column;
-    align-items: center;
     flex-wrap: wrap;
 }
-
 
 .nameGroup {
     display: flex;
     flex-direction: column;
     margin: -2px 4px -2px 4px;
-
+    
 }
 
 .flexArea {
@@ -142,7 +131,7 @@ export default {
 
 .kana {
     font-size: small;
-    margin-bottom: 5px;
+    margin-bottom:5px;
 }
 
 p {
@@ -170,6 +159,5 @@ p {
 .info {
     margin-top: -12px;
     margin-left: 30px;
-
 }
 </style>
