@@ -7,8 +7,8 @@ export default {
   },
   data() {
     return {
-      landlord: [],
-     earchDate:[],
+      landlords: [],
+     searchDate:[],
      useSearchResult:false
            
     }
@@ -23,17 +23,19 @@ export default {
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
-            this.landlord = data.landlordList; 
-            console.log(this.landlord);                                    
+            this.landlords = data.landlordList; 
+            console.log(this.landlords);    
+            //這要放哪才讀的到  
+            this.searchDate=this.searchResult           
             })
         .catch((error) => {
             console.error(error);
         })
-
         if (this.searchResult && this.searchResult.length > 0) {
-            this.earchDate=this.searchResult
-            this.useSearchResult = true;
-        }
+            console.log(123)          
+            this.searchResult=null
+        } 
+        
     },
     //搜尋結果覆蓋
     cover(){
@@ -61,8 +63,8 @@ export default {
 }
 </script>
 <template>
-
-        <div class="infoBox" v-for="landlord in useSearchResult ? earchDate : landlord"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
+<p v-for="utem in searchResult">{{ utem }}</p>
+        <div class="infoBox" v-for="landlord in landlords"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">
                     <p class="kana" >{{landlord.firstNameKana}}</p>

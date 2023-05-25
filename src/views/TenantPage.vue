@@ -24,7 +24,8 @@ export default {
                     address:"",
                     payment:"",
                     payment_account:"",
-                    result:[]
+                    result:[],
+                    showresult:[]
         }
     },
     methods: {
@@ -80,6 +81,7 @@ export default {
         catchsearchbar(resultArr){            
                 this.result=resultArr
                 console.log(this.result);
+                
         }
         
     }
@@ -90,9 +92,9 @@ export default {
     <div class="bodyArea">
         <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar" @emitPush="catchsearchbar"/>
         
-        <button  :searchResult=this.result class="tenantAddBtn">借主追加{{result}}</button>
+        <button class="tenantAddBtn">借主追加</button>
 
-        <TenantInfo />
+        <TenantInfo  :searchResult=result />
 
         <!--跳出新增頁面 -->
         <ModalView v-if="modalShow" :title="'借主追加'" @close="switchModal">
