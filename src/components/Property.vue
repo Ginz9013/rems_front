@@ -20,7 +20,11 @@ export default {
 
             modalShow: false,
             isShow:false,
-            btnShow:true
+            btnShow:true,
+
+            type: "",
+            layout:"",
+            rentalStatus:""
         }
     },
     methods: {
@@ -45,7 +49,27 @@ export default {
         .then((data) => {
             console.log(data);
             this.response2 = data.propertyList[0];
-            console.log(data.propertyList[0].propertyId);
+            
+            let typeList = ["アパート",  "マンション", "一戶建て"]
+            this.type = typeList[data.propertyList[0].type];
+            
+            let layoutList = [
+                "ワンルーム","1K","1DK","1LDK",
+                "2K","2DK","2LDK",
+                "3K","3DK","3LDK",
+                "4R以上"
+            ];
+            this.layout = layoutList[data.propertyList[0].layout];
+            
+            console.log(data.propertyList[0])
+            console.log(data.propertyList[0].rentalStatus)
+            if(data.propertyList[0].rentalStatus === true ){
+                this.rentalStatus = "出租中"
+            } else {
+                this.rentalStatus = "未租中"
+            }
+
+            console.log(data.propertyList[0].layout);
         })
         .catch(err =>console.log(err))
             
@@ -160,7 +184,7 @@ export default {
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
-                        <p>{{response2.rentalStatus}}</p>
+                        <p>{{ rentalStatus }}</p>
                         <p>{{response2.rentalPrice}}</p>
                         <p>{{response2.keyMoney}}</p>
                         <p>{{response2.deposit}}</p>
@@ -183,8 +207,8 @@ export default {
                     <div class="bbb2">
                         <p>賃主姓名</p>
                         <p>借主姓名</p>
-                        <p>{{response2.type}}</p>
-                        <p>{{response2.layout}}</p>
+                        <p>{{type}}</p>
+                        <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}}</p>
                         <p>{{response2.floorNumber}}</p>
                         <p>{{response2.buildYear}}</p>
