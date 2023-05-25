@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
-import Homepage from "../views/Homepage.vue";
+// import Homepage from "../views/Homepage.vue";
 import Property from "../components/Property.vue";
 import addPropperty from "../components/addPropertyPage.vue"
 
+import SearchHouse from "../views/SearchHouse.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,7 +24,7 @@ const router = createRouter({
       // 物件首頁
       path: '/bukken',
       name: 'bukken',
-      // component: ,
+      component: SearchHouse
     },
     {
       // 物件詳細頁面(含修改)
