@@ -4,6 +4,12 @@ import HomeView from "../views/Home.vue";
 import ContractDetailsView from "../views/ContractDetails.vue";
 import ContractView from "../views/Contract.vue";
 
+//home不需要
+// import Homepage from "../views/Homepage.vue";
+import Property from "../components/property.vue";
+import addPropperty from "../components/addPropertyPage.vue"
+
+import SearchHouse from "../views/SearchHouse.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,13 +29,13 @@ const router = createRouter({
       // 物件首頁
       path: '/bukken',
       name: 'bukken',
-      // component: ,
+      component: SearchHouse
     },
     {
       // 物件詳細頁面(含修改)
       path: '/bukken/info',
-      name: 'bukkenInfo'
-      // component:
+      name: 'bukkenInfo',
+      component:Property,
     },
     {
       // 契約首頁
