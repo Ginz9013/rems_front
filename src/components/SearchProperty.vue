@@ -143,12 +143,3 @@ export default {
         <button class="btn btn-primary px-5" type="button" id="button-addon2" @click="search">検索</button>
     </div>
 </template>
-<style lang="scss" scoped>
-.input-group{
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50% , -50%);
-    width: 70vw;
-}
-</style>
