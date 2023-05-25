@@ -6,13 +6,44 @@ export default {
     },
     data() {
         return {
-            propertiesList: []
+            propertiesList: [],
+            infoList:[{
+                propertyId:null,
+                propertyName:null,
+                prefecture:null,
+                district:null,
+                rentalStatus:null,
+                rentalPrice:null,
+                keyMoney:null,
+                deposit:null,
+                type:null,
+                layout:null,
+                propertyFloors:null,
+                floorNumber:null,
+                buildYear:null,
+                exclusiveArea:null,
+                remarks:null,
+            }],
+                propertyId:null,
+                propertyName:null,
+                prefecture:null,
+                district:null,
+                rentalStatus:null,
+                rentalPrice:null,
+                keyMoney:null,
+                deposit:null,
+                type:null,
+                layout:null,
+                propertyFloors:null,
+                floorNumber:null,
+                buildYear:null,
+                exclusiveArea:null,
+                remarks:null,
         }
     },
     methods: {
         getALL() {
             const body = {
-
             }
             fetch("http://localhost:8080/get_property_all", {
                 method: "POST",
@@ -29,7 +60,18 @@ export default {
                     console.log(data)
                     this.propertiesList = data.propertyList;
                 })
-        }
+        },
+        switchURL(event, infoList) {
+      console.log(event)
+      console.log(infoList)
+    
+
+      this.$router.push({
+        name: 'bukkenInfo',
+        params: { property_id: infoList }
+      })
+      this.selectPropertyDetail()
+    },
     },
     mounted() {
         this.getALL();

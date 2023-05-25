@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from "../views/Login.vue";
-import SearchHouse from "../views/SearchHouse.vue"
+import SearchHouse from "../views/SearchHouse.vue";
+import property from "../components/property.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -25,8 +26,8 @@ const router = createRouter({
     {
       // 物件詳細頁面(含修改)
       path: '/bukken/info',
-      name: 'bukkenInfo'
-      // component:
+      name: 'bukkenInfo',
+      component:property
     },
     {
       // 契約首頁
