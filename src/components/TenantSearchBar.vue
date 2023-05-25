@@ -29,8 +29,7 @@ export default {
                 'Content-Type': 'application/json'       
                 },
                 body: JSON.stringify({
-                    "search":this.search,
-                   
+                    "search":this.search,                  
                     })
                 })
                 .then((res) => res.json())

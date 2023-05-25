@@ -8,14 +8,15 @@ export default {
   data() {
     return {
       landlords: [],
-     searchDate:[],
-     useSearchResult:false
-           
     }
   },
-  methods: {
-     
-    
+  //如果搜尋有新的值
+  watch:{
+        "searchResult":function(){
+            this.landlords=this.searchResult
+        }
+    },
+  methods: {    
     //顯示所有資料
     getpost() {
         fetch('http://localhost:8080/show_All_Landlord', {
@@ -25,8 +26,7 @@ export default {
             console.log(data);
             this.landlords = data.landlordList; 
             console.log(this.landlords);    
-            //這要放哪才讀的到  
-            this.searchDate=this.searchResult           
+                      
             })
         .catch((error) => {
             console.error(error);
@@ -36,11 +36,7 @@ export default {
             this.searchResult=null
         } 
         
-    },
-    //搜尋結果覆蓋
-    cover(){
-        
-    },
+    },   
     //點下後轉換網頁
     passLandlordId(input, landlordId) {
         console.log(input.target);
@@ -63,7 +59,6 @@ export default {
 }
 </script>
 <template>
-<p v-for="utem in searchResult">{{ utem }}</p>
         <div class="infoBox" v-for="landlord in landlords"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">
