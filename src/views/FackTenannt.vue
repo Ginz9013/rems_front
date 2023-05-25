@@ -3,7 +3,6 @@ import SearchBar from "../components/SearchBar.vue";
 import addContrcat from "../components/NewContract.vue";
 import PropertySearch from "../components/PropertySearch.vue"
 import FackCView from "../views/FackContract.vue"
-
 import Child from "../components/PropertiesChild.vue";
 
 export default {
@@ -19,7 +18,7 @@ export default {
         return {
             getData: "",
             subModalShow: false,
-            modalShow: false,
+            modalShow2: false,
             searchModalShow: false,
             propertyData: [
             ],
@@ -63,8 +62,8 @@ export default {
         switchSubModal() {
             this.subModalShow = !this.subModalShow;
         },
-        switchModal() {
-            this.modalShow = !this.modalShow;
+        switchModal2() {
+            this.modalShow2 = !this.modalShow2;
         },
         handleButtonClick(value) {
             this.getData = value;
@@ -108,7 +107,7 @@ export default {
         },
         switchAndClear() {
             this.newContract();
-            this.switchModal();
+            this.switchModal2();
             this.fullName = this.formatName(this.fName, this.lName)
         },
         formatName(fName, lName) {
@@ -138,11 +137,11 @@ export default {
 
 
         jumpPage() {
-            this.switchModal();
+            this.switchModal2();
             this.sendData();
         },
 
-    },
+    }
 
 
 }
@@ -240,7 +239,7 @@ export default {
 
         </div>
         <!-- <button @click="switchAndClear" type="button">addcontract</button> -->
-        <addContrcat v-if="modalShow" :title="'契 約 追 加'" @close="switchModal">
+        <addContrcat v-if="modalShow2" :title="'契 約 追 加'" @close="switchModal2">
             <div class="addContract">
                 <dl class="row d-flex justify-content-center">
                     <dt class="col-sm-2 text-primary">物件名</dt>

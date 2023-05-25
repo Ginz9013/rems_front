@@ -7,6 +7,7 @@ import LandlordPage from "../views/LandlordPage.vue";
 import LandlordDetailPage from "../views/LandlordDetailPage.vue";
 import TenantPage from "../views/TenantPage.vue";
 import TenantDetailPage from "../views/TenantDetailPage.vue";
+import KarikeiyakuPage from "../views/FackContract.vue";
 
 import Property from "../components/property.vue";
 
@@ -76,7 +77,13 @@ const router = createRouter({
       name: 'karinushiInfo',
       component: TenantDetailPage,
       props: true
-    }
+    },
+    {
+      // 模擬契約首頁
+      path: '/karikeiyaku',
+      name: 'karikeiyaku',
+      component: KarikeiyakuPage
+    },
   ]
 })
 
