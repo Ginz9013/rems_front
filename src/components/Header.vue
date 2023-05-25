@@ -3,7 +3,8 @@ import { RouterLink } from 'vue-router';
 export default {
     data() {
         return {
-            location: 0
+            location: 0,
+            isLogPage: false
         }
     },
     methods: {
