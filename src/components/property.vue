@@ -1,10 +1,10 @@
 <script>
-import SearchBar from "./SearchBar.vue";
+import SearchProperty from "./SearchProperty.vue";
 import ModalView from "./ModalView.vue";
 
 export default {
     components: {
-        SearchBar,
+        SearchProperty,
         ModalView
     },
     data() {

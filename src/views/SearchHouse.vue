@@ -1,10 +1,10 @@
 <script>
-import SearchBar from "../components/SearchBar.vue";
+import SearchProperty from "../components/SearchProperty.vue";
 import Wire from "../components/Wire.vue";
 import properties from "../components/properties.vue"
 export default {
     components: {
-        SearchBar,
+        SearchProperty,
         Wire,
         properties
     },
@@ -151,7 +151,7 @@ export default {
 
 <template >
     <div class="serch">
-        <SearchBar :searchCondition="['物件', '貸主', '借主', '契約コード']" />
+        <SearchProperty :searchCondition="['物件', '貸主', '借主', '契約コード']" />
     </div>
     <div class="flex">
         <div class="checkbox">
