@@ -19,8 +19,8 @@ const router = createRouter({
     {
       // 物件首頁
       path: '/bukken',
-      name: 'bukken',
-      // component: ,
+      name: 'SearchHouse',
+      component: SearchHouse
     },
     {
       // 物件詳細頁面(含修改)
