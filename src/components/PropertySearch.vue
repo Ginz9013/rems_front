@@ -1,19 +1,24 @@
 <script>
+import SearchView from "../components/PropertiesChild.vue"
+
 export default {
+    components:{
+        SearchView
+    },
     // 請傳入一個 title 字串作為標題顯示
     props: ["title"],
-    data() {
-        return {
-            rent: null,
-            managementFee: null,
-            startingTime: null,
-            timeLimit: null,
-        }
-    },
     methods: {
         // 請綁訂一個 @close 作為右上角取消按鈕的方法
         closeModal() {
             this.$emit("close");
+        },
+        switchSubModal() {
+            this.subModalShow = !this.subModalShow;
+        }
+    },
+    data(){
+        return{
+            subModalShow: false,
         }
     }
 }

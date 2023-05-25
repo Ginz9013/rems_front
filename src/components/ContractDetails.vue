@@ -1,20 +1,22 @@
 <script>
+import SearchBar from '../components/SearchBar.vue'
 import ModalView from '../components/ModalView.vue'
 import AddContractBar from '../components/AddContractBar.vue'
 
+
 export default {
   components: {
+    SearchBar,
     ModalView,
-    AddContractBar
+    AddContractBar,
   },
-  props: ['contract_id'],
   data() {
     return {
       modalShow: false,
       delectModal: false,
       reviseModal: false,
       addModal: false,
-      // contractId: '',
+      contractId: '',
       addType: '',
       addDate: '',
       addrent: '',
@@ -29,22 +31,7 @@ export default {
       // addContractDetail
       count: null,
       rent: null,
-      // selectcontractdetail
-      infoList: [
-        {
-          property: null,
-          landlord: null,
-          tenant: null,
-          giftMoney: null,
-          deposit: null,
-          rent: null,
-          startDate: null,
-          endDate: null
-        }
-      ],
-      contractDate: [],
-      // 判斷契約時間結果的陣列
-      resoult: []
+      // 
     }
   },
   methods: {
@@ -61,21 +48,22 @@ export default {
       this.addModal = !this.addModal
     },
     addContractDetail() {
+
       this.addModal = !this.addModal
 
       let body = {
         count: this.count,
         rent: this.rent,
-        contractID: this.contractId
+        contractID: this.contractId,
       }
-
+      
       fetch('http://localhost:8080/add_contractDetail_info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(body)
-      })
+        })
         .then((response) => {
           return response.json()
         })
@@ -122,78 +110,11 @@ export default {
           this.status = data.infoMap.payment_status
         })
     },
-    getContractDetail() {
-      let body = {
-        contractID: this.contract_id
-      }
-
-      fetch('http://localhost:8080/select_contract_detail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
-        .then((response) => {
-          return response.json()
-        })
-        .then((data) => {
-          console.log(data)
-          this.contractDate = data.contractDetailList
-
-          const nowDate = new Date()
-          // 迭代 contractDetailList 進行判斷
-          for (let i = 0; i < data.contractDetailList.length; i++) {
-            const dateRange = data.contractDetailList[i].split('~')
-            const endDate = new Date(dateRange[1])
-
-            if (endDate > nowDate) {
-              console.log('結束日期大於目前時間')
-              this.resoult[i] = '契約中'
-            } else {
-              console.log('結束日期小於或等於目前時間')
-              this.resoult[i] = '終了'
-            }
-          }
-        })
+    getSelectInfo(contractId){
+      this.contractId = contractId
     },
-
-    selectContractDetail() {
-      let body = {
-        contractID: this.contract_id
-      }
-
-      fetch('http://localhost:8080/FindContractDetailsData', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      })
-        .then((response) => {
-          return response.json()
-        })
-        .then((data) => {
-          console.log(data)
-
-          this.infoList.contractId = data.contract_id
-          this.infoList.property = data.pProperty_name
-          this.infoList.landlord = data.lFirst_name + data.lLast_name
-          this.infoList.tenant = data.tFirst_name + data.tLast_name
-          this.infoList.giftMoney = data.pKey_money
-          this.infoList.deposit = data.pDeposit
-          this.infoList.rent = data.rent
-          this.infoList.startDate =
-            data.cdStart_year + '-' + data.cdStart_month + '-' + data.cdStart_day
-          this.infoList.endDate = data.cdEnd_year + '-' + data.cdEnd_month + '-' + data.cdEnd_day
-          console.log(this.infoList)
-        })
-    }
   },
-
-  mounted() {
-    this.selectContractDetail(), this.getContractDetail()
-  }
+  mounted() {}
 }
 </script>
 <template>
@@ -203,46 +124,42 @@ export default {
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">物件名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.property }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">貸主名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.landlord }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">借主名</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.tenant }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">礼金</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">
-        {{ infoList.giftMoney * infoList.rent }}
-      </dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">敷金</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">
-        {{ infoList.deposit * infoList.rent }}
-      </dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">賃料</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.rent }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">契約開始時間</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.startDate }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <dl class="row ms-6">
       <dt class="col-sm-2 text-primary">契約終了時間</dt>
       <dt class="col-sm-1 text-primary">：</dt>
-      <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.endDate }}</dt>
+      <dt class="col-sm-7 border-bottom border-1 border-secondary">info</dt>
     </dl>
     <div class="d-flex justify-content-center">
       <button @click="addSwitch" type="button" class="btn btn-primary mx-5 fw-bolder m-3">
@@ -250,8 +167,8 @@ export default {
       </button>
       <ModalView v-if="addModal" :title="'契約の更新手続き'" @close="addSwitch">
         <div class="" style="height: 300px; width: 550px">
-          <div class="row d-flex justify-content-center mt-5">
-            <dt class="col-sm-2 text-primary">賃料</dt>
+          <div class="row d-flex justify-content-center">
+            <dt class="col-sm-3 text-primary">賃料</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
               <input
@@ -262,8 +179,8 @@ export default {
               />
             </dt>
           </div>
-          <div class="row d-flex justify-content-center mt-5">
-            <dt class="col-sm-2 text-primary">期限</dt>
+          <dl class="row d-flex justify-content-center">
+            <dt class="col-sm-3 text-primary">期限</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
               <input
@@ -273,8 +190,8 @@ export default {
                 v-model="count"
               />
             </dt>
-          </div>
-          <div class="d-flex justify-content-center mt-5">
+          </dl>
+          <div class="d-flex justify-content-center">
             <button @:click="addContractDetail" type="button" class="btn btn-primary px-5">
               確認
             </button>
@@ -288,11 +205,11 @@ export default {
       >
         解約する
       </button>
-      <ModalView v-if="delectModal" :title="'契約の解約'" @close="delectSwitch">
+      <ModalView v-if="delectModal" :title="'契約の削除'" @close="delectSwitch">
         <div style="height: 150px; width: 350px">
-          <h4 class="mt-3 text-center">この契約を解約しますか？</h4>
-          <div class="d-flex justify-content-center mt-5">
-            <button type="button" class="btn btn-danger px-5 fw-bolder text-white">解約</button>
+          <h4>この契約を削除しますか？</h4>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-danger px-5 fw-bolder text-white">削除</button>
           </div>
         </div>
       </ModalView>
@@ -306,27 +223,21 @@ export default {
         入金追加
       </button>
       <ModalView v-if="modalShow" :title="'入金情報'" @close="switchModal">
-        <div class="addPayment mt-5">
-          <div class="row d-flex justify-content-center">
+        <div class="addPayment">
+          <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金種類</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>賃料 / 礼金 / 敷金</option>
-                <option value="0">賃料</option>
-                <option value="1">礼金</option>
-                <option value="2">敷金</option>
-              </select>
-              <!-- <input
+              <input
                 type="text"
                 v-model="addType"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
                 placeholder="賃料/礼金/敷金"
-              /> -->
+              />
             </dt>
-          </div>
-          <div class="row d-flex justify-content-center mt-3">
+          </dl>
+          <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">支払期限</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -337,8 +248,8 @@ export default {
                 class="form-control"
               />
             </dt>
-          </div>
-          <div class="row d-flex justify-content-center mt-3">
+          </dl>
+          <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金額</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -349,8 +260,8 @@ export default {
                 class="form-control"
               />
             </dt>
-          </div>
-          <div class="row d-flex justify-content-center mt-3">
+          </dl>
+          <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金日：</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
@@ -361,27 +272,21 @@ export default {
                 class="form-control"
               />
             </dt>
-          </div>
-          <div class="row d-flex justify-content-center mt-3">
+          </dl>
+          <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金状態</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>あり / 確認中 / なし</option>
-                <option value="0">なし</option>
-                <option value="1">確認中</option>
-                <option value="2">あり</option>
-              </select>
-              <!-- <input
+              <input
                 v-model="addStatus"
                 type="text"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
                 placeholder="あり/確認中/なし"
-              /> -->
+              />
             </dt>
-          </div>
-          <div class="d-flex justify-content-center mt-6">
+          </dl>
+          <div class="d-flex justify-content-center">
             <button @click="addPayment" type="button" class="btn btn-primary px-5">確認</button>
           </div>
         </div>
@@ -457,14 +362,14 @@ export default {
     </dl>
   </div>
 
-  <div class="contractDetail-area mb-6">
+  <div class="contractDetail-area">
     <h4 class="fw-bolder text-center mt-5 text-primary">詳細契約リスト</h4>
     <hr class="border border-secondary border-2" />
-    <dl class="row ms-6" v-for="(item, index) in contractDate" v-bind:key="index">
+    <dl class="row ms-6">
       <dt class="col-sm-2">契約開始時間</dt>
       <dt class="col-sm-1">：</dt>
-      <dt class="col-sm-5">{{ item }}</dt>
-      <dt class="col-sm-2">{{ resoult[index] }}</dt>
+      <dt class="col-sm-5">2023-05-20</dt>
+      <dt class="col-sm-2">契約中</dt>
     </dl>
   </div>
 </template>

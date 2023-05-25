@@ -24,7 +24,7 @@ export default {
 <template>
   <div class="d-flex flex-column justify-content-center my-0 mx-auto" style="width: 60%">
     <SearchBar
-      :searchCondition="['物件', '借主', '貸主']"
+      :conditionList="['物件', '借主', '貸主']"
       class="mt-8 mx-auto"
       style="width: 80%"
     />

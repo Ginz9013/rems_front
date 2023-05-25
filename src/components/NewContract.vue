@@ -1,19 +1,24 @@
 <script>
+import SearchView from "../components/PropertiesChild.vue"
+
 export default {
+    components: {
+        SearchView
+    },
     // 請傳入一個 title 字串作為標題顯示
     props: ["title"],
-    data() {
-        return {
-            rent: null,
-            managementFee: null,
-            startingTime: null,
-            timeLimit: null,
-        }
-    },
     methods: {
         // 請綁訂一個 @close 作為右上角取消按鈕的方法
         closeModal() {
             this.$emit("close");
+        },
+        switchSubModal() {
+            this.subModalShow = !this.subModalShow;
+        }
+    },
+    data() {
+        return {
+            subModalShow: false,
         }
     }
 }
@@ -54,7 +59,7 @@ export default {
             top: 10px;
             right: 10px;
             transition: 0.3s;
-            
+
             &:hover {
                 cursor: pointer;
                 scale: 1.05;
@@ -64,7 +69,8 @@ export default {
                 scale: 0.95;
             }
 
-            &::before, &::after {
+            &::before,
+            &::after {
                 content: "";
                 width: 20px;
                 height: 2px;
@@ -73,7 +79,7 @@ export default {
                 position: absolute;
                 top: 10px;
                 left: 0;
-                
+
             }
 
             &::before {
@@ -96,7 +102,7 @@ export default {
             min-width: 16rem;
         }
     }
-    
+
     .bg {
         position: inherit;
         top: 0;
@@ -107,5 +113,4 @@ export default {
         opacity: 0.9;
     }
 }
-
 </style>
