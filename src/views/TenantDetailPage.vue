@@ -12,7 +12,21 @@ export default {
         return {
             modalShow: false,
             isShow: true,
-            alllandlord:[]
+            // 詳細資料
+            landlordDetail:[],
+            // 詳細資料更新
+            // first_name:"",
+            // first_name_kana:"",
+            // last_name:"",
+            // last_name_kana:"",
+            // mynumber:"",
+            // license:"",
+            // phone:"",
+            // email:"",
+            // birth_date:"",
+            // address:"",
+            // payment:"",
+            // payment_account:"",
         }
     },
     methods: {
@@ -23,8 +37,8 @@ export default {
             this.isShow = !this.isShow; //F/T相反
         },
         getLandlord(){
-            let alllandlord=[];
-            console.log(this.getid);
+            
+            
             return fetch('http://localhost:8080/get_Landlord', {
 
             method: 'POST',
@@ -38,35 +52,47 @@ export default {
             .then((res) => res.json())
             .then((data) => {
                 console.log(data);
-                alllandlord =data;
-                this.alllandlord=alllandlord;
-                console.log(alllandlord.firstName);                        
+                this.landlordDetail=data;
+                console.log(this.landlordDetail.firstName);                        
                 })
             .catch((error) => {
                 console.error(error);
             })
         },
-        // updatedlandlord() {
-        //     return fetch('http://localhost:8080/get_Landlord', {
-
-        //         method: 'POST',
-        //         headers: {
-        //         'Content-Type': 'application/json'       
-        //         },
-        //         body: JSON.stringify({
-        //             "landlord_id":1
-        //         })
-        //         })
-        //         .then((res) => res.json())
-        //         .then((data) => {
-        //             console.log(data);
-        //             this.alllandlord = data.landlordList;
-        //             console.log(getid);                        
-        //             })
-        //         .catch((error) => {
-        //             console.error(error);
-        //         })
-        // },
+        //詳細資料更新
+        upDate() {
+            console.log(this.landlordDetail.firstName);
+            return fetch('http://localhost:8080/update_Landlord', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'       
+                },
+                body: JSON.stringify({
+                    "landlord_id":this.getid,
+                    "first_name":this.landlordDetail.firstName,
+                    "first_name_kana":this.landlordDetail.firstNameKana,
+                    "last_name":this.landlordDetail.lastName,
+                    "last_name_kana":this.landlordDetail.lastNameKana,
+                    "mynumber":this.landlordDetail.myNumber,
+                    "license":this.landlordDetail.license,
+                    "phone":this.landlordDetail.phone,
+                    "email":this.landlordDetail.email,
+                    "birth_date":this.landlordDetail.birthDate,
+                    "address":this.landlordDetail.address,
+                    "payment":this.landlordDetail.payment,
+                    "payment_account":this.landlordDetail.paymentAccount
+                })
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    this.landlordDe = data.landlordList;
+                                            
+                    })
+                .catch((error) => {
+                    console.error(error);
+                })
+        },
     },
     mounted(){
         this.getLandlord()
@@ -85,76 +111,76 @@ export default {
             <div class="flex">
                 <p class="phead">姓</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{alllandlord.firstName }}</p>
-                <input v-else type="text" class="twiinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.firstName }}</p>
+                <input v-else type="text" class="twiinput" v-model="landlordDetail.firstName">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">名</p>
                 <p class="pdot2">:</p>
-                <p v-if="isShow" class="readding2">{{alllandlord.lastName }}</p>
-                <input v-else type="text" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{landlordDetail.lastName }}</p>
+                <input v-else type="text" class="twiinput2" v-model="landlordDetail.lastName" >
             </div>
             <div class="flex">
                 <p class="phead">セイ</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{alllandlord.firstNameKana }}</p>
-                <input v-else type="text" class="twiinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.firstNameKana }}</p>
+                <input v-else type="text" class="twiinput" v-model="landlordDetail.firstNameKana">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">メイ</p>
                 <p class="pdot2">:</p>
-                <p v-if="isShow" class="readding2">{{alllandlord.lastNameKana }}</p>
-                <input v-else type="text" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{landlordDetail.lastNameKana }}</p>
+                <input v-else type="text" class="twiinput2" v-model="landlordDetail.lastNameKana">
             </div>
             <div class="flex">
                 <p class="phead">生年月日</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{alllandlord.birthDate }}</p>
-                <input v-else type="date" class="twiinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.birthDate }}</p>
+                <input v-else type="date" class="twiinput" v-model="landlordDetail.birthDate">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">電話番号</p>
                 <p class="pdot2">:</p>
-                <p v-if="isShow" class="readding2">{{alllandlord.phone }}</p>
-                <input v-else type="number" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{landlordDetail.phone }}</p>
+                <input v-else type="text" class="twiinput2" v-model="landlordDetail.phone">
             </div>
             <div class="flex">
                 <p class="phead">マイナンバー</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{alllandlord.myNumber }}</p>
-                <input v-else type="number" class="twiinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.myNumber }}</p>
+                <input v-else type="number" class="twiinput" v-model="landlordDetail.myNumber">
 
                 <p style="height: 20px;"></p>
                 <p class="pfooter">免許番号</p>
                 <p class="pdot2">:</p>
-                <p v-if="isShow" class="readding2">{{alllandlord.license }}</p>
-                <input v-else type="number" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{landlordDetail.license }}</p>
+                <input v-else type="number" class="twiinput2" v-model="landlordDetail.license">
             </div>
             <div class="flex">
                 <p class="phead">住所</p>
                 <p class="pdot">:</p>
                 <p style="height: 20px;"></p>
-                <p v-if="isShow" class="readding">{{alllandlord.address }}</p>
-                <input v-else type="text" class="soloinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.address }}</p>
+                <input v-else type="text" class="soloinput" v-model="landlordDetail.address">
             </div>
             <div class="flex">
                 <p class="phead">Email</p>
                 <p class="pdot">:</p>
                 <p style="height: 20px;"></p>
-                <p v-if="isShow" class="readding">{{alllandlord.email }}</p>
-                <input v-else type="email" class="soloinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.email }}</p>
+                <input v-else type="email" class="soloinput" v-model="landlordDetail.email">
             </div>
             <div class="flex">
                 <p class="phead">支払方法</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">text</p>
-                <input v-else type="text" class="twiinput">
+                <p v-if="isShow" class="readding">{{landlordDetail.payment }}</p>
+                <input v-else type="text" class="twiinput" v-model="landlordDetail.payment">
                 <p style="height: 20px;"></p>
                 <p class="pfooter">口座番号</p>
                 <p class="pdot2">:</p>
-                <p v-if="isShow" class="readding2">text</p>
-                <input v-else type="number" class="twiinput2">
+                <p v-if="isShow" class="readding2">{{landlordDetail.payment_account }}</p>
+                <input v-else type="number" class="twiinput2" v-model="landlordDetail.payment_account">
             </div>
             <div class="flex" style="width: 615px;">
-                <button @click="change" v-if="isShow" type="button" class="btnL">情 報 更新</button>
-                <button @click="change" v-else type="button" class="btnL">情 報 確 認</button>
+                <button @click="isShow ? change() : upDate()" type="button" class="btnL"> {{ isShow ? "情 報 更新" : "情 報 確 認" }}</button>
+                
                 <p style="height: 20px;"></p>
                 <button type="button" class="btnR">物 件 追 加</button>
             </div>

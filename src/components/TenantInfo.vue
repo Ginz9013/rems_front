@@ -1,60 +1,68 @@
 <script >
 export default {
     props:[      
-    "dataFromPage"
+            "searchResult"
         ],
     components: {
   },
   data() {
     return {
-      alllandlord: [],
-      
+      landlord: [],
+     earchDate:[],
+     useSearchResult:false
            
     }
   },
   methods: {
+     
+    
+    //顯示所有資料
     getpost() {
-
         fetch('http://localhost:8080/show_All_Landlord', {
-
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'       
-        },
-        body: JSON.stringify()
       })
         .then((res) => res.json())
         .then((data) => {
             console.log(data);
-            this.alllandlord = data.landlordList;                                   
+            this.landlord = data.landlordList; 
+            console.log(this.landlord);                                    
             })
         .catch((error) => {
             console.error(error);
         })
+
+        if (this.searchResult && this.searchResult.length > 0) {
+            this.earchDate=this.searchResult
+            this.useSearchResult = true;
+        }
     },
+    //搜尋結果覆蓋
+    cover(){
+        
+    },
+    //點下後轉換網頁
     passLandlordId(input, landlordId) {
-        this.$emit("getid",landlordId);
         console.log(input.target);
         console.log(landlordId);
+        //轉址帶ID
         this.$router.push({
-        name: 'TenantDetailPage',
+        name: 'karinushiInfo',
         params: { getid: landlordId }
         });
     }
+
     
   },
   created(){
     
   },
-  mounted(){
-    
+  mounted(){ 
     this.getpost();
   }
 }
 </script>
 <template>
 
-        <div class="infoBox" v-for="landlord in alllandlord" :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
+        <div class="infoBox" v-for="landlord in useSearchResult ? earchDate : landlord"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">
                     <p class="kana" >{{landlord.firstNameKana}}</p>

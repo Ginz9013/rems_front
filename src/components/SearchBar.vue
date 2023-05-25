@@ -4,7 +4,7 @@ export default {
     // 請帶入搜尋條件陣列，名稱: searchCondition ，下拉選單會自動帶入
     props: [
         "searchCondition",
-        "emitPush"
+        
 ],
     components: {
         detail
@@ -38,23 +38,13 @@ export default {
                     console.log(data);                                    
                     resultArr = data.landlordList; 
                     console.log(resultArr)
-                    this.result=resultArr[0].firstName
-                    console.log(this.result); 
-                    
-                    this.push();                         
+                    this.$emit("emitPush",resultArr)                      
                     })
                 .catch((error) => {
                     console.error(error);
                 })
-
-                
-                console.log(this.result); 	
-
         },
-        push(textAAA){
-            console.log('AAA');
-            this.$emit("emitresultPush",textAAA)
-        }
+       
 
     },
     mounted() {

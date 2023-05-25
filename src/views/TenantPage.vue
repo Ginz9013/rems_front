@@ -1,18 +1,17 @@
 <script >
 import SearchBar from "../components/SearchBar.vue";
 import ModalView from "../components/ModalView.vue";
-import TenantInfoCompo from "../components/TenantInfo.vue";
-
+import TenantInfo from "../components/TenantInfo.vue";
+//首頁
 export default {
     components: {
         SearchBar,
         ModalView,
-        TenantInfoCompo,
+        TenantInfo,
     },
     data() {
         return {
-            modalShow: false,
-            
+                     modalShow: false,
                     first_name:"",
                     first_name_kana:"",
                     last_name:"",
@@ -24,13 +23,15 @@ export default {
                     birth_date:"",
                     address:"",
                     payment:"",
-                    payment_account:""
+                    payment_account:"",
+                    result:[]
         }
     },
     methods: {
         switchModal() {
             this.modalShow = !this.modalShow;
         },
+        //新增房東
         addTenantInfo() {
          fetch('http://localhost:8080/add_Landlord', {
 
@@ -75,17 +76,25 @@ export default {
                 })
 
                     
+        },
+        catchsearchbar(resultArr){            
+                this.result=resultArr
+                console.log(this.result);
         }
+        
     }
 }
 </script>
 
 <template>
     <div class="bodyArea">
-        <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar" />
+        <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar" @emitPush="catchsearchbar"/>
+        
+        <button  :searchResult=this.result class="tenantAddBtn">借主追加{{result}}</button>
 
-        <button @click="switchModal" class="tenantAddBtn">借主追加</button>
-        <TenantInfoCompo />
+        <TenantInfo />
+
+        <!--跳出新增頁面 -->
         <ModalView v-if="modalShow" :title="'借主追加'" @close="switchModal">
             <div class="field">
                 <div class="flex">
@@ -148,6 +157,7 @@ export default {
                 <button type="button" class="confirmToAddBtn" @click="addTenantInfo">追加</button>
             </div>
         </ModalView>
+        <!--跳出新增頁面 -->
     </div>
 
     
