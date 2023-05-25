@@ -1,11 +1,13 @@
 <script>
 import SearchBar from "./SearchBar.vue";
 import ModalView from "./ModalView.vue";
+import ContractItem from "./ContractItem.vue";
 
 export default {
     components: {
         SearchBar,
-        ModalView
+        ModalView,
+        ContractItem
     },
     data() {
         return {
@@ -33,7 +35,7 @@ export default {
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
-                "propertyId":1715
+                "propertyId":1
             }
 
             fetch("http://localhost:8080/get_property_by_property_id",{
@@ -63,6 +65,7 @@ export default {
             
             console.log(data.propertyList[0])
             console.log(data.propertyList[0].rentalStatus)
+            
             if(data.propertyList[0].rentalStatus === true ){
                 this.rentalStatus = "出租中"
             } else {
@@ -186,8 +189,8 @@ export default {
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
                         <p>{{response2.rentalPrice}}</p>
-                        <p>{{response2.keyMoney}}</p>
-                        <p>{{response2.deposit}}</p>
+                        <p>{{response2.keyMoney}} 個月</p>
+                        <p>{{response2.deposit}} 個月</p>
                         <p>{{response2.imageBytesString}}</p>
                         <!-- <p>-</p> -->
                     </div>
@@ -209,9 +212,9 @@ export default {
                         <p>借主姓名</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
-                        <p>{{response2.propertyFloors}}</p>
-                        <p>{{response2.floorNumber}}</p>
-                        <p>{{response2.buildYear}}</p>
+                        <p>{{response2.propertyFloors}} 樓</p>
+                        <p>{{response2.floorNumber}} 樓</p>
+                        <p>{{response2.buildYear}} 年</p>
                         <p>{{response2.exclusiveArea}}</p>
                         <p>{{response2.remarks}}</p>
 
@@ -300,7 +303,8 @@ export default {
         <!-- area3========================= -->
 
         <div class="ddd">
-            <div class="aaa">
+            <ContractItem />
+            <!-- <div class="aaa">
                 <div>
                     <p>契約時間 :</p>
                     <p>契約時間 :</p>
@@ -313,7 +317,7 @@ export default {
             <div>
                 <p>123</p>
                 <p>123</p>
-            </div>
+            </div> -->
 
         </div>
 
@@ -429,11 +433,11 @@ export default {
     // width: 60vw;
     // // height: 500px;
     margin: 20px auto;
-        display: flex;
+        // display: flex;
         justify-content: center;
         align-items: center;
         border-top: 2px solid #B8D26E;
-        display: flex;
+        // display: flex;
         justify-content: space-between;
         // position: relative;
         // left: 20%;
