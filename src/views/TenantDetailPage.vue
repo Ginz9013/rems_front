@@ -40,8 +40,6 @@ export default {
             fLName: '',
             lLName: '',
             fullLName: ''
-
-           
         }
     },
     methods: {
@@ -162,7 +160,7 @@ export default {
             'Content-Type': 'application/json'       
             },
             body: JSON.stringify({
-                "tenantId":23
+                "tenantId":40
             })
             })
             .then((res) => res.json())
@@ -188,7 +186,7 @@ export default {
                     "first_name_kana":this.tenantDetail.firstNameKana,
                     "last_name":this.tenantDetail.lastName,
                     "last_name_kana":this.tenantDetail.lastNameKana,
-                    "mynumber":this.tenantDetail.myNumber,
+                    "mynumber":this.tenantDetail.mynumber,
                     "license":this.tenantDetail.license,
                     "phone":this.tenantDetail.phone,
                     "email":this.tenantDetail.email,
@@ -259,8 +257,8 @@ export default {
             <div class="flex">
                 <p class="phead">マイナンバー</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{tenantDetail.myNumber }}</p>
-                <input v-else type="number" class="twiinput" v-model="tenantDetail.myNumber">
+                <p v-if="isShow" class="readding">{{tenantDetail.mynumber }}</p>
+                <input v-else type="number" class="twiinput" v-model="tenantDetail.mynumber">
 
                 <p style="height: 20px;"></p>
                 <p class="pfooter">免許番号</p>
