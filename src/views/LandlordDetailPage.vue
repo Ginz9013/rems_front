@@ -6,7 +6,8 @@ export default {
         "getLandlordId"
     ],
     components: {
-        ModalView
+        ModalView,
+        
     },
     data() {
         return {
@@ -159,8 +160,8 @@ export default {
                 <p v-if="isShow" class="readding">{{landlordDetail.payment }}</p>
                 <select v-else =!isShow v-model="paymentMethod" id="group" value="1" class="twiinput">
                     <!-- <option value="0">支払方法選択</option> -->
-                    <option value="0">振り込み</option>
-                    <option value="1">現金</option>
+                    <option value="0">現金</option>
+                    <option value="1">振り込み</option>
                 </select>
                 <p style="height: 20px;"></p>
                 <p v-if="paymentMethod === '1'" class="pfooter">口座番号</p>
@@ -186,8 +187,8 @@ export default {
                 <p style="height: 20px;"></p>
                 <p class="phead">圖案</p>
                 <p class="pdot">物件名</p>
-
-                <div class="a"><a href="">123</a></div>
+                <div class="a"><a href="">契約中</a></div>
+               
             </div>
         </div>
 

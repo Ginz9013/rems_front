@@ -62,7 +62,8 @@ const router = createRouter({
       path: '/kashinushi/info/:getLandlordId',
       name: 'kashinushiInfo',
       component: LandlordDetailPage,
-      props: true
+      props: true,
+      
     },
     {
       // 借主首頁
