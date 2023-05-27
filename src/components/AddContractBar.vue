@@ -45,9 +45,9 @@ export default {
         })
     },
 
-    selectInfo() {
-      this.$emit('contractInfo', this.contractId)
-    }
+    // selectInfo() {
+    //   this.$emit('contractInfo', this.contractId)
+    // }
   },
   mounted() {
     this.selectContract()
@@ -55,6 +55,7 @@ export default {
 }
 </script>
 <template>
+  <!-- :value="item.contract_id" -->
   <div
     v-for="item in ContractList"
     v-bind:key="item.contract_id"

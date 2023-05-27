@@ -68,7 +68,6 @@ export default {
 </template>
 <style lang="scss" scoped>
 .input-group{
-    //position: absolute;
     top: 25%;
     left: 50%;
     transform: translate(-50% , -50%);
