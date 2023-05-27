@@ -192,6 +192,7 @@ export default {
 
   mounted() {
     this.selectContractDetail(), this.getContractDetail()
+    console.log(this.contract_id)
   }
 }
 </script>

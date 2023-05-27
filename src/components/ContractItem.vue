@@ -2,14 +2,34 @@
 import { RouterLink } from 'vue-router'
 export default {
   components: {},
+  props: {
+  landlordId: {
+    type: String,
+    required: true
+  }
+},
+
   
   data(){
       return{
         ContractList: [],
-          
+        ContractResult: [],
+        nowYear: null,
+        nowMonth: null,
+        nowDate: null
       }
   },
   methods:{
+    //test
+    passLandlordId(contractId) {
+        console.log(contractId)
+        //轉址帶ID
+        this.$router.push({
+        name: 'keiyaku_info',
+        params: { contract_id: contractId }
+        });
+    },
+
     getContractID(){
         const body = {
             //接上一頁的物件ID
@@ -30,7 +50,7 @@ export default {
         .then((data) => {
           console.log(data)
           this.ContractList = data.ropertiesResponseList
-
+          data.ropertiesResponseList
           console.log(data.ropertiesResponseList)
         })
     }
@@ -38,6 +58,11 @@ export default {
   },
   mounted() {
     this.getContractID()
+    const date = new Date();
+    this.nowYear = date.getFullYear();
+    this.nowMonth = date.getMonth() + 1;
+    this.nowDate = date.getDate();
+    console.log(date.getFullYear(), date.getMonth() + 1, date.getDate())
     
   },
   }
@@ -60,7 +85,10 @@ export default {
         </div>
         
         <div>
-        <p>連結</p> <!-- 我想讓現行契約顯示"契約中"，歷史契約顯示"歷史契約" -->
+          <div  @click="passLandlordId(item.contractID)">{{ item.end_year > nowYear ? '契約中~' : '歷史契約' }}</div>
+          <!-- @click="passLandlordId($event, landlord.landlordId)"
+          <RouterLink to="/keiyaku_info">{{ item.end_year > nowYear ? '契約中' : '歷史契約' }}</RouterLink> -->
+        <!-- <p>連結</p> 我想讓現行契約顯示"契約中"，歷史契約顯示"歷史契約" -->
         </div>
     </div>
 </template>

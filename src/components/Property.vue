@@ -252,11 +252,12 @@ export default {
 
                     </div>
                     <div class="bbb2">
-                        <p>{{ response2.propertyId }}</p>
+                        <p>{{ response2.propertyName }}</p>
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
-                        <div class="yes">
+                        <p>{{ rentalStatus }}</p>
+                        <!-- <div class="yes">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio1" >已出租</label>
@@ -265,7 +266,7 @@ export default {
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio2">未出租</label>
                                 </div>
-                            </div>
+                            </div> -->
                         <input type="number" v-model="rentalPrice">
                         <input type="number" v-model="keyMoney">
                         <input type="number" v-model="deposit">
@@ -288,11 +289,11 @@ export default {
                     <div class="bbb2">
                         <p>賃主姓名</p>
                         <p>借主姓名</p>
-                        <p>{{response2.type}}</p>
-                        <p>{{response2.layout}}</p>
-                        <p>{{response2.propertyFloors}}</p>
-                        <p>{{response2.floorNumber}}</p>
-                        <p>{{response2.buildYear}}</p>
+                        <p>{{type}}</p>
+                        <p>{{layout}}</p>
+                        <p>{{response2.propertyFloors}} 樓</p>
+                        <p>{{response2.floorNumber}} 樓</p>
+                        <p>{{response2.buildYear}} 年</p>
                         <p>{{response2.exclusiveArea}}</p>
                         <input type="text" v-model="remarks">
 
