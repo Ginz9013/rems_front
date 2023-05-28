@@ -17,10 +17,10 @@ export default {
       // 判斷是否解約
       showButtons: true,
       // addPayment():用在新增方法的變數
-      addType: null,
       addrent: null,
       addDeadline: null,
-      addStatus: null,
+      selectPaymentType: null,
+      selectPaymentStatus: null,
       // addContractDetail()
       count: null,
       rent: null,
@@ -100,10 +100,10 @@ export default {
       this.modalShow = !this.modalShow
 
       let body = {
-        paymentType: this.addType,
+        paymentType: this.selectPaymentType,
         paymentDeadline: this.addDeadline,
         amount: this.addrent,
-        paymentStatus: this.addStatus,
+        paymentStatus: this.selectPaymentStatus,
         contractID: this.contract_id
       }
 
@@ -213,6 +213,26 @@ export default {
           })
           console.log(this.paymentArray)
         })
+    },
+    getPaymentTypeText(paymentType) {
+      // 根據select的數值進行轉換文字
+      if (paymentType === 0) {
+        return "賃料";
+      } else if (paymentType === 1) {
+        return "礼金";
+      } else if (paymentType === 2) {
+        return "敷金";
+      }
+    },
+    getPaymentStatusText(paymentStatus) {
+      // 根據select的數值進行轉換文字
+      if (paymentStatus === 0) {
+        return "なし";
+      } else if (paymentStatus === 1) {
+        return "確認中";
+      } else if (paymentStatus === 2){
+        return "あり";
+      }
     },
     // 更新入金狀態
     updatePayment(payment_id) {
@@ -388,7 +408,7 @@ export default {
     </div>
   </div>
 
-  <div class="payment-area" style="height: 350px;">
+  <div class="payment-area" style="height: 350px">
     <div class="d-flex justify-content-center">
       <h4 class="fw-bolder text-center mt-5 text-primary">入金情報</h4>
       <button @click="switchModal" type="button" class="btn btn-primary fw-bolder m-5 px-3 py-0">
@@ -400,13 +420,15 @@ export default {
             <dt class="col-sm-2 text-primary">入金種類</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <input
-                type="text"
-                v-model="addType"
-                aria-describedby="inputGroup-sizing-sm"
-                class="form-control"
-                placeholder="賃料/礼金/敷金"
-              />
+              <select
+                v-model="selectPaymentType"
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option value="0">賃料</option>
+                <option value="1">礼金</option>
+                <option value="2">敷金</option>
+              </select>
             </dt>
           </dl>
           <dl class="row d-flex justify-content-center">
@@ -437,13 +459,15 @@ export default {
             <dt class="col-sm-2 text-primary">入金状態</dt>
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
-              <input
-                v-model="addStatus"
-                type="text"
-                aria-describedby="inputGroup-sizing-sm"
-                class="form-control"
-                placeholder="あり/確認中/なし"
-              />
+              <select
+                v-model="selectPaymentStatus"
+                class="form-select"
+                aria-label="Default select example"
+              >
+                <option value="0">なし</option>
+                <option value="1">確認中</option>
+                <option value="2">あり</option>
+              </select>
             </dt>
           </dl>
           <div class="d-flex justify-content-center mt-6">
@@ -453,7 +477,7 @@ export default {
       </ModalView>
     </div>
     <hr class="border border-secondary border-2" />
-    <div class="overflow-scroll" style="height: 250px;">
+    <div class="overflow-scroll" style="height: 250px">
       <dl class="row ms-4">
         <dt class="col-sm-2 text-primary">入金種類</dt>
         <dt class="col-sm-2 text-primary">支払期限</dt>
@@ -463,11 +487,11 @@ export default {
       </dl>
       <div>
         <div class="row ms-4" v-for="paymentItem in paymentArray" v-bind:key="paymentItem">
-          <p class="col-sm-2">{{ paymentItem.payment_type }}</p>
+          <p class="col-sm-2">{{ getPaymentTypeText(paymentItem.payment_type) }}</p>
           <p class="col-sm-2">{{ paymentItem.payment_deadline }}</p>
           <p class="col-sm-2">{{ paymentItem.amount }}</p>
           <p class="col-sm-2">{{ paymentItem.payment_date }}</p>
-          <p class="col-sm-2">{{ paymentItem.payment_status }}</p>
+          <p class="col-sm-2">{{ getPaymentStatusText(paymentItem.payment_status) }}</p>
           <div class="col-sm-2">
             <button
               @click="
@@ -492,52 +516,58 @@ export default {
                   <dt class="col-sm-4 text-primary">元入金状態：</dt>
                   <p class="col-sm-4">{{ revisePaymentStatus }}</p>
                 </div>
-                <div class="row ms-4 mt-4">
-                  <dt class="col-sm-4 text-primary">入金状態：</dt>
-                  <dt class="d-flex justify-content-center mt-3">
-                    <div class="mx-3">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="radioDefault"
-                        id="radioDefault1"
-                        value="0"
-                        v-model="reviseStatus"
-                      />
-                      <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;なし</label>
+                <div class="row ms-4 mt-4 d-flex">
+                  <div class="d-flex">
+                    <dt class="col-sm-4 text-primary">入金状態：</dt>
+                    <div class="d-flex">
+                      <div class="mx-2">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="radioDefault"
+                          id="radioDefault1"
+                          value="0"
+                          v-model="reviseStatus"
+                        />
+                        <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;なし</label>
+                      </div>
+                      <div class="mx-2">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="radioDefault"
+                          id="radioDefault2"
+                          value="1"
+                          v-model="reviseStatus"
+                        />
+                        <label class="form-check-label" for="radioDefault2"
+                          >&nbsp;&nbsp;確認中</label
+                        >
+                      </div>
+                      <div class="mx-2">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="radioDefault"
+                          id="radioDefault3"
+                          value="2"
+                          v-model="reviseStatus"
+                        />
+                        <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;あり</label>
+                      </div>
                     </div>
-                    <div class="mx-3">
+                  </div>
+                  <div class="row mt-6 d-flex">
+                    <dt class="col-sm-4 text-primary">入金日：</dt>
+                    <dt class="col-sm-7">
                       <input
-                        class="form-check-input"
-                        type="radio"
-                        name="radioDefault"
-                        id="radioDefault2"
-                        value="1"
-                        v-model="reviseStatus"
+                        v-model="addDate"
+                        type="date"
+                        aria-describedby="inputGroup-sizing-sm"
+                        class="form-control"
                       />
-                      <label class="form-check-label" for="radioDefault2">&nbsp;&nbsp;確認中</label>
-                    </div>
-                    <div class="mx-3">
-                      <input
-                        class="form-check-input"
-                        type="radio"
-                        name="radioDefault"
-                        id="radioDefault3"
-                        value="2"
-                        v-model="reviseStatus"
-                      />
-                      <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;あり</label>
-                    </div>
-                  </dt>
-                  <dt class="col-sm-4 text-primary">入金日：</dt>
-                  <dt class="col-sm-7">
-                    <input
-                      v-model="addDate"
-                      type="date"
-                      aria-describedby="inputGroup-sizing-sm"
-                      class="form-control"
-                    />
-                  </dt>
+                    </dt>
+                  </div>
                   <div class="mt-6 d-flex justify-content-center">
                     <button
                       @click="updatePayment(paymentItem.payment_id)"
@@ -556,7 +586,7 @@ export default {
     </div>
   </div>
 
-  <div class="contractDetail-area mb-6">
+  <div class="contractDetail-area my-6">
     <h4 class="fw-bolder text-center mt-5 text-primary">詳細契約リスト</h4>
     <hr class="border border-secondary border-2" />
     <dl class="row ms-6" v-for="(item, index) in contractDate" v-bind:key="index">
