@@ -2,10 +2,13 @@
 import { RouterLink } from 'vue-router'
 export default {
   components: {},
+  props: [
+    "contractList"
+],
   data() {
     return {
       // selectContract
-      ContractList: [],
+      contractList: [],
       // selectContractDetail
       infoList: [
         {
@@ -41,23 +44,19 @@ export default {
         })
         .then((data) => {
           console.log(data)
-          this.ContractList = data.contractResponse
+          this.contractList = data.contractResponse
         })
     },
-
-    // selectInfo() {
-    //   this.$emit('contractInfo', this.contractId)
-    // }
   },
   mounted() {
     this.selectContract()
+    
   }
 }
 </script>
 <template>
-  <!-- :value="item.contract_id" -->
   <div
-    v-for="item in ContractList"
+    v-for="item in contractList"
     v-bind:key="item.contract_id"
     :value="item.contract_id"
     @click="switchURL($event, item.contract_id)"

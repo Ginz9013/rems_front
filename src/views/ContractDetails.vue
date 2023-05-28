@@ -14,6 +14,8 @@ export default {
       delectModal: false,
       reviseModal: false,
       addModal: false,
+      // 判斷是否解約
+      showButtons: true,
       // addPayment():用在新增方法的變數
       addType: null,
       addrent: null,
@@ -47,7 +49,7 @@ export default {
       revisePaymentStatus: null,
       revisePaymentId: null,
       reviseStatus: null,
-      addDate: null,
+      addDate: null
     }
   },
   methods: {
@@ -56,6 +58,7 @@ export default {
     },
     delectSwitch() {
       this.delectModal = !this.delectModal
+      this.showButtons = !this.showButtons
     },
     reviseSwitch(payment_deadline, payment_id, payment_status) {
       this.reviseModal = !this.reviseModal
@@ -65,6 +68,7 @@ export default {
     },
     addSwitch() {
       this.addModal = !this.addModal
+      this.showButtons = !this.showButtons
     },
     // 新增契約情報
     addContractDetail() {
@@ -212,7 +216,6 @@ export default {
     },
     // 更新入金狀態
     updatePayment(payment_id) {
-
       this.reviseModal = !this.reviseModal
 
       let body = {
@@ -238,11 +241,14 @@ export default {
           console.log(data)
         })
     },
-    // 契約解約
+    // 契約解除
     cancelContract() {
+      // 解約後隱藏按鈕
+      this.showButtons = false
+      this.delectModal = !this.delectModal
+
       let body = {
-        contractID: this.contract_id,
-        propertyID: 29
+        contractID: this.contract_id
       }
 
       fetch('http://localhost:8080/deleteAndRenewContracts', {
@@ -257,6 +263,7 @@ export default {
         })
         .then((data) => {
           console.log(data)
+          alert(data.message)
         })
     }
   },
@@ -267,7 +274,7 @@ export default {
 }
 </script>
 <template>
-  <div class="contract-area">
+  <div class="contract-area" style="height: 530px">
     <h2 class="fw-bolder text-center mt-5 text-primary">契約情報</h2>
     <hr class="border border-secondary border-2" />
     <dl class="row ms-6">
@@ -315,7 +322,12 @@ export default {
       <dt class="col-sm-7 border-bottom border-1 border-secondary">{{ infoList.endDate }}</dt>
     </dl>
     <div class="d-flex justify-content-center">
-      <button @click="addSwitch" type="button" class="btn btn-primary mx-5 fw-bolder m-3">
+      <button
+        @click="addSwitch"
+        type="button"
+        class="btn btn-primary mx-5 fw-bolder m-3"
+        v-if="showButtons"
+      >
         更新手続き
       </button>
       <ModalView v-if="addModal" :title="'契約の更新手続き'" @close="addSwitch">
@@ -355,6 +367,7 @@ export default {
         @click="delectSwitch"
         type="button"
         class="btn btn-danger mx-5 fw-bolder m-3 text-white"
+        v-if="showButtons"
       >
         解約する
       </button>
@@ -362,14 +375,20 @@ export default {
         <div style="height: 150px; width: 350px">
           <h4 class="text-center mt-5">この契約を解除しますか？</h4>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-danger px-5 fw-bolder text-white mt-5">解除</button>
+            <button
+              type="button"
+              @click="cancelContract"
+              class="btn btn-danger px-5 fw-bolder text-white mt-5"
+            >
+              解除
+            </button>
           </div>
         </div>
       </ModalView>
     </div>
   </div>
 
-  <div class="payment-area" style="height: 300px; overflow-x: auto">
+  <div class="payment-area" style="height: 350px">
     <div class="d-flex justify-content-center">
       <h4 class="fw-bolder text-center mt-5 text-primary">入金情報</h4>
       <button @click="switchModal" type="button" class="btn btn-primary fw-bolder m-5 px-3 py-0">
@@ -441,89 +460,96 @@ export default {
       <dt class="col-sm-2 text-primary">入金日</dt>
       <dt class="col-sm-2 text-primary">入金状態</dt>
     </dl>
-
-    <div class="row ms-4" v-for="paymentItem in paymentArray" v-bind:key="paymentItem">
-      <p class="col-sm-2">{{ paymentItem.payment_type }}</p>
-      <p class="col-sm-2">{{ paymentItem.payment_deadline }}</p>
-      <p class="col-sm-2">{{ paymentItem.amount }}</p>
-      <p class="col-sm-2">{{ paymentItem.payment_date }}</p>
-      <p class="col-sm-2">{{ paymentItem.payment_status }}</p>
-      <div class="col-sm-2">
-        <button
-          @click="reviseSwitch(paymentItem.payment_deadline, paymentItem.payment_id, paymentItem.payment_status)"
-          type="button"
-          class="btn btn-secondary text-white fw-bolder px-3 py-0"
-        >
-          状態更新
-        </button>
-        <ModalView v-if="reviseModal" :title="'入金状態の更新'" @close="reviseSwitch">
-          <div class="" style="height: 350px; width: 450px">
-            <div class="row ms-4 mt-4">
-              <dt class="col-sm-4 text-primary">支払期限：</dt>
-              <p class="col-sm-4">{{ revisePaymentDeadline }}</p>
-            </div>
-            <div class="row ms-4 mt-4">
-              <dt class="col-sm-4 text-primary">元入金状態：</dt>
-              <p class="col-sm-4">{{ revisePaymentStatus }}</p>
-            </div>
-            <div class="row ms-4 mt-4">
-              <dt class="col-sm-4 text-primary">入金状態：</dt>
-              <dt class="d-flex justify-content-center mt-3">
-                <div class="mx-3">
+    <div>
+      <div class="row ms-4" v-for="paymentItem in paymentArray" v-bind:key="paymentItem">
+        <p class="col-sm-2">{{ paymentItem.payment_type }}</p>
+        <p class="col-sm-2">{{ paymentItem.payment_deadline }}</p>
+        <p class="col-sm-2">{{ paymentItem.amount }}</p>
+        <p class="col-sm-2">{{ paymentItem.payment_date }}</p>
+        <p class="col-sm-2">{{ paymentItem.payment_status }}</p>
+        <div class="col-sm-2">
+          <button
+            @click="
+              reviseSwitch(
+                paymentItem.payment_deadline,
+                paymentItem.payment_id,
+                paymentItem.payment_status
+              )
+            "
+            type="button"
+            class="btn btn-secondary text-white fw-bolder px-3 py-0"
+          >
+            状態更新
+          </button>
+          <ModalView v-if="reviseModal" :title="'入金状態の更新'" @close="reviseSwitch">
+            <div class="" style="height: 350px; width: 450px">
+              <div class="row ms-4 mt-4">
+                <dt class="col-sm-4 text-primary">支払期限：</dt>
+                <p class="col-sm-4">{{ revisePaymentDeadline }}</p>
+              </div>
+              <div class="row ms-4 mt-4">
+                <dt class="col-sm-4 text-primary">元入金状態：</dt>
+                <p class="col-sm-4">{{ revisePaymentStatus }}</p>
+              </div>
+              <div class="row ms-4 mt-4">
+                <dt class="col-sm-4 text-primary">入金状態：</dt>
+                <dt class="d-flex justify-content-center mt-3">
+                  <div class="mx-3">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radioDefault"
+                      id="radioDefault1"
+                      value="0"
+                      v-model="reviseStatus"
+                    />
+                    <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;なし</label>
+                  </div>
+                  <div class="mx-3">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radioDefault"
+                      id="radioDefault2"
+                      value="1"
+                      v-model="reviseStatus"
+                    />
+                    <label class="form-check-label" for="radioDefault2">&nbsp;&nbsp;確認中</label>
+                  </div>
+                  <div class="mx-3">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radioDefault"
+                      id="radioDefault3"
+                      value="2"
+                      v-model="reviseStatus"
+                    />
+                    <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;あり</label>
+                  </div>
+                </dt>
+                <dt class="col-sm-4 text-primary">入金日：</dt>
+                <dt class="col-sm-7">
                   <input
-                    class="form-check-input"
-                    type="radio"
-                    name="radioDefault"
-                    id="radioDefault1"
-                    value="0"
-                    v-model="reviseStatus"
+                    v-model="addDate"
+                    type="date"
+                    aria-describedby="inputGroup-sizing-sm"
+                    class="form-control"
                   />
-                  <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;なし</label>
+                </dt>
+                <div class="mt-6 d-flex justify-content-center">
+                  <button
+                    @click="updatePayment(paymentItem.payment_id)"
+                    type="button"
+                    class="btn btn-primary px-3"
+                  >
+                    確認
+                  </button>
                 </div>
-                <div class="mx-3">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="radioDefault"
-                    id="radioDefault2"
-                    value="1"
-                    v-model="reviseStatus"
-                  />
-                  <label class="form-check-label" for="radioDefault2">&nbsp;&nbsp;確認中</label>
-                </div>
-                <div class="mx-3">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="radioDefault"
-                    id="radioDefault3"
-                    value="2"
-                    v-model="reviseStatus"
-                  />
-                  <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;あり</label>
-                </div>
-              </dt>
-              <dt class="col-sm-4 text-primary">入金日：</dt>
-              <dt class="col-sm-7">
-                <input
-                  v-model="addDate"
-                  type="date"
-                  aria-describedby="inputGroup-sizing-sm"
-                  class="form-control"
-                />
-              </dt>
-              <div class="mt-6 d-flex justify-content-center">
-                <button
-                  @click="updatePayment(paymentItem.payment_id)"
-                  type="button"
-                  class="btn btn-primary px-3"
-                >
-                  確認
-                </button>
               </div>
             </div>
-          </div>
-        </ModalView>
+          </ModalView>
+        </div>
       </div>
     </div>
   </div>

@@ -11,17 +11,56 @@ export default {
   },
   data() {
     return {
-      modalShow: false
+      modalShow: false,
+      contractList: [],
     }
   },
   methods: {
     switchModal() {
       this.modalShow = !this.modalShow
     },
-    search(res){
-      console.log(res.keyWord);
-      console.log(res.condition);
-    }
+    // selectContract() {
+    //   fetch('http://localhost:8080/getAllContracts', {})
+    //     .then((response) => {
+    //       return response.json()
+    //     })
+    //     .then((data) => {
+    //       console.log(data)
+    //       this.contractList = data.contractResponse
+    //     })
+    // },
+    search(res) {
+      let condition = null
+      console.log(res.keyWord)
+      console.log(res.condition)
+
+      let body = null
+
+      if (res.condition === '貸主') {
+        condition = "Landlords"
+        body = {
+          inputName: res.keyWord,
+          payment_status_type: 3
+        }
+      }
+      fetch(`http://localhost:8080/find${condition}Name`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then((response) => {
+          return response.json()
+        })
+        .then((data) => {
+          console.log(data)
+          this.contractList = data.contractResponse
+        })
+    },
+  },
+  mounted() {
+    // this.selectContract()
   }
 }
 </script>
@@ -47,7 +86,6 @@ export default {
           <input class="form-check-input" type="checkbox" value="" id="CheckChecked" checked />
           <label class="form-check-label" for="CheckChecked">入金なし</label>
         </div>
-
       </div>
       <div>
         <AddContractBar />
