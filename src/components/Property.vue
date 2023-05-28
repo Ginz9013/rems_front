@@ -10,7 +10,6 @@ export default {
         SearchProperty,
 
     },
-    props: ["property_id"],
     data() {
         return {
             rentalPrice :'',
@@ -53,7 +52,7 @@ export default {
             const body = {
                 //ContractItem那一頁也要接相同的ID
                 //接上一頁傳進來的物件ID
-                "propertyId":this.property_id
+                "propertyId":1
             }
 
             fetch("http://localhost:8080/get_property_by_property_id",{
