@@ -96,7 +96,7 @@ export default {
         },
         formatDate(year, month, day) {
             // 將年、月、日轉換為YYYY-MM-DD的日期格式
-            return `${ year }-${ this.padNumber(month) }-${ this.padNumber(day) }`
+            return `${year}-${this.padNumber(month)}-${this.padNumber(day)}`
         },
         padNumber(number) {
             // 將數字補零成兩位數字的字串
@@ -140,7 +140,39 @@ export default {
                 })
                 .then((data) => {
                     console.log(data.contractResponse.length)
-                    this.num = data.contractResponse.length + 1
+                    console.log(this.num)
+                    this.num = data.contractResponse.length + 2
+                    let body = {
+                        property_id: this.getData.propertyId,
+                        rental_price: this.getData.rentalPrice,
+                        tenant_id: this.tenantDetail.tenantId,
+                        key_money: this.getData.keyMoney,
+                        deposit: this.getData.deposit,
+                        start_year: this.year,
+                        start_month: this.month,
+                        start_day: this.day,
+                        numberMonths: this.endMonth
+                    }
+
+                  
+                    fetch('http://localhost:8080/AddContractAndContractDetail', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(body)
+                    })
+                        .then(function (response) {
+                            return response.json()
+                        })
+                        .then((data) => {
+                            console.log(data)
+                            this.goTarget();
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        });
+                        
                 })
 
         },
@@ -155,7 +187,7 @@ export default {
             this.endMonth = new Date(this.endDate).getMonth() + 1
         },
         getYear(startDate) {
-            this.year = new Date(this.startDate).getFullYear() + 1
+            this.year = new Date(this.startDate).getFullYear() 
         },
         getMonth(startDate) {
             this.month = new Date(this.startDate).getMonth() + 1
@@ -171,34 +203,7 @@ export default {
             this.getDay(this.startDate)
             this.getYear(this.startDate)
             this.getMonth(this.startDate)
-            let body = {
-                property_id: this.getData.propertyId,
-                rental_price: this.getData.rentalPrice,
-                tenant_id: this.tenantDetail.tenantId,
-                key_money: this.getData.keyMoney,
-                deposit: this.getData.deposit,
-                start_year: this.year,
-                start_month: this.month,
-                start_day: this.day,
-                numberMonths: this.endMonth
-            }
-            fetch('http://localhost:8080/AddContractAndContractDetail', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-            })
-                .then(function (response) {
-                    return response.json()
-                })
-                .then((data) => {
-                    console.log(data)
-                })
-                .catch(function (error) {
-                    console.log(error)
-                });
-            this.goTarget();
+
         },
         switchModal() {
             this.modalShow = !this.modalShow
@@ -471,7 +476,8 @@ export default {
         text-align: center;
         width: 50vw;
         height: 70vh;
-        .roll{
+
+        .roll {
             overflow: scroll;
         }
     }
