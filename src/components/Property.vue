@@ -15,6 +15,7 @@ export default {
             rentalPrice :'',
             keyMoney :'',
             deposit :'',
+            prefecture:'',
             imageBytesString :'',
             remarks :'',
             response:[],
@@ -116,6 +117,7 @@ export default {
                 //也是接上一頁傳進來的ID
                 "propertyId":1,
 
+                "prefecture": this,prefecture,
                 "rentalPrice": this.rentalPrice,
                 "keyMoney":this.keyMoney,
                 "deposit": this.deposit,
@@ -269,7 +271,8 @@ export default {
                     </div>
                     <div class="bbb2">
                         <p>{{ response2.propertyName }}</p>
-                        <p>{{response2.prefecture}}</p>
+                        <div><input type="text" v-model="prefecture"></div>
+                        <!-- <p>{{response2.prefecture}}</p> -->
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
