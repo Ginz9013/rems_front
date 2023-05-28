@@ -1,5 +1,5 @@
 <script >
-import SearchBar from "../components/TenantSearchBar.vue";
+import SearchBar from "../components/SearchBar.vue"
 import ModalView from "../components/ModalView.vue";
 import TenantInfo from "../components/TenantInfo.vue";
 
@@ -12,6 +12,7 @@ export default {
     data() {
         return {
                      modalShow: false,
+                     message:"",
                     first_name:"",
                     first_name_kana:"",
                     last_name:"",
@@ -24,8 +25,7 @@ export default {
                     address:"",
                     payment:"",
                     payment_account:"",
-                    result:[],
-                    showresult:[]
+                    result:[],                   
         }
     },
     methods: {
@@ -34,6 +34,14 @@ export default {
         },
         //新增房東
         addTenantInfo() {
+            //轉字串
+            let number = this.phone.toString();
+            let paymentAccount = this.payment_account.toString();
+            //去除多餘字
+            this.phone =number.replace(/-/g, '');
+            this.payment_account =paymentAccount.replace(/-/g, '');
+            console.log(this.phone)
+
          fetch('http://localhost:8080/addTenantInfo', {
 
                 method: 'POST',
@@ -57,8 +65,11 @@ export default {
                 })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
-                    this.message = data;
+                    console.log(data);                     
+                    this.message=data;                  
+                     //跳出視窗判斷   
+                    if(this.message.message === '新增成功'){
+                    alert(this.message.message); 
                     this.first_name=null,
                     this.first_name_kana=null,
                     this.last_name=null,
@@ -71,6 +82,10 @@ export default {
                     this.address=null,
                     this.payment=null,
                     this.payment_account=null
+                } else{
+                    alert(this.message.errorMessage);             
+                }
+
                     })
                 .catch((error) => {
                     console.error(error);
@@ -78,10 +93,32 @@ export default {
 
                     
         },
-        catchsearchbar(resultArr){            
-                this.result=resultArr
-                console.log(this.result);
-                
+        //搜尋
+        getInfo(searchCondition){  
+          console.log(searchCondition.keyWord);
+          this.searchCondition = searchCondition;  
+          
+          fetch('http://localhost:8080/findByNameOrPhoneGetTenantInfo', {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'       
+                },
+                body: JSON.stringify({
+                    "searchInput":searchCondition.keyWord,                  
+                    })
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                  console.log(data);                                    
+                    this.result = data.tenantCollection; 
+                    if(data.errorMessage === "検索条件に該当する会員の情報はありません。")
+                    {
+                    alert(data.errorMessage)
+                    }
+                    })
+                .catch((error) => {
+                    console.error(error);
+                }) 
         }
         
     }
@@ -90,7 +127,7 @@ export default {
 
 <template>
     <div class="bodyArea">
-        <SearchBar :searchCondition="['借主姓名', '借主電話番号']" class="SearchBar" @emitPush="catchsearchbar"/>
+        <SearchBar :conditionList="['借主姓名', '借主電話番号']" class="SearchBar" @searchResponse="getInfo"/>
 
         <button @click="switchModal" class="tenantAddBtn">借主追加</button>
 
@@ -101,59 +138,63 @@ export default {
                 <div class="flex">
                     <p class="phead">姓</p>
                     <p class="pdot">:</p>
-                    <input type="text" class="twiinput">
+                    <input type="text" class="twiinput"  v-model="first_name">
                     <p style="height: 20px;"></p>
                     <p class="pfooter">名</p>
                     <p class="pdot2">:</p>
-                    <input type="text" class="twiinput2">
+                    <input type="text" class="twiinput2"  v-model="last_name">
                 </div>
                 <div class="flex">
                     <p class="phead">セイ</p>
                     <p class="pdot">:</p>
-                    <input type="text" class="twiinput">
+                    <input type="text" class="twiinput"  v-model="first_name_kana">
                     <p style="height: 20px;"></p>
                     <p class="pfooter">メイ</p>
                     <p class="pdot2">:</p>
-                    <input type="text" class="twiinput2">
+                    <input type="text" class="twiinput2"  v-model="last_name_kana">
                 </div>
                 <div class="flex">
                     <p class="phead">生年月日</p>
                     <p class="pdot">:</p>
-                    <input type="date" class="twiinput">
+                    <input type="date" class="twiinput"  v-model="birth_date">
                     <p style="height: 20px;"></p>
                     <p class="pfooter">電話番号</p>
                     <p class="pdot2">:</p>
-                    <input type="number" class="twiinput2">
+                    <input type="text" class="twiinput2" placeholder="10文字で入力して" v-model="phone">
                 </div>
                 <div class="flex">
                     <p class="phead">マイナンバー</p>
                     <p class="pdot">:</p>
-                    <input type="number" class="twiinput">
+                    <input type="number" class="twiinput"  v-model="mynumber">
                     <p style="height: 20px;"></p>
                     <p class="pfooter">免許番号</p>
                     <p class="pdot2">:</p>
-                    <input type="number" class="twiinput2">
+                    <input type="number" class="twiinput2"  v-model="license">
                 </div>
                 <div class="flex">
                     <p class="phead">住所</p>
                     <p class="pdot">:</p>
                     <p style="height: 20px;"></p>
-                    <input type="text" class="soloinput">
+                    <input type="text" class="soloinput"  v-model="address">
                 </div>
                 <div class="flex">
                     <p class="phead">Email</p>
                     <p class="pdot">:</p>
                     <p style="height: 20px;"></p>
-                    <input type="email" class="soloinput">
+                    <input type="email" class="soloinput" placeholder="メールアドレスには「@」を含めてください" v-model="email">
                 </div>
                 <div class="flex">
-                    <p class="phead">支払方法</p>
-                    <p class="pdot">:</p>
-                    <input type="text" class="twiinput">
-                    <p style="height: 20px;"></p>
-                    <p class="pfooter">口座番号</p>
-                    <p class="pdot2">:</p>
-                    <input type="number" class="twiinput2">
+                <p class="phead">支払方法</p>
+                <p class="pdot">:</p>           
+                <select  v-model="payment" id="group" value="0" class="twiinput" >                  
+                    <!-- <option value="0">支払方法選択</option> -->
+                    <option value="0">現金</option>
+                    <option value="1">振り込み</option>
+                </select>
+                <p style="height: 20px;"></p>
+                <p v-if="payment === '1'" class="pfooter">口座番号</p>
+                <p v-if="payment === '1'" class="pdot2">:</p>
+                <input v-if="payment === '1' " v-model="payment_account" type="text" class="twiinput2" >                                 
                 </div>
                 <button type="button" class="confirmToAddBtn" @click="addTenantInfo">追加</button>
             </div>
@@ -163,124 +204,106 @@ export default {
 
 <style lang="scss" scoped>
 .bodyArea {
-    // margin: 20px 300px 20px 300px;
-    width: 800px;
-    margin: 0 auto;
-}
-
-.modalArea{
-    width: 100%;
+  margin: 20px 300px 20px 300px;
 }
 
 .field {
-    // margin-left: 24vw;
-    // margin-right: 24vw;
-    width: 50vw;
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    position: relative;
-
-    .flex {
-        text-align: center;
-        justify-content: center;
-        display: flex;
-    }
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
 }
 
-.tenantAddBtn {
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    padding: 9px 21px;
-    border: 0px solid #45ab71;
-    border-radius: 9px;
-    background: #45ab71;
-    color: #ffffff;
-    text-decoration: none;
+.flex {
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
-.confirmToAddBtn {
-    width: 10vw;
-    position: absolute;
-    left: 260px;
-    top: 300px;
-    display: inline-block;
-    text-align: center;
-    vertical-align: middle;
-    padding: 9px 21px;
-    border: 0px solid #692bff;
-    border-radius: 9px;
-    background: #692bff;
-    color: #ffffff;
-    text-decoration: none;
-}
-
-.SearchBar {
-    margin: 1rem;
-    width: 50vw;
-}
-
-.phead {
-    position: absolute;
-    left: 0;
-}
-
+.phead,
 .pfooter {
-    position: absolute;
-    left: 345px;
+  margin: 0;
+  width: 100px;
 }
 
-.pdot {
-    position: absolute;
-    left: 100px;
-}
-
+.pdot,
 .pdot2 {
-    position: absolute;
-    left: 445px;
-
+  margin: 0;
+  width: 10px;
 }
 
 .twiinput {
-    position: absolute;
-    left: 120px;
-    height: 25px;
-    width: 150px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
 }
 
 .twiinput2 {
-    position: absolute;
-    left: 465px;
-    height: 25px;
-    width: 150px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
-}
-
-.a {
-    position: absolute;
-    left: 465px;
-    height: 25px;
-    width: 150px;
+  height: 25px;
+  width: 150px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
 }
 
 .soloinput {
-    position: absolute;
-    left: 120px;
-    height: 25px;
-    width: 495px;
-    border: 0;
-    border-bottom: 1px;
-    border-color: rgb(100, 165, 3);
-    border-style: solid;
+  height: 25px;
+  width: 495px;
+  border: 0;
+  border-bottom: 1px;
+  border-color: rgb(100, 165, 3);
+  border-style: solid;
+}
+
+.tenantAddBtn {
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #B8D26E;
+  border-radius: 9px;
+  background: #B8D26E;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.tenantAddBtn:hover {
+  background: #A3BD56;
+}
+
+.tenantAddBtn:active {
+  background: #91A944;
+}
+
+.confirmToAddBtn {
+  width: 10vw;
+  margin-left: 40%;
+  margin-top: 2%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding: 9px 21px;
+  border: 0px solid #1962A7;
+  border-radius: 9px;
+  background: #1962A7;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.confirmToAddBtn:hover {
+  background: #0F4C91;
+}
+
+.confirmToAddBtn:active {
+  background: #084476;
+}
+
+.SearchBar {
+  margin: 1rem;
+  width: 50vw;
 }
 </style>

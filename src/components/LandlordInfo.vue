@@ -23,19 +23,15 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+            
             this.landlords = data.landlordList; 
-            console.log(this.landlords);    
+            
                       
             })
         .catch((error) => {
             console.error(error);
         })
-        if (this.searchResult && this.searchResult.length > 0) {
-            console.log(123)          
-            this.searchResult=null
-        } 
-        
+      
     },   
     //點下後轉換網頁
     passLandlordId(input, landlordId) {
@@ -50,15 +46,16 @@ export default {
 
     
   },
-  created(){
-    
-  },
-  mounted(){ 
-    this.getpost();
-  }
+//   created(){
+//     this.getpost();
+//   },
+   mounted(){ 
+     this.getpost();
+   }
 }
 </script>
 <template>
+    
         <div class="infoBox" v-for="landlord in landlords"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">

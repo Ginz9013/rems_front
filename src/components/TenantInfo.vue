@@ -1,7 +1,7 @@
 <script >
 export default {
     props:[      
-            "tenantsearchResult"
+            "tenantSearchResult"
         ],
     components: {
     },
@@ -13,8 +13,9 @@ export default {
   },
   //如果搜尋有新的值
   watch:{
-        "tenantsearchResult":function(){
-            this.Tenant=this.tenantsearchResult
+        "tenantSearchResult":function(){
+            this.Tenants=this.tenantSearchResult
+            
         }
     },
   methods: {    
@@ -24,9 +25,9 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+           
             this.Tenants = data; 
-            console.log(this.Tenants);    
+               
                       
             })
         .catch((error) => {
@@ -88,7 +89,7 @@ export default {
                 <div class="flex">
                     <p class="black">マイナンバー／免許番号</p>
                     <p class="content">:</p>
-                    <p>{{ Tenant.myNumber }}</p>
+                    <p>{{ Tenant.mynumber }}</p>
                 </div>
             </div>
 

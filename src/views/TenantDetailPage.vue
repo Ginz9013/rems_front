@@ -14,7 +14,8 @@ export default {
             modalShow: false,
             isShow: true,
             // 詳細資料
-            tenantDetail:[],
+            tenantDetail:{},
+            paymentMethod: 0 // 預設支付方式為振り込み
            
         }
     },
@@ -46,32 +47,48 @@ export default {
             })
         },
         //詳細資料更新
-        upDate() {        
+        upDate() {     
+            console.log(this.tenantDetail.firstName)   
+            // //轉字串
+             console.log(this.tenantDetail.phone)
+            let number = this.tenantDetail.phone.toString();
+            // console.log(this.tenantDetail.paymentAccount)
+            // let paymentAccount = this.tenantDetail.paymentAccount.toString();
+            // //去除多餘字
+             console.log(number)
+             this.tenantDetail.phone =number.replace(/-/g, '');
+            // this.tenantDetail.paymentAccount =paymentAccount.replace(/-/g, '');
+             console.log(this.tenantDetail.phone)
+
+
             return fetch('http://localhost:8080/reviseTenantInfo', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'       
                 },
                 body: JSON.stringify({
-                    "landlord_id":this.getid,
-                    "first_name":this.tenantDetail.firstName,
-                    "first_name_kana":this.tenantDetail.firstNameKana,
-                    "last_name":this.tenantDetail.lastName,
-                    "last_name_kana":this.tenantDetail.lastNameKana,
-                    "mynumber":this.tenantDetail.myNumber,
+                    "tenantId":this.getTenantId,
+                    "firstName":"123",
+                    "firstNamekana":"123",
+                    "lastName":"123",
+                    "lastNameKana":"123",
+                    //"mynumber":this.tenantDetail.myNumber,
                     "license":this.tenantDetail.license,
                     "phone":this.tenantDetail.phone,
                     "email":this.tenantDetail.email,
-                    "birth_date":this.tenantDetail.birthDate,
+                    "birthDate":this.tenantDetail.birthDate,
                     "address":this.tenantDetail.address,
-                    "payment":paymentMethod,
+                    "payment":this.tenantDetail.payment,
                     "payment_account":this.tenantDetail.paymentAccount
                 })
                 })
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data);
-                    this.landlordDe = data.landlordList;
+                    this.tenantDetail = data.tenant;
+                    
+                    alert(data.errorMessage)                
+                    this.change()
                                             
                     })
                 .catch((error) => {
@@ -81,6 +98,7 @@ export default {
     },
     mounted(){
         this.getTenant()
+        console.log(this.tenantDetail);
     }
 }
 </script>
@@ -129,8 +147,8 @@ export default {
             <div class="flex">
                 <p class="phead">マイナンバー</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{tenantDetail.myNumber }}</p>
-                <input v-else type="number" class="twiinput" v-model="tenantDetail.myNumber">
+                <p v-if="isShow" class="readding">{{tenantDetail.mynumber }}</p>
+                <input v-else type="number" class="twiinput" v-model="tenantDetail.mynumber">
 
                 <p style="height: 20px;"></p>
                 <p class="pfooter">免許番号</p>
@@ -152,26 +170,33 @@ export default {
                 <p v-if="isShow" class="soloreadding">{{tenantDetail.email }}</p>
                 <input v-else type="email" class="soloinput" v-model="tenantDetail.email">
             </div>
+            <!-- 支付方式 -->
             <div class="flex">
                 <p class="phead">支払方法</p>
                 <p class="pdot">:</p>
-                <p v-if="isShow" class="readding">{{tenantDetail.payment }}</p>
-                <select v-else =!isShow v-model="paymentMethod" id="group" value="1" class="twiinput" >
-                    <!-- <option value="0">支払方法選択</option> -->
-                    <option value="0">振り込み</option>
-                    <option value="1">現金</option>
-                </select>
+              
+                <template v-if="isShow" v-model="tenantDetail.payment">
+                <p v-if="tenantDetail.payment === 0" class="readding">現金</p>
+                <p v-else-if="tenantDetail.payment === 1" class="readding" value="1">振り込み</p>
+                </template>
+                <select v-else class="twiinput" v-model="tenantDetail.payment" id="group">
+                <option value="0">現金</option>
+                <option value="1">振り込み</option>
+                </select>    
                 <p style="height: 20px;"></p>
-                <p v-if="paymentMethod === '1'" class="pfooter">口座番号</p>
-                <p v-if="paymentMethod === '1'" class="pdot2">:</p>
-                <p v-if="paymentMethod === '1' && isShow" class="readding2">text</p>
-                <p v-if="paymentMethod === '1' && isShow" class="readding2">text</p>
-                <input v-else-if="paymentMethod === '1' && !isShow" v-model="accountNumber" type="number" class="twiinput2">
+                <template v-if="tenantDetail.payment === 1 ">
+                <p class="pfooter">口座番号</p>
+                <p class="pdot2">:</p>
+                <p class="readding2">{{ tenantDetail.paymentAccount }}</p>
+                </template>                 
+                <input v-else-if="tenantDetail.payment === '1' && !isShow" v-model="tenantDetail.paymentAccount" type="number" class="twiinput2"/>
+                
             </div>
+            
             <div class="flex" style="width: 615px;">
                 <button @click="isShow ? change() : upDate()" type="button" class="btnL"> {{ isShow ? "情 報 更新" : "情 報 確 認" }}</button>
                 <p style="height: 20px;"></p>
-                <button type="button" class="btnR">物 件 追 加</button>
+                <button type="button" class="btnR">契 約 追 加</button>
             </div>
 
             <div>
@@ -269,6 +294,7 @@ export default {
         border-bottom: 1px;
         border-color: rgb(100, 165, 3);
         border-style: solid;
+        appearance: none;
     }
 
     .twiinput2 {
@@ -291,6 +317,7 @@ export default {
         border-bottom: 1px;
         border-color: rgb(100, 165, 3);
         border-style: solid;
+        
     }
 
     .readding2 {
@@ -343,4 +370,6 @@ export default {
     height: 1px;
     background-color: rgb(100, 165, 3);
 }
+
+
 </style>

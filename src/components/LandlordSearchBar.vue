@@ -1,9 +1,12 @@
 <script>
-import detail  from "../components/TenantInfo.vue"
+import detail  from "../components/LandlordInfo.vue"
 export default {
-    // 請帶入搜尋條件陣列，名稱: searchCondition ，下拉選單會自動帶入
+     // 1. 請帶入搜尋條件陣列，名稱: conditionList ，下拉選單會自動帶入
+    // 2. 請@searchResponse，會回傳一個物件，包含搜索條件跟搜尋關鍵字
+    // 範例 <SearchBar :conditionList="['物件','借主', '契約コード']" @searchResponse="getInfo">
     props: [
         "searchCondition",
+        "conditionList"
         
 ],
     components: {
@@ -12,10 +15,15 @@ export default {
     data() {
         return {
             placeholderString : null,
-            search:"",
-            result:[],
-            textAAA:123
-        }
+             // 回傳的物件格式
+        //      searchCondition: {
+        //         condition: this.conditionList[0],
+        //         keyWord: ""
+        //     },
+        //     search:"",
+        //     result:[],
+        //     textAAA:123
+         }
     },
     methods:{
         // 搜尋
@@ -43,7 +51,23 @@ export default {
                     console.error(error);
                 })
         },
-       
+        switchCondition(item) {
+            this.searchCondition.condition = item;
+            console.log(this.searchCondition.condition);
+        },
+        returnCondition() {
+            this.$emit("searchResponse", this.searchCondition)
+        }
+    },
+    mounted() {
+        // 組搜索欄位 placeholder 字串
+        this.placeholderString  = this.conditionList.map(item => {
+            if(item === this.conditionList[this.conditionList.length - 1]) {
+                return item
+            }
+
+            return item + " / "
+        }).join("")
 
     },
     mounted() {
