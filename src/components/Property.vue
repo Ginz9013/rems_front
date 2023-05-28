@@ -20,6 +20,7 @@ export default {
             response:[],
             response2:"",
             rentalStatus:"",
+            image64:"",
 
             modalShow: false,
             isShow:false,
@@ -31,6 +32,17 @@ export default {
         }
     },
     methods: {
+        //轉圖片成base64
+        loadimage(e){
+            console.log(e.target.files[0])
+            const reader = new FileReader();
+
+            reader.readAsDataURL(e.target.files[0]);
+
+            reader.onload = (e) => {
+                console.log(e.target.result)
+            }
+        },
 
         //抓ID給畫面選染資訊
         getPropertyByPropertyId(){
@@ -38,6 +50,7 @@ export default {
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
+                //ContractItem那一頁也要接相同的ID
                 //接上一頁傳進來的物件ID
                 "propertyId":1
             }
@@ -59,6 +72,7 @@ export default {
             let typeList = ["アパート",  "マンション", "一戶建て"]
             this.type = typeList[data.propertyList[0].type];
             
+            
             let layoutList = [
                 "ワンルーム","1K","1DK","1LDK",
                 "2K","2DK","2LDK",
@@ -67,9 +81,11 @@ export default {
             ];
             this.layout = layoutList[data.propertyList[0].layout];
             
-            console.log(data.propertyList[0])
-            console.log(data.propertyList[0].rentalStatus)
-            
+            // console.log(data.propertyList[0])
+            // console.log(data.propertyList[0].rentalStatus)
+            console.log(this.image64)
+            this.image64 = "data:image/png;base64," + data.propertyList[0].propertyImage
+
             if(data.propertyList[0].rentalStatus === true ){
                 this.rentalStatus = "出租中"
             } else {
@@ -148,13 +164,13 @@ export default {
                </div>
                <div class="carousel-inner">
                    <div class="carousel-item active">
-                   <img src="../../picture/16691863_6.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                    <div class="carousel-item">
-                   <img src="../../picture/20190122-075307_U5965_M493824_81f5.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                    <div class="carousel-item">
-                   <img src="../../picture/md-035201caed5b8e631e40cde56958315e.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                </div>
                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -195,7 +211,7 @@ export default {
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
-                        <p>{{response2.rentalPrice}}</p>
+                        <p>{{response2.rentalPrice}}日圓</p>
                         <p>{{response2.keyMoney}} 個月</p>
                         <p>{{response2.deposit}} 個月</p>
                         <p>{{response2.imageBytesString}}</p>
@@ -267,11 +283,11 @@ export default {
                                     <label class="form-check-label" for="inlineRadio2">未出租</label>
                                 </div>
                             </div> -->
-                        <input type="number" v-model="rentalPrice">
-                        <input type="number" v-model="keyMoney">
-                        <input type="number" v-model="deposit">
-                        <input type="number" v-model="imageBytesString">
-                    
+                        <div><input type="number" v-model="rentalPrice">日圓</div>
+                        <div><input type="number" v-model="keyMoney">個月</div>
+                        <div><input type="number" v-model="deposit">個月</div>
+                        <div><input type="file" @change="loadimage" class="push"></div>
+
                     </div>
                 </div>
                 <div class="aaa">
@@ -419,6 +435,9 @@ export default {
             .bbb2{
                 width: 80%;
                 text-align: center;
+                .push{
+                    width: 80%;
+                }
                 input{
                     // width: 90%;
                     margin-bottom: 9px;

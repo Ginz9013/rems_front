@@ -32,6 +32,7 @@ export default {
 
     getContractID(){
         const body = {
+            //Property那一頁要接一樣的ID
             //接上一頁的物件ID
                 "propertyID":12
             }
@@ -78,10 +79,7 @@ export default {
             <p>契約時間:</p>
         </div>
         <div>
-            <p>{{ item.start_year }}/{{ item.start_month }}/{{ item.start_day }}</p>
-        </div>
-        <div>
-            <p>{{ item.end_year }}/{{ item.end_month }}/{{ item.end_day }}</p>
+            <p>{{ item.start_year }}/{{ item.start_month }}/{{ item.start_day }} ~ {{ item.end_year }}/{{ item.end_month }}/{{ item.end_day }}</p>
         </div>
         
         <div>
