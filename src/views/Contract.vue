@@ -18,6 +18,10 @@ export default {
     switchModal() {
       this.modalShow = !this.modalShow
     },
+    search(res){
+      console.log(res.keyWord);
+      console.log(res.condition);
+    }
   }
 }
 </script>
@@ -25,6 +29,7 @@ export default {
   <div class="d-flex flex-column justify-content-center my-0 mx-auto" style="width: 60%">
     <SearchBar
       :conditionList="['物件', '借主', '貸主']"
+      @searchResponse="search"
       class="mt-8 mx-auto"
       style="width: 80%"
     />

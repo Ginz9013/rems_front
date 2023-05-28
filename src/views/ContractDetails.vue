@@ -13,11 +13,9 @@ export default {
       modalShow: false,
       delectModal: false,
       reviseModal: false,
-      revisePaymentDeadline: null,
       addModal: false,
       // addPayment():用在新增方法的變數
       addType: null,
-      addDate: null,
       addrent: null,
       addDeadline: null,
       addStatus: null,
@@ -45,7 +43,11 @@ export default {
       paymentArray: [],
       paymentId: null,
       // 修改入金狀態
-      reviseStatus: null
+      revisePaymentDeadline: null,
+      revisePaymentStatus: null,
+      revisePaymentId: null,
+      reviseStatus: null,
+      addDate: null,
     }
   },
   methods: {
@@ -55,9 +57,11 @@ export default {
     delectSwitch() {
       this.delectModal = !this.delectModal
     },
-    reviseSwitch(paymentDeadline) {
+    reviseSwitch(payment_deadline, payment_id, payment_status) {
       this.reviseModal = !this.reviseModal
-      this.revisePaymentDeadline = paymentDeadline
+      this.revisePaymentDeadline = payment_deadline
+      this.revisePaymentStatus = payment_status
+      this.revisePaymentId = payment_id
     },
     addSwitch() {
       this.addModal = !this.addModal
@@ -93,9 +97,8 @@ export default {
 
       let body = {
         paymentType: this.addType,
-        paymentDeadline: this.addDate,
+        paymentDeadline: this.addDeadline,
         amount: this.addrent,
-        paymentDate: this.addDeadline,
         paymentStatus: this.addStatus,
         contractID: this.contract_id
       }
@@ -156,7 +159,7 @@ export default {
         contractID: this.contract_id
       }
 
-      fetch('http://localhost:8080/FindContractDetailsData', {
+      fetch('http://localhost:8080/findContractDetailsData', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -186,7 +189,7 @@ export default {
         contract_id: this.contract_id
       }
 
-      fetch('http://localhost:8080/ContractDetailFPayments', {
+      fetch('http://localhost:8080/contractDetailFPayments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -197,19 +200,29 @@ export default {
           return response.json()
         })
         .then((data) => {
-          this.paymentArray = data.contractDetailPEResponseAList
+          // this.paymentArray = data.contractDetailPEResponseAList
+          this.paymentArray = data.contractDetailPEResponseAList.map((value) => {
+            if (value.payment_date === null) {
+              value.payment_date = null
+            }
+            return value
+          })
           console.log(this.paymentArray)
         })
     },
     // 更新入金狀態
     updatePayment(payment_id) {
+
+      this.reviseModal = !this.reviseModal
+
       let body = {
         paymentStatus: this.reviseStatus,
-        paymentDate:this.addDate,
-        paymentID: payment_id
+        paymentDate: this.addDate,
+        paymentID: this.revisePaymentId
       }
       // console.log(this.reviseStatus)
-      // console.log(payment_id)
+      // console.log(this.addDate)
+      // console.log(this.payment_id)
 
       fetch('http://localhost:8080/update_payment_info', {
         method: 'POST',
@@ -226,7 +239,7 @@ export default {
         })
     },
     // 契約解約
-    cancelContract(){
+    cancelContract() {
       let body = {
         contractID: this.contract_id,
         propertyID: 29
@@ -345,18 +358,18 @@ export default {
       >
         解約する
       </button>
-      <ModalView v-if="delectModal" :title="'契約の削除'" @close="delectSwitch">
+      <ModalView v-if="delectModal" :title="'契約の解約'" @close="delectSwitch">
         <div style="height: 150px; width: 350px">
-          <h4>この契約を削除しますか？</h4>
+          <h4 class="text-center mt-5">この契約を解除しますか？</h4>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-danger px-5 fw-bolder text-white">削除</button>
+            <button type="button" class="btn btn-danger px-5 fw-bolder text-white mt-5">解除</button>
           </div>
         </div>
       </ModalView>
     </div>
   </div>
 
-  <div class="payment-area" style="height: 300px">
+  <div class="payment-area" style="height: 300px; overflow-x: auto">
     <div class="d-flex justify-content-center">
       <h4 class="fw-bolder text-center mt-5 text-primary">入金情報</h4>
       <button @click="switchModal" type="button" class="btn btn-primary fw-bolder m-5 px-3 py-0">
@@ -382,7 +395,7 @@ export default {
             <dt class="col-sm-1 text-primary">：</dt>
             <dt class="col-sm-6">
               <input
-                v-model="addDate"
+                v-model="addDeadline"
                 type="date"
                 aria-describedby="inputGroup-sizing-sm"
                 class="form-control"
@@ -401,18 +414,6 @@ export default {
               />
             </dt>
           </dl>
-          <!-- <dl class="row d-flex justify-content-center">
-            <dt class="col-sm-2 text-primary">入金日：</dt>
-            <dt class="col-sm-1 text-primary">：</dt>
-            <dt class="col-sm-6">
-              <input
-                v-model="addDeadline"
-                type="date"
-                aria-describedby="inputGroup-sizing-sm"
-                class="form-control"
-              />
-            </dt>
-          </dl> -->
           <dl class="row d-flex justify-content-center">
             <dt class="col-sm-2 text-primary">入金状態</dt>
             <dt class="col-sm-1 text-primary">：</dt>
@@ -449,19 +450,23 @@ export default {
       <p class="col-sm-2">{{ paymentItem.payment_status }}</p>
       <div class="col-sm-2">
         <button
-          @click="reviseSwitch(paymentItem.payment_deadline)"
+          @click="reviseSwitch(paymentItem.payment_deadline, paymentItem.payment_id, paymentItem.payment_status)"
           type="button"
           class="btn btn-secondary text-white fw-bolder px-3 py-0"
         >
           状態更新
         </button>
         <ModalView v-if="reviseModal" :title="'入金状態の更新'" @close="reviseSwitch">
-          <div class="" style="height: 240px; width: 400px">
+          <div class="" style="height: 350px; width: 450px">
             <div class="row ms-4 mt-4">
-              <dt class="col-sm-4 text-primary">支払期限 :</dt>
+              <dt class="col-sm-4 text-primary">支払期限：</dt>
               <p class="col-sm-4">{{ revisePaymentDeadline }}</p>
             </div>
-            <div class="row d-flex  mt-3">
+            <div class="row ms-4 mt-4">
+              <dt class="col-sm-4 text-primary">元入金状態：</dt>
+              <p class="col-sm-4">{{ revisePaymentStatus }}</p>
+            </div>
+            <div class="row ms-4 mt-4">
               <dt class="col-sm-4 text-primary">入金状態：</dt>
               <dt class="d-flex justify-content-center mt-3">
                 <div class="mx-3">
@@ -501,13 +506,13 @@ export default {
               <dt class="col-sm-4 text-primary">入金日：</dt>
               <dt class="col-sm-7">
                 <input
-                  v-model="addDeadline"
+                  v-model="addDate"
                   type="date"
                   aria-describedby="inputGroup-sizing-sm"
                   class="form-control"
                 />
               </dt>
-              <div class="mt-6">
+              <div class="mt-6 d-flex justify-content-center">
                 <button
                   @click="updatePayment(paymentItem.payment_id)"
                   type="button"
