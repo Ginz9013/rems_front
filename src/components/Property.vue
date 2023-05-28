@@ -10,6 +10,7 @@ export default {
         SearchProperty,
 
     },
+    props: ["property_id"],
     data() {
         return {
             rentalPrice :'',
@@ -39,7 +40,7 @@ export default {
             this.btnShow = !this.btnShow
             const body = {
                 //接上一頁傳進來的物件ID
-                "propertyId":1
+                "propertyId":this.property_id
             }
 
             fetch("http://localhost:8080/get_property_by_property_id",{

@@ -2,50 +2,47 @@
 import SearchProperty from "../components/SearchProperty.vue";
 import Wire from "../components/Wire.vue";
 import properties from "../components/properties.vue"
+import SearchBar from "../components/SearchBar.vue";
 export default {
     components: {
         SearchProperty,
         Wire,
-        properties
+        properties,
+        SearchBar
     },
     data() {
         return {
+            propertyList: [],
             selectedOption: '2',
-            prefecture: null,
-            district0: null,
-            district1: null,
-            district2: null,
-            district3: null,
-            district4: null,
-            district5: null,
-            district6: null,
-            district7: null,
-            district8: null,
+            districtList: [],
+            typeList: [],
+            layoutList: [],
             highPrice: null,
             lowPrice: null,
-            type0: null,
-            type1: null,
-            type2: null,
-            layout0: null,
-            layout1: null,
-            layout2: null,
-            layout3: null,
-            layout4: null,
-            layout5: null,
-            layout6: null,
-            layout7: null,
-            layout8: null,
-            layout9: null,
-            layout10: null,
-            layout11: null,
-            layout12: null,
-            layout13: null,
             keyMoney: 0,
             deposit: 0,
-            propertiesList: []
         }
     },
     methods: {
+        getALL() {
+            const body = {
+            }
+            fetch("http://localhost:8080/get_property_all", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body)
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data)
+                    console.log(data.propertyList)
+                    this.propertyList = data.propertyList;
+                })
+        },
         search() {
             if (this.selectedOption === '1') {
                 this.getTokyo();
@@ -54,36 +51,59 @@ export default {
             }
         },
         getKyoto() {
-            const body = {
-                "prefecture": "京都府",
-                "district0": this.district0,
-                "district1": this.district1,
-                "district2": this.district2,
-                "district3": this.district3,
-                "district4": this.district4,
-                "district5": this.district5,
+            let districtKyoto = this.districtList
+            let typeKyoto = this.typeList
+            let layoutKyoto = this.layoutList
+            if(this.keyMoney === true){
+                this.keyMoney = null
+            }else{
+                this.keyMoney=0
+            }
+            if(this.deposit === true){
+                this.deposit = null
+            }else{
+                this.deposit=0
+            }
+            let body = {
+                "prefecture":"京都府",
+                district0: null,
+                district1: null,
+                district2: null,
+                district3: null,
+                district4: null,
+                district5: null,
                 "highPrice": this.highPrice,
                 "lowPrice": this.lowPrice,
-                "type0": this.type0,
-                "type1": this.type1,
-                "type2": this.type2,
-                "layout0": this.layout0,
-                "layout1": this.layout1,
-                "layout2": this.layout2,
-                "layout3": this.layout3,
-                "layout4": this.layout4,
-                "layout5": this.layout5,
-                "layout6": this.layout6,
-                "layout7": this.layout7,
-                "layout8": this.layout8,
-                "layout9": this.layout9,
-                "layout10": this.layout10,
-                "layout11": this.layout11,
-                "layout12": this.layout12,
-                "layout13": this.layout13,
+                type0: null,
+                type1: null,
+                type2: null,
+                layout0: null,
+                layout1: null,
+                layout2: null,
+                layout3: null,
+                layout4: null,
+                layout5: null,
+                layout6: null,
+                layout7: null,
+                layout8: null,
+                layout9: null,
+                layout10: null,
+                layout11: null,
+                layout12: null,
+                layout13: null,
                 "keyMoney": this.keyMoney,
                 "deposit": this.deposit
             }
+            districtKyoto.forEach((item, index) => {
+                body[`district${index}`] = item
+            })
+            typeKyoto.forEach((item, index) => {
+                body[`type${index}`] = item
+            })
+            layoutKyoto.forEach((item, index) => {
+                body[`layout${index}`] = item
+            })
+
             fetch("http://localhost:8080/get_property_by_kyoto_prefecture", {
                 method: "POST",
                 headers: {
@@ -92,41 +112,56 @@ export default {
                 body: JSON.stringify(body)
             })
                 .then((response) => {
-
                     return response.json();
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertyList = data.propertyList
+                    if(data.errorCode === '400'){
+                        alert(data.message)
+                    }
                 })
-        }, getTokyo() {
+        },
+        getTokyo() {
+            let districtKyoto = this.districtList
+            let typeKyoto = this.typeList
+            let layoutKyoto = this.layoutList
             const body = {
                 "prefecture": "東京都",
-                "district0": this.district6,
-                "district1": this.district7,
-                "district2": this.district8,
+                district6: null,
+                district7: null,
+                district8: null,
                 "highPrice": this.highPrice,
                 "lowPrice": this.lowPrice,
-                "type0": this.type0,
-                "type1": this.type1,
-                "type2": this.type2,
-                "layout0": this.layout0,
-                "layout1": this.layout1,
-                "layout2": this.layout2,
-                "layout3": this.layout3,
-                "layout4": this.layout4,
-                "layout5": this.layout5,
-                "layout6": this.layout6,
-                "layout7": this.layout7,
-                "layout8": this.layout8,
-                "layout9": this.layout9,
-                "layout10": this.layout10,
-                "layout11": this.layout11,
-                "layout12": this.layout12,
-                "layout13": this.layout13,
+                type0: null,
+                type1: null,
+                type2: null,
+                layout0: null,
+                layout1: null,
+                layout2: null,
+                layout3: null,
+                layout4: null,
+                layout5: null,
+                layout6: null,
+                layout7: null,
+                layout8: null,
+                layout9: null,
+                layout10: null,
+                layout11: null,
+                layout12: null,
+                layout13: null,
                 "keyMoney": this.keyMoney,
                 "deposit": this.deposit
             }
+            districtKyoto.forEach((item, index) => {
+                body[`district${index}`] = item
+            })
+            typeKyoto.forEach((item, index) => {
+                body[`type${index}`] = item
+            })
+            layoutKyoto.forEach((item, index) => {
+                body[`layout${index}`] = item
+            })
             fetch("http://localhost:8080/get_property_by_tokyo_prefecture", {
                 method: "POST",
                 headers: {
@@ -140,18 +175,79 @@ export default {
                 })
                 .then((data) => {
                     console.log(data)
-                    this.propertiesList = data.propertyList;
+                    this.propertyList = data.propertyList
+                    if(data.errorCode === '400'){
+                        alert(data.message)
+                    }
                 })
 
         },
+        searchByKeyWord(res) {
+            let condition = null;
+            console.log(res.keyWord);
+            console.log(res.condition);
 
-    }
+            let body = null;
+
+            if (res.condition === "物件名稱") {
+                condition = 'property_name';
+
+                body = {
+                    "propertyName": res.keyWord,
+                }
+            }
+            if (res.condition === "貸主姓名") {
+                condition = 'landlord_name';
+
+                body = {
+                    "landlordName": res.keyWord,
+                }
+            }
+            if (res.condition === "借主姓名") {
+                condition = 'tenant_name'
+                body = {
+                    "tenantName": res.keyWord,
+                }
+            }
+            if (res.condition === "契約コード") {
+                condition = 'contract_id'
+                body = {
+                    "contractId": res.keyWord,
+                }
+            }
+            fetch(`http://localhost:8080/get_property_by_${condition}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(body)
+            })
+                .then((response) => {
+
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log(data)
+                    this.propertyList = data.propertyList
+                })
+        }
+    },
+    mounted() {
+        this.getALL();
+        this.districtList= []
+    },
+    watch: {
+    selectedOption() {
+      this.districtList = []; // 在选项变化时重置 districtList
+    },
+  },
 }
 </script>
 
 <template >
     <div class="serch">
-        <SearchProperty :searchCondition="['物件', '貸主', '借主', '契約コード']" />
+        <!-- <SearchProperty :searchCondition="['物件', '貸主', '借主', '契約コード']" /> -->
+        <SearchBar :conditionList="['物件名稱', '貸主姓名', '借主姓名', '契約コード']" @searchResponse="searchByKeyWord" />
     </div>
     <div class="flex">
         <div class="checkbox">
@@ -169,46 +265,46 @@ export default {
                 <div v-if="selectedOption === '2'" class="flex">
                     <div class="down down2">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="中京区" id="flexCheckDefault"
-                                v-model="district0">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="中京区" value="京都市中京区" id="flexCheckDefault1"
+                                v-model="districtList">
+                            <label class="form-check-label" for="中京区">
                                 中京区
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="左京区" id="flexCheckDefault"
-                                v-model="district1">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="左京区" value="左京区" id="flexCheckDefault2"
+                                v-model="districtList">
+                            <label class="form-check-label" for="左京区">
                                 左京区
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="右京区" id="flexCheckDefault"
-                                v-model="district2">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="右京区" value="京都市右京区" id="flexCheckDefault3"
+                                v-model="districtList">
+                            <label class="form-check-label" for="右京区">
                                 右京区
                             </label>
                         </div>
                     </div>
                     <div class="down">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="上京区" id="flexCheckDefault"
-                                v-model="district3">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="上京区" value="京都市上京区" id="flexCheckDefault4"
+                                v-model="districtList">
+                            <label class="form-check-label" for="上京区">
                                 上京区
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="下京区" id="flexCheckDefault"
-                                v-model="district4">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="下京区" value="下京区" id="flexCheckDefault5"
+                                v-model="districtList">
+                            <label class="form-check-label" for="下京区">
                                 下京区
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="伏見区" id="flexCheckDefault"
-                                v-model="district5">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="伏見区" value="伏見区" id="flexCheckDefault6"
+                                v-model="districtList">
+                            <label class="form-check-label" for="伏見区">
                                 伏見区
                             </label>
                         </div>
@@ -216,23 +312,23 @@ export default {
                 </div>
                 <div v-else class="down1">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="中央区" id="flexCheckDefault"
-                            v-model="district6">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="中央区" value="中央区" id="flexCheckDefault"
+                            v-model="districtList">
+                        <label class="form-check-label" for="中央区">
                             中央区
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="新宿区" id="flexCheckDefault"
-                            v-model="district7">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="新宿区" value="新宿区" id="flexCheckDefault"
+                            v-model="districtList">
+                        <label class="form-check-label" for="新宿区">
                             新宿区
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="港区" id="flexCheckDefault"
-                            v-model="district8">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="港区" value="港区" id="flexCheckDefault"
+                            v-model="districtList">
+                        <label class="form-check-label" for="港区">
                             港区
                         </label>
                     </div>
@@ -241,18 +337,20 @@ export default {
             <div>
                 <p class="wire">賃料</p>
                 <Wire />
-                <input class="input1" type="number" v-model="highPrice">
-                <input class="input2" type="number" v-model="lowPrice">
+                <input class="input1" type="number" v-model="highPrice" placeholder="最高價格">
+                <input class="input2" type="number" v-model="lowPrice" placeholder="最低價格">
                 <div class="down down2">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" v-model="deposit">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="敷金" value=null id="flexCheckDefault"
+                            v-model="deposit">
+                        <label class="form-check-label" for="敷金">
                             敷金なし
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" v-model="keyMoney">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="礼金" value=null id="flexCheckDefault"
+                            v-model="keyMoney">
+                        <label class="form-check-label" for="礼金">
                             礼金なし
                         </label>
                     </div>
@@ -263,20 +361,23 @@ export default {
                 <Wire />
                 <div class="down">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value=0 id="flexCheckDefault" v-model="type0">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="マンション" value=0 id="flexCheckDefault"
+                            v-model="typeList">
+                        <label class="form-check-label" for="マンション">
                             マンション
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value=1 id="flexCheckDefault" v-model="type1">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="アパート" value=1 id="flexCheckDefault"
+                            v-model="typeList">
+                        <label class="form-check-label" for="アパート">
                             アパート
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value=2 id="flexCheckDefault" v-model="type2">
-                        <label class="form-check-label" for="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="一戸建て" value=2 id="flexCheckDefault"
+                            v-model="typeList">
+                        <label class="form-check-label" for="一戸建て">
                             一戸建て
                         </label>
                     </div>
@@ -288,112 +389,112 @@ export default {
                 <div class="flex">
                     <div class="down ">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=0 id="flexCheckDefault"
-                                v-model="layout0">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="ワンルーム" value=0 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="ワンルーム">
                                 ワンルーム
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=1 id="flexCheckDefault"
-                                v-model="layout1">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="1K" value=1 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="1K">
                                 1K
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=2 id="flexCheckDefault"
-                                v-model="layout2">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="1DK" value=2 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for=" 1DK">
                                 1DK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=3 id="flexCheckDefault"
-                                v-model="layout3">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="1LDK" value=3 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="1LDK">
                                 1LDK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=4 id="flexCheckDefault"
-                                v-model="layout4">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="2K" value=4 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="2K">
                                 2K
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=5 id="flexCheckDefault"
-                                v-model="layout5">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="2DK" value=5 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="2DK">
                                 2DK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=6 id="flexCheckDefault"
-                                v-model="layout6">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="2LDK" value=6 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="2LDK">
                                 2LDK
                             </label>
                         </div>
                     </div>
                     <div class="down">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=7 id="flexCheckDefault"
-                                v-model="layout7">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="3K" value=7 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="3K">
                                 3K
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=8 id="flexCheckDefault"
-                                v-model="layout8">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="3DK" value=8 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="3DK">
                                 3DK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=9 id="flexCheckDefault"
-                                v-model="layout9">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="3LDK" value=9 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="3LDK">
                                 3LDK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=10 id="flexCheckDefault"
-                                v-model="layout10">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="4K" value=10 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="f4K">
                                 4K
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=11 id="flexCheckDefault"
-                                v-model="layout11">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="4DK" value=11 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="4DK">
                                 4DK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=12 id="flexCheckDefault"
-                                v-model="layout12">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="4LDK" value=12 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="4LDK">
                                 4LDK
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value=13 id="flexCheckDefault"
-                                v-model="layout13">
-                            <label class="form-check-label" for="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" name="4LDK以上" value=13 id="flexCheckDefault"
+                                v-model="layoutList">
+                            <label class="form-check-label" for="4LDK以上">
                                 4LDK以上
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="btn btn-primary px-5" type="button" @click="search">検索</button>
+            <button class="btnSearch btn btn-primary px-5" type="button" @click="search">検索</button>
         </div>
         <div class="property">
-            <properties />
+            <properties :propertyList="propertyList" />
         </div>
     </div>
 </template>
@@ -401,8 +502,12 @@ export default {
 
 <style  scoped> .serch {
      margin-left: 350px;
-     margin-top: 50px;
+     margin-top: 30px;
      width: 800px;
+ }
+
+ .btnSearch {
+     margin-top: -20px;
  }
 
  .property {
@@ -410,8 +515,8 @@ export default {
  }
 
  .checkbox {
-     margin-top: 50px;
-     margin-bottom: 50px;
+     margin-top: 30px;
+     margin-bottom: 80px;
      margin-left: 300px;
      height: 800px;
      width: 250px;
