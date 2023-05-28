@@ -8,7 +8,7 @@ export default {
   data() {
     return {
       // selectContract
-      contractList: [],
+      // contractList: [],
       // selectContractDetail
       infoList: [
         {
@@ -37,19 +37,19 @@ export default {
         params: { contract_id: contractId }
       })
     },
-    selectContract() {
-      fetch('http://localhost:8080/getAllContracts', {})
-        .then((response) => {
-          return response.json()
-        })
-        .then((data) => {
-          console.log(data)
-          this.contractList = data.contractResponse
-        })
-    },
+    // selectContract() {
+    //   fetch('http://localhost:8080/getAllContracts', {})
+    //     .then((response) => {
+    //       return response.json()
+    //     })
+    //     .then((data) => {
+    //       console.log(data)
+    //       this.contractList = data.contractResponse
+    //     })
+    // },
   },
   mounted() {
-    this.selectContract()
+    // this.selectContract()
     
   }
 }
@@ -60,7 +60,7 @@ export default {
     v-bind:key="item.contract_id"
     :value="item.contract_id"
     @click="switchURL($event, item.contract_id)"
-    class="d-flex+ justify-content-center border border-secondary mt-3"
+    class="d-flex+ justify-content-center border border-secondary my-5 "
     style="width: 600px; height: 130px"
   >
     <h6 class="col-sm-10 text-start ms-6 mt-3 fs-6 fw-bold">{{ item.property_name }}</h6>
