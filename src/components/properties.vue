@@ -5,7 +5,7 @@ export default {
     components: {
         SearchProperty,
     },
-    props: ["propertyList"],
+    props: ["propertyList","image64"],
     data() {
         return {
             
@@ -35,7 +35,8 @@ export default {
 <template >
     <div v-for="item in propertyList" class="properties"  :key="property_id" @click="switchURL($event, item.property_id)">
         <div class="flex">
-            <div class="img">圖片</div>
+            <img :src="image64" class="img">
+            <!-- <div class="img" src="image64">圖片</div> -->
             <div class="name">
                 <h1 class="h1">{{ item.propertyName }}</h1>
             </div>

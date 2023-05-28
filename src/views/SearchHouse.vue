@@ -21,6 +21,7 @@ export default {
             lowPrice: null,
             keyMoney: 0,
             deposit: 0,
+            image64:""
         }
     },
     methods: {
@@ -40,7 +41,9 @@ export default {
                 .then((data) => {
                     console.log(data)
                     console.log(data.propertyList)
+                    console.log(this.image64)
                     this.propertyList = data.propertyList;
+                    this.image64 ="data:image/png;base64," + data.propertyList[0].propertyImage
                 })
         },
         search() {
