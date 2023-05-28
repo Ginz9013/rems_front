@@ -28,7 +28,13 @@ export default {
 
             type: "",
             layout:"",
-            rentalStatus:""
+            rentalStatus:"",
+
+            //這些資料寫在更新方法裡，目前如果沒更新取不到
+            landlordFirstName:"", 
+            landlordLastName :"",
+            tenantFirstName :"",
+            tenantLastName:"",
         }
     },
     methods: {
@@ -83,7 +89,7 @@ export default {
             
             // console.log(data.propertyList[0])
             // console.log(data.propertyList[0].rentalStatus)
-            console.log(this.image64)
+            // console.log(this.image64)
             this.image64 = "data:image/png;base64," + data.propertyList[0].propertyImage
 
             if(data.propertyList[0].rentalStatus === true ){
@@ -91,8 +97,6 @@ export default {
             } else {
                 this.rentalStatus = "未租中"
             }
-
-            console.log(data.propertyList[0].layout);
         })
         .catch(err =>console.log(err))
             
@@ -137,6 +141,11 @@ export default {
             console.log(data);
             this.response = data;
             console.log(this.response.message);
+            this.landlordFirstName = data.updatePropertyVo.landlordFirstName;
+            this.landlordLastName = data.updatePropertyVo.landlordLastName;
+            this.tenantFirstName = data.updatePropertyVo.tenantFirstName;
+            this.tenantLastName = data.updatePropertyVo.tenantLastName;
+
 
             alert('更新物件：' + this.response.message);
         })
@@ -206,11 +215,11 @@ export default {
                         <p>上傳圖片</p>
                     </div>
                     <div class="bbb2">
-                        <p>{{ response2.propertyName }}</p>
+                        <p>{{response2.propertyName}}</p>
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
-                        <p>{{ rentalStatus }}</p>
+                        <p>{{rentalStatus}}</p>
                         <p>{{response2.rentalPrice}}日圓</p>
                         <p>{{response2.keyMoney}} 個月</p>
                         <p>{{response2.deposit}} 個月</p>
@@ -231,8 +240,8 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>賃主姓名</p>
-                        <p>借主姓名</p>
+                        <p>{{landlordFirstName}}{{ landlordLastName }}</p>
+                        <p>{{tenantFirstName}}{{ tenantLastName }}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
@@ -303,8 +312,8 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>賃主姓名</p>
-                        <p>借主姓名</p>
+                        <p>{{landlordFirstName}}{{ landlordLastName }}</p>
+                        <p>{{tenantFirstName}}{{ tenantLastName }}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
