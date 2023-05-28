@@ -21,6 +21,7 @@ export default {
             response:[],
             response2:"",
             rentalStatus:"",
+            image64:"",
 
             modalShow: false,
             isShow:false,
@@ -32,6 +33,17 @@ export default {
         }
     },
     methods: {
+        //轉圖片成base64
+        loadimage(e){
+            console.log(e.target.files[0])
+            const reader = new FileReader();
+
+            reader.readAsDataURL(e.target.files[0]);
+
+            reader.onload = (e) => {
+                console.log(e.target.result)
+            }
+        },
 
         //抓ID給畫面選染資訊
         getPropertyByPropertyId(){
@@ -39,6 +51,7 @@ export default {
             this.isShow = !this.isShow
             this.btnShow = !this.btnShow
             const body = {
+                //ContractItem那一頁也要接相同的ID
                 //接上一頁傳進來的物件ID
                 "propertyId":this.property_id
             }
@@ -60,6 +73,7 @@ export default {
             let typeList = ["アパート",  "マンション", "一戶建て"]
             this.type = typeList[data.propertyList[0].type];
             
+            
             let layoutList = [
                 "ワンルーム","1K","1DK","1LDK",
                 "2K","2DK","2LDK",
@@ -68,9 +82,11 @@ export default {
             ];
             this.layout = layoutList[data.propertyList[0].layout];
             
-            console.log(data.propertyList[0])
-            console.log(data.propertyList[0].rentalStatus)
-            
+            // console.log(data.propertyList[0])
+            // console.log(data.propertyList[0].rentalStatus)
+            console.log(this.image64)
+            this.image64 = "data:image/png;base64," + data.propertyList[0].propertyImage
+
             if(data.propertyList[0].rentalStatus === true ){
                 this.rentalStatus = "出租中"
             } else {
@@ -149,13 +165,13 @@ export default {
                </div>
                <div class="carousel-inner">
                    <div class="carousel-item active">
-                   <img src="../../picture/16691863_6.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                    <div class="carousel-item">
-                   <img src="../../picture/20190122-075307_U5965_M493824_81f5.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                    <div class="carousel-item">
-                   <img src="../../picture/md-035201caed5b8e631e40cde56958315e.jpg" class="d-block w-100" alt="...">
+                   <img :src="image64" class="d-block w-100" alt="...">
                    </div>
                </div>
                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -196,7 +212,7 @@ export default {
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
-                        <p>{{response2.rentalPrice}}</p>
+                        <p>{{response2.rentalPrice}}日圓</p>
                         <p>{{response2.keyMoney}} 個月</p>
                         <p>{{response2.deposit}} 個月</p>
                         <p>{{response2.imageBytesString}}</p>
@@ -253,11 +269,12 @@ export default {
 
                     </div>
                     <div class="bbb2">
-                        <p>{{ response2.propertyId }}</p>
+                        <p>{{ response2.propertyName }}</p>
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
-                        <div class="yes">
+                        <p>{{ rentalStatus }}</p>
+                        <!-- <div class="yes">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio1" >已出租</label>
@@ -266,12 +283,12 @@ export default {
                                     <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false" v-model="rentalStatus">
                                     <label class="form-check-label" for="inlineRadio2">未出租</label>
                                 </div>
-                            </div>
-                        <input type="number" v-model="rentalPrice">
-                        <input type="number" v-model="keyMoney">
-                        <input type="number" v-model="deposit">
-                        <input type="number" v-model="imageBytesString">
-                    
+                            </div> -->
+                        <div><input type="number" v-model="rentalPrice">日圓</div>
+                        <div><input type="number" v-model="keyMoney">個月</div>
+                        <div><input type="number" v-model="deposit">個月</div>
+                        <div><input type="file" @change="loadimage" class="push"></div>
+
                     </div>
                 </div>
                 <div class="aaa">
@@ -289,11 +306,11 @@ export default {
                     <div class="bbb2">
                         <p>賃主姓名</p>
                         <p>借主姓名</p>
-                        <p>{{response2.type}}</p>
-                        <p>{{response2.layout}}</p>
-                        <p>{{response2.propertyFloors}}</p>
-                        <p>{{response2.floorNumber}}</p>
-                        <p>{{response2.buildYear}}</p>
+                        <p>{{type}}</p>
+                        <p>{{layout}}</p>
+                        <p>{{response2.propertyFloors}} 樓</p>
+                        <p>{{response2.floorNumber}} 樓</p>
+                        <p>{{response2.buildYear}} 年</p>
                         <p>{{response2.exclusiveArea}}</p>
                         <input type="text" v-model="remarks">
 
@@ -419,6 +436,9 @@ export default {
             .bbb2{
                 width: 80%;
                 text-align: center;
+                .push{
+                    width: 80%;
+                }
                 input{
                     // width: 90%;
                     margin-bottom: 9px;
