@@ -2,10 +2,13 @@
 import { RouterLink } from 'vue-router'
 export default {
   components: {},
+  props: [
+    "contractList"
+],
   data() {
     return {
       // selectContract
-      ContractList: [],
+      // contractList: [],
       // selectContractDetail
       infoList: [
         {
@@ -34,36 +37,33 @@ export default {
         params: { contract_id: contractId }
       })
     },
-    selectContract() {
-      fetch('http://localhost:8080/getAllContracts', {})
-        .then((response) => {
-          return response.json()
-        })
-        .then((data) => {
-          console.log(data)
-          this.ContractList = data.contractResponse
-        })
-    },
-
-    selectInfo() {
-      this.$emit('contractInfo', this.contractId)
-    }
+    // selectContract() {
+    //   fetch('http://localhost:8080/getAllContracts', {})
+    //     .then((response) => {
+    //       return response.json()
+    //     })
+    //     .then((data) => {
+    //       console.log(data)
+    //       this.contractList = data.contractResponse
+    //     })
+    // },
   },
   mounted() {
-    this.selectContract()
+    // this.selectContract()
+    
   }
 }
 </script>
 <template>
   <div
-    v-for="item in ContractList"
+    v-for="item in contractList"
     v-bind:key="item.contract_id"
     :value="item.contract_id"
     @click="switchURL($event, item.contract_id)"
-    class="d-flex+ justify-content-center border border-secondary mt-3"
+    class="d-flex+ justify-content-center border border-secondary my-5 "
     style="width: 600px; height: 130px"
   >
-    <h5 class="col-sm-8 text-start ms-6">{{ item.property_name }}</h5>
+    <h6 class="col-sm-10 text-start ms-6 mt-3 fs-6 fw-bold">{{ item.property_name }}</h6>
     <h6 class="col-sm-10 text-center mt-3">{{ item.llFirst_name + item.llLast_name }}</h6>
     <h6 class="col-sm-10 text-center">{{ item.ttFirst_name + item.ttLast_name }}</h6>
   </div>

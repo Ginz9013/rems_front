@@ -4,14 +4,9 @@ export default{
     components:{
         ModalView
     },
-    // props: [
-    //     "種類",
-    //     "入金日",
-    //     "支払期限",
-    //     "入金額",
-    //     "入金状態"
+    props: [
         
-    // ],
+    ],
     data(){
         return{
             reviseModal:false,
