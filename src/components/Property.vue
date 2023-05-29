@@ -31,6 +31,7 @@ export default {
             rentalStatus:"",
 
             //這些資料寫在更新方法裡，目前如果沒更新取不到
+            //等幻真跟新後端
             landlordFirstName:"", 
             landlordLastName :"",
             tenantFirstName :"",
