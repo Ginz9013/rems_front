@@ -13,7 +13,7 @@ export default {
     return {
       modalShow: false,
       contractList: [],
-      paymentStatus:2,
+      paymentStatus: 2
     }
   },
   methods: {
@@ -80,69 +80,58 @@ export default {
 }
 </script>
 <template>
-  <div class="d-flex flex-column justify-content-center my-0 mx-auto" style="width: 60%">
+  <div class="mx-auto" style="width: 60%">
     <SearchBar
       :conditionList="['物件', '借主', '貸主']"
       @searchResponse="search"
-      class="mt-8 mx-auto"
+      class="mt-8"
       style="width: 80%"
     />
-    <div class="d-flex justify-content-center mt-5">
-      <div class="me-8">
-        <h5 class="fw-bolder text-center text-primary mt-5">検索条件</h5>
-        <hr class="border border-secondary border-1" style="width: 200px" />
+  </div>
+  <div class="d-flex justify-content-center mt-5 mx-auto" style="width: 100%">
+    <div class="me-8">
+      <h5 class="fw-bolder text-center text-primary mt-5">検索条件</h5>
+      <hr class="border border-secondary border-1"  />
 
-        <dt class="d-flex flex-column justify-content-center mt-3">
-          <div class="mx-6 my-2 d-flex justify-content-start">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="radioDefault"
-              id="radioDefault1"
-              value="0"
-              v-model="paymentStatus"
-            />
-            <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;入金あり</label>
-          </div>
-          <div class="mx-6 my-2 d-flex justify-content-start">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="radioDefault"
-              id="radioDefault2"
-              value="1"
-              v-model="paymentStatus"
-            />
-            <label class="form-check-label" for="radioDefault2">&nbsp;&nbsp;入金なし</label>
-          </div>
-          <div class="mx-6 my-2 d-flex justify-content-start">
-            <input
-              class="form-check-input"
-              type="radio"
-              name="radioDefault"
-              id="radioDefault3"
-              value="2"
-              v-model="paymentStatus"
-            />
-            <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;全部</label>
-          </div>
-        </dt>
-
-        <!-- <div class="form-check d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" value="" id="CheckDefault" />
-          <label class="form-check-label" for="CheckDefault">入金あり</label>
+      <dt class="d-flex flex-column justify-content-center mt-3">
+        <div class="mx-4 my-2 d-flex justify-content-start" >
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radioDefault"
+            id="radioDefault1"
+            value="0"
+            v-model="paymentStatus"
+          />
+          <label class="form-check-label" for="radioDefault1">&nbsp;&nbsp;入金あり</label>
         </div>
-
-        <div class="form-check d-flex justify-content-center">
-          <input class="form-check-input" type="checkbox" value="" id="CheckChecked" checked />
-          <label class="form-check-label" for="CheckChecked">入金なし</label>
-        </div> -->
-      </div>
-      <div>
-        <AddContractBar :contractList="contractList" />
-      </div>
+        <div class="mx-4 my-2 d-flex justify-content-start" >
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radioDefault"
+            id="radioDefault2"
+            value="1"
+            v-model="paymentStatus"
+          />
+          <label class="form-check-label" for="radioDefault2">&nbsp;&nbsp;入金なし</label>
+        </div>
+        <div class="mx-4 my-2 d-flex justify-content-start">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="radioDefault"
+            id="radioDefault3"
+            value="2"
+            v-model="paymentStatus"
+          />
+          <label class="form-check-label" for="radioDefault3">&nbsp;&nbsp;全部</label>
+        </div>
+      </dt>
+    </div>
+    <div>
+      <AddContractBar :contractList="contractList" />
     </div>
   </div>
 </template>
-<style scoped>
-</style>
+<style scoped></style>

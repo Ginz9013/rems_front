@@ -2,14 +2,9 @@
 import { RouterLink } from 'vue-router'
 export default {
   components: {},
-  props: [
-    "contractList"
-],
+  props: ['contractList'],
   data() {
     return {
-      // selectContract
-      // contractList: [],
-      // selectContractDetail
       infoList: [
         {
           property: null,
@@ -37,21 +32,15 @@ export default {
         params: { contract_id: contractId }
       })
     },
-    // selectContract() {
-    //   fetch('http://localhost:8080/getAllContracts', {})
-    //     .then((response) => {
-    //       return response.json()
-    //     })
-    //     .then((data) => {
-    //       console.log(data)
-    //       this.contractList = data.contractResponse
-    //     })
-    // },
+    getContractExecutionText(execution) {
+      if (execution === 0) {
+        return "契約終了";
+      } else if (execution === 1) {
+        return "契約中";
+      }
+    }
   },
-  mounted() {
-    // this.selectContract()
-    
-  }
+  mounted() {}
 }
 </script>
 <template>
@@ -60,12 +49,21 @@ export default {
     v-bind:key="item.contract_id"
     :value="item.contract_id"
     @click="switchURL($event, item.contract_id)"
-    class="d-flex+ justify-content-center border border-secondary my-5 "
-    style="width: 600px; height: 130px"
+    class="d-flex+ justify-content-centerjustify-content-center border border-secondary my-5 mx-auto"
+    style="width: 85%"
   >
-    <h6 class="col-sm-10 text-start ms-6 mt-3 fs-6 fw-bold">{{ item.property_name }}</h6>
-    <h6 class="col-sm-10 text-center mt-3">{{ item.llFirst_name + item.llLast_name }}</h6>
-    <h6 class="col-sm-10 text-center">{{ item.ttFirst_name + item.ttLast_name }}</h6>
+    <h6 class="col-sm-10 text-start ms-6 mt-3 fs-6 fw-bold text-primary">
+      {{ item.property_name }}
+    </h6>
+    <div class="d-flex justify-content-evenly">
+      <div class="d-flex flex-column">
+        <h6 class="col-sm-12 text-start mt-2 px-3">貸主：{{ item.llFirst_name + item.llLast_name }}</h6>
+        <h6 class="col-sm-12 text-start px-3">借主：{{ item.ttFirst_name + item.ttLast_name }}</h6>
+      </div>
+      <div class="d-flex justify-content-center">
+        <h6 class="col-sm-12 text-center mt-3 px-5"><b>{{ getContractExecutionText(item.execution) }}</b></h6>
+      </div>
+    </div>
   </div>
 </template>
 

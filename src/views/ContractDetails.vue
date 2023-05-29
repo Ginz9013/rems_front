@@ -477,7 +477,7 @@ export default {
       </ModalView>
     </div>
     <hr class="border border-secondary border-2" />
-    <div class="overflow-scroll" style="height: 250px">
+    <div class="" style="height: 250px">
       <dl class="row ms-4">
         <dt class="col-sm-2 text-primary">入金種類</dt>
         <dt class="col-sm-2 text-primary">支払期限</dt>
@@ -485,7 +485,7 @@ export default {
         <dt class="col-sm-2 text-primary">入金日</dt>
         <dt class="col-sm-2 text-primary">入金状態</dt>
       </dl>
-      <div>
+      <div class="overflow-scroll">
         <div class="row ms-4" v-for="paymentItem in paymentArray" v-bind:key="paymentItem">
           <p class="col-sm-2">{{ getPaymentTypeText(paymentItem.payment_type) }}</p>
           <p class="col-sm-2">{{ paymentItem.payment_deadline }}</p>
