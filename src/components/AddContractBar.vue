@@ -50,7 +50,7 @@ export default {
     :value="item.contract_id"
     @click="switchURL($event, item.contract_id)"
     class="d-flex+ justify-content-centerjustify-content-center border border-secondary my-5 mx-auto"
-    style="width: 85%"
+    style="width: 600px"
   >
     <h6 class="col-sm-10 text-start ms-6 mt-3 fs-6 fw-bold text-primary">
       {{ item.property_name }}
