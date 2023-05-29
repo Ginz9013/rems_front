@@ -60,7 +60,7 @@ export default {
         <h6 class="col-sm-12 text-start mt-2 px-3">貸主：{{ item.llFirst_name + item.llLast_name }}</h6>
         <h6 class="col-sm-12 text-start px-3">借主：{{ item.ttFirst_name + item.ttLast_name }}</h6>
       </div>
-      <div class="d-flex justify-content-center">
+      <div class="">
         <h6 class="col-sm-12 text-center mt-3 px-5"><b>{{ getContractExecutionText(item.execution) }}</b></h6>
       </div>
     </div>
