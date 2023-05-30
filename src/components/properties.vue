@@ -5,47 +5,27 @@ export default {
     components: {
         SearchProperty,
     },
+    props: ["propertyList","image64"],
     data() {
         return {
-            propertySearch: [],
-            infoList:[{}]
-
+            
         }
     },
     methods: {
-        getALL() {
-            const body = {
-            }
-            fetch("http://localhost:8080/get_property_all", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(body)
-            })
-                .then((response) => {
-
-                    return response.json();
-                })
-                .then((data) => {
-                    console.log(data)
-                    this.propertySearch = data.propertyList;
-                })
-        },
-         switchURL(event, infoList) {
+       
+    switchURL(event, propertyId) {
       console.log(event)
-      console.log(infoList)
-      //this.$router.push("/keiyaku/info")
-
+      console.log(propertyId)
       this.$router.push({
-        name: 'bukkenInfo',
-        params: { property_id: infoList }
-      })
+          name: 'bukkenInfo',
+          params: { property_id : propertyId }
+        })
     }
 
     },
+
     mounted() {
-        this.getALL();
+       
     }
 
 }
@@ -53,9 +33,10 @@ export default {
 </script>
 
 <template >
-    <div v-for="item in propertySearch" class="properties"  @click="switchURL($event, item.property_id)">
+    <div v-for="item in propertyList" class="properties"  :key="property_id" @click="switchURL($event, item.property_id)">
         <div class="flex">
-            <div class="img">圖片</div>
+            <img :src="image64" class="img">
+            <!-- <div class="img" src="image64">圖片</div> -->
             <div class="name">
                 <h1 class="h1">{{ item.propertyName }}</h1>
             </div>
@@ -82,9 +63,9 @@ export default {
 .properties {
     width: 700px;
     height: 200px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 10px;
-    background-image: linear-gradient(blue, blue), linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255));
+    background-image: linear-gradient(#1962A7, #1962A7), linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255));
     background-position: top, bottom;
     background-size: 100% 10%;
     background-repeat: no-repeat;
