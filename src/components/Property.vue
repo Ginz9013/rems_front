@@ -18,8 +18,9 @@ export default {
             prefecture:'',
             imageBytesString :'',
             remarks :'',
+
             response:[],
-            response2:"",
+            response2:[],
             rentalStatus:"",
             image64:"",
 
@@ -29,7 +30,7 @@ export default {
 
             type: "",
             layout:"",
-            rentalStatus:""
+            rentalStatus:"",
         }
     },
     methods: {
@@ -56,7 +57,7 @@ export default {
                 "propertyId":1
             }
 
-            fetch("http://localhost:8080/get_property_by_property_id",{
+            fetch("http://localhost:8080/get_property_info_by_id",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
@@ -68,11 +69,19 @@ export default {
         })
         .then((data) => {
             console.log(data);
-            this.response2 = data.propertyList[0];
+            // this.response2 = data.propertyList[0];
             
+            console.log( data.updatePropertyVo.propertyImage)
             let typeList = ["アパート",  "マンション", "一戶建て"]
-            this.type = typeList[data.propertyList[0].type];
-            
+            this.type = typeList[data.updatePropertyVo.type]
+
+            this.response2 = data.updatePropertyVo;
+
+            if(data.updatePropertyVo.execution === true ){
+                this.rentalStatus = "出租中"
+            } else {
+                this.rentalStatus = "未租中"
+            }
             
             let layoutList = [
                 "ワンルーム","1K","1DK","1LDK",
@@ -80,20 +89,12 @@ export default {
                 "3K","3DK","3LDK",
                 "4R以上"
             ];
-            this.layout = layoutList[data.propertyList[0].layout];
+            this.layout = layoutList[data.updatePropertyVo.layout];
             
             // console.log(data.propertyList[0])
-            // console.log(data.propertyList[0].rentalStatus)
-            console.log(this.image64)
-            this.image64 = "data:image/png;base64," + data.propertyList[0].propertyImage
-
-            if(data.propertyList[0].rentalStatus === true ){
-                this.rentalStatus = "出租中"
-            } else {
-                this.rentalStatus = "未租中"
-            }
-
-            console.log(data.propertyList[0].layout);
+            // console.log(this.image64)
+            this.image64 = "data:image/png;base64," + data.updatePropertyVo.propertyImage
+            console.log(this.response.message);
         })
         .catch(err =>console.log(err))
             
@@ -138,7 +139,7 @@ export default {
         .then((data) => {
             console.log(data);
             this.response = data;
-            console.log(this.response.message);
+
 
             alert('更新物件：' + this.response.message);
         })
@@ -208,11 +209,11 @@ export default {
                         <p>上傳圖片</p>
                     </div>
                     <div class="bbb2">
-                        <p>{{ response2.propertyName }}</p>
+                        <p>{{response2.propertyName}}</p>
                         <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
-                        <p>{{ rentalStatus }}</p>
+                        <p>{{rentalStatus}}</p>
                         <p>{{response2.rentalPrice}}日圓</p>
                         <p>{{response2.keyMoney}} 個月</p>
                         <p>{{response2.deposit}} 個月</p>
@@ -233,8 +234,8 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>賃主姓名</p>
-                        <p>借主姓名</p>
+                        <p>{{response2.landlordFirstName}}{{ response2.landlordLastName }}</p>
+                        <p>{{response2.tenantFirstName}}{{ response2.tenantLastName }}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
@@ -306,8 +307,8 @@ export default {
                         <p>備考</p>
                     </div>
                     <div class="bbb2">
-                        <p>賃主姓名</p>
-                        <p>借主姓名</p>
+                        <p>{{response2.landlordFirstName}}{{ response2.landlordLastName }}</p>
+                        <p>{{response2.tenantFirstName}}{{ response2.tenantLastName }}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
