@@ -23,19 +23,15 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+            
             this.landlords = data.landlordList; 
-            console.log(this.landlords);    
+            
                       
             })
         .catch((error) => {
             console.error(error);
         })
-        if (this.searchResult && this.searchResult.length > 0) {
-            console.log(123)          
-            this.searchResult=null
-        } 
-        
+      
     },   
     //點下後轉換網頁
     passLandlordId(input, landlordId) {
@@ -50,15 +46,16 @@ export default {
 
     
   },
-  created(){
-    
-  },
-  mounted(){ 
-    this.getpost();
-  }
+//   created(){
+//     this.getpost();
+//   },
+   mounted(){ 
+     this.getpost();
+   }
 }
 </script>
 <template>
+    <div class="wrap">
         <div class="infoBox" v-for="landlord in landlords"   :key="landlord.landlordId" :value="landlord.landlordId" @click="passLandlordId($event, landlord.landlordId)">
             <div class="flexArea">
                 <div class="nameGroup">
@@ -89,29 +86,40 @@ export default {
                 </div>
             </div>
         </div>
-
+    </div>
 </template>
   
 <style lang="scss" scoped>
-
-
+.wrap{
+ max-width: 800px;
+ margin: 0 auto;
+}
 .infoBox {
+    box-sizing: border-box;
     width: 515px;
     height: 90px;
     border: 2px solid #1962A7;
     border-radius: 6px;
     padding: 30px;
     display: flex;
-    margin: 5px 60px;
+    margin: 20px 60px;
     flex-direction: column;
+    align-items: center;
     flex-wrap: wrap;
+    transition: 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        scale: 1.05;
+    }
 }
+
 
 .nameGroup {
     display: flex;
     flex-direction: column;
     margin: -2px 4px -2px 4px;
-    
+
 }
 
 .flexArea {
@@ -131,7 +139,7 @@ export default {
 
 .kana {
     font-size: small;
-    margin-bottom:5px;
+    margin-bottom: 5px;
 }
 
 p {
@@ -159,5 +167,6 @@ p {
 .info {
     margin-top: -12px;
     margin-left: 30px;
+
 }
 </style>
