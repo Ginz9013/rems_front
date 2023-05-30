@@ -38,9 +38,7 @@ export default {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     this.tenantDetail = data.tenant;
-                    console.log(this.tenantDetail);
                 })
                 .catch((error) => {
                     console.error(error);
@@ -48,18 +46,13 @@ export default {
         },
         //詳細資料更新
         upDate() {
-            console.log(this.tenantDetail.firstName)
             // //轉字串
-            console.log(this.tenantDetail.phone)
             let number = this.tenantDetail.phone.toString();
             // console.log(this.tenantDetail.paymentAccount)
             // let paymentAccount = this.tenantDetail.paymentAccount.toString();
             // //去除多餘字
-            console.log(number)
             this.tenantDetail.phone = number.replace(/-/g, '');
             // this.tenantDetail.paymentAccount =paymentAccount.replace(/-/g, '');
-            console.log(this.tenantDetail.phone)
-
 
             return fetch('http://localhost:8080/reviseTenantInfo', {
                 method: 'POST',
@@ -84,7 +77,6 @@ export default {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
                     this.tenantDetail = data.tenant;
 
                     alert(data.errorMessage)
@@ -98,7 +90,6 @@ export default {
     },
     mounted() {
         this.getTenant()
-        console.log(this.tenantDetail);
     }
 }
 </script>

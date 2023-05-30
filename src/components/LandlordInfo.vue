@@ -35,8 +35,6 @@ export default {
     },   
     //點下後轉換網頁
     passLandlordId(input, landlordId) {
-        console.log(input.target);
-        console.log(landlordId);
         //轉址帶ID
         this.$router.push({
         name: 'kashinushiInfo',

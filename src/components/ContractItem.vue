@@ -49,10 +49,8 @@ export default {
           return response.json()
         })
         .then((data) => {
-          console.log(data)
           this.ContractList = data.ropertiesResponseList
           data.ropertiesResponseList
-          console.log(data.ropertiesResponseList)
         })
     }
 
@@ -63,8 +61,6 @@ export default {
     this.nowYear = date.getFullYear();
     this.nowMonth = date.getMonth() + 1;
     this.nowDate = date.getDate();
-    console.log(date.getFullYear(), date.getMonth() + 1, date.getDate())
-    
   },
   }
 </script>

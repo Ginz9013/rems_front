@@ -91,7 +91,6 @@ export default {
           return response.json()
         })
         .then((data) => {
-          console.log(data)
           alert(data.message)
         })
     },

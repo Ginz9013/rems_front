@@ -16,9 +16,6 @@ export default {
     created() {
         const startDate = this.$route.query.startDate;
         const endDate = this.$route.query.endDate;
-
-        console.log(startDate); // 输出开始日期值
-        console.log(endDate); // 输出结束日期值
     }
 }
 

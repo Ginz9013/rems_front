@@ -1,14 +1,12 @@
 <script>
-import SearchProperty from "./SearchProperty.vue";
 import ModalView from "./ModalView.vue";
 import ContractItem from "./ContractItem.vue";
 
 export default {
+    props: ["propertyId"],
     components: {    
         ModalView,
         ContractItem,
-        SearchProperty,
-
     },
     data() {
         return {
@@ -18,8 +16,7 @@ export default {
             prefecture:'',
             imageBytesString :'',
             remarks :'',
-
-            response:[],
+            // response:[],
             response2:[],
             rentalStatus:"",
             image64:"",
@@ -36,7 +33,6 @@ export default {
     methods: {
         //轉圖片成base64
         loadimage(e){
-            console.log(e.target.files[0])
             const reader = new FileReader();
 
             reader.readAsDataURL(e.target.files[0]);
@@ -54,7 +50,7 @@ export default {
             const body = {
                 //ContractItem那一頁也要接相同的ID
                 //接上一頁傳進來的物件ID
-                "propertyId":1
+                "propertyId": this.propertyId
             }
 
             fetch("http://localhost:8080/get_property_info_by_id",{
@@ -68,10 +64,7 @@ export default {
             return response.json();
         })
         .then((data) => {
-            console.log(data);
             // this.response2 = data.propertyList[0];
-            
-            console.log( data.updatePropertyVo.propertyImage)
             let typeList = ["アパート",  "マンション", "一戶建て"]
             this.type = typeList[data.updatePropertyVo.type]
 
@@ -90,11 +83,7 @@ export default {
                 "4R以上"
             ];
             this.layout = layoutList[data.updatePropertyVo.layout];
-            
-            // console.log(data.propertyList[0])
-            // console.log(this.image64)
             this.image64 = "data:image/png;base64," + data.updatePropertyVo.propertyImage
-            console.log(this.response.message);
         })
         .catch(err =>console.log(err))
             
@@ -138,9 +127,6 @@ export default {
         })
         .then((data) => {
             console.log(data);
-            this.response = data;
-
-
             alert('更新物件：' + this.response.message);
         })
         .catch(err =>console.log(err))
@@ -149,7 +135,6 @@ export default {
     ,
     mounted(){
         this.getPropertyByPropertyId();
-       
     }
 };
 </script>
@@ -277,16 +262,6 @@ export default {
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
-                        <!-- <div class="yes">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="true" v-model="rentalStatus">
-                                    <label class="form-check-label" for="inlineRadio1" >已出租</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="false" v-model="rentalStatus">
-                                    <label class="form-check-label" for="inlineRadio2">未出租</label>
-                                </div>
-                            </div> -->
                         <div><input type="number" v-model="rentalPrice">日圓</div>
                         <div><input type="number" v-model="keyMoney">個月</div>
                         <div><input type="number" v-model="deposit">個月</div>
@@ -316,7 +291,6 @@ export default {
                         <p>{{response2.buildYear}} 年</p>
                         <p>{{response2.exclusiveArea}}</p>
                         <input type="text" v-model="remarks">
-
                     </div>
                 </div>
             </div>
@@ -327,29 +301,10 @@ export default {
             </div>
         </div>
 
-
         <!-- area3========================= -->
-
         <div class="ddd">
             <ContractItem />
-            <!-- <div class="aaa">
-                <div>
-                    <p>契約時間 :</p>
-                    <p>契約時間 :</p>
-                </div>
-                <div>
-                    <p> 1111111111111111111111</p>
-                    <p> 1111111111111111111</p>
-                </div>
-            </div>
-            <div>
-                <p>123</p>
-                <p>123</p>
-            </div> -->
-
         </div>
-
-        
     </div>
 </template>
 

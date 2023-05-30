@@ -26,15 +26,11 @@ export default {
           return response.json()
         })
         .then((data) => {
-          console.log(data)
           this.contractList = data.contractResponse
         })
     },
     search(res) {
       let condition = null
-      console.log(res.keyWord)
-      console.log(res.condition)
-
       let body = null
 
       if (res.condition === '貸主') {
@@ -69,7 +65,6 @@ export default {
           return response.json()
         })
         .then((data) => {
-          console.log(data)
           this.contractList = data.contractResponse
         })
     }

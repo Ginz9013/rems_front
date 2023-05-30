@@ -68,7 +68,6 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           this.message = data;
           //訊息出視窗判斷   
           if (this.message.message === '新增成功') {
@@ -101,7 +100,6 @@ export default {
     },
     //搜尋
     getInfo(searchCondition) {
-      console.log(searchCondition.keyWord);
       this.searchCondition = searchCondition;
 
       fetch('http://localhost:8080/search_Landlord', {
@@ -115,9 +113,7 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           this.result = data.landlordList;
-          console.log(this.result);
           if (data.errorMessage === "検索条件に該当する会員の情報はありません。") {
             alert(data.errorMessage)
           }

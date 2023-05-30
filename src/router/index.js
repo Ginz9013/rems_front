@@ -34,9 +34,10 @@ const router = createRouter({
     },
     {
       // 物件詳細頁面(含修改)
-      path: '/bukken/info',
+      path: '/bukken/info/:propertyId',
       name: 'bukkenInfo',
       component:Property,
+      props:true
     },
     {
       // 契約首頁

@@ -33,16 +33,13 @@ export default {
         .catch((error) => {
             console.error(error);
         })
-        if (this.searchResult && this.searchResult.length > 0) {
-            console.log(123)          
+        if (this.searchResult && this.searchResult.length > 0) {         
             this.searchResult=null
         } 
         
     },   
     //點下後轉換網頁
     passTenantId(input, tenantId) {
-        console.log(123);
-        console.log(tenantId);
         //轉址帶ID
         this.$router.push({
         name: 'karinushiInfo',

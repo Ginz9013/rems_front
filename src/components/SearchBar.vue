@@ -18,7 +18,6 @@ export default {
     methods: {
         switchCondition(item) {
             this.searchCondition.condition = item;
-            console.log(this.searchCondition.condition);
         },
         returnCondition() {
             this.$emit("searchResponse", this.searchCondition)

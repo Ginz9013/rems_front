@@ -40,7 +40,6 @@ export default {
       //去除多餘字
       this.phone = number.replace(/-/g, '');
       this.payment_account = paymentAccount.replace(/-/g, '');
-      console.log(this.phone)
 
       fetch('http://localhost:8080/addTenantInfo', {
 
@@ -65,7 +64,6 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           this.message = data;
           //跳出視窗判斷   
           if (this.message.message === '新增成功') {
@@ -95,7 +93,6 @@ export default {
     },
     //搜尋
     getInfo(searchCondition) {
-      console.log(searchCondition.keyWord);
       this.searchCondition = searchCondition;
 
       fetch('http://localhost:8080/findByNameOrPhoneGetTenantInfo', {
@@ -109,7 +106,6 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           this.result = data.tenantCollection;
           if (data.errorMessage === "検索条件に該当する会員の情報はありません。") {
             alert(data.errorMessage)

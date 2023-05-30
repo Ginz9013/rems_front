@@ -34,9 +34,7 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           this.landlordDetail = data.landlordList[0]
-          console.log(this.landlordDetail.firstName)
         })
         .catch((error) => {
           console.error(error)
@@ -47,8 +45,6 @@ export default {
 
       let number = this.landlordDetail.phone.toString();
       this.landlordDetail.phone = number.replace(/-/g, '');
-      console.log(this.landlordDetail.phone)
-      console.log(this.landlordDetail.firstName)
       return fetch('http://localhost:8080/update_Landlord', {
         method: 'POST',
         headers: {
@@ -73,7 +69,6 @@ export default {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           this.landlordDetail = data.landlordList
 
           alert(data.message)

@@ -22,9 +22,6 @@ export default {
   methods: {
     //轉址
     switchURL(event, contractId) {
-      console.log(event)
-      console.log(contractId)
-      console.log(this.infoList)
       //this.$router.push("/keiyaku/info")
 
       this.$router.push({

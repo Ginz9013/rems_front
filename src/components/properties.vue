@@ -1,41 +1,28 @@
 <script>
 import { RouterLink } from 'vue-router'
-import SearchProperty from "../components/SearchProperty.vue";
 export default {
-    components: {
-        SearchProperty,
-    },
-    props: ["propertyList","image64"],
+    props: ["propertyList"],
     data() {
         return {
             
         }
     },
     methods: {
-       
-    switchURL(event, propertyId) {
-      console.log(event)
-      console.log(propertyId)
-      this.$router.push({
-          name: 'bukkenInfo',
-          params: { property_id : propertyId }
-        })
-    }
-
+        switchURL(propertyId) {
+            this.$router.push({
+                name: 'bukkenInfo',
+                params: { propertyId : propertyId }
+            })
+        }
     },
-
-    mounted() {
-       
-    }
-
 }
 
 </script>
 
 <template >
-    <div v-for="item in propertyList" class="properties"  :key="property_id" @click="switchURL($event, item.property_id)">
+    <div v-for="item in propertyList" class="properties"  :key="property_id" @click="switchURL(item.propertyId)">
         <div class="flex">
-            <img :src="image64" class="img">
+            <img :src="`data:image/png;base64,${item.propertyImage}`" class="img">
             <!-- <div class="img" src="image64">圖片</div> -->
             <div class="name">
                 <h1 class="h1">{{ item.propertyName }}</h1>

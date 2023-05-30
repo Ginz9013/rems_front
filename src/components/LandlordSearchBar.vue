@@ -22,7 +22,6 @@ export default {
         search_Landlord(){
             let textAAA=123
             let resultArr=[]
-            console.log(this.search)
              fetch('http://localhost:8080/search_Landlord', {
                 method: 'POST',
                 headers: {
@@ -33,10 +32,8 @@ export default {
                     })
                 })
                 .then((res) => res.json())
-                .then((data) => {
-                    console.log(data);                                    
+                .then((data) => {                                 
                     resultArr = data.landlordList; 
-                    console.log(resultArr)
                     this.$emit("emitPush",resultArr)                      
                     })
                 .catch((error) => {

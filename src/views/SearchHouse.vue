@@ -1,11 +1,9 @@
 <script>
-import SearchProperty from "../components/SearchProperty.vue";
 import Wire from "../components/Wire.vue";
 import properties from "../components/properties.vue"
 import SearchBar from "../components/SearchBar.vue";
 export default {
     components: {
-        SearchProperty,
         Wire,
         properties,
         SearchBar
@@ -39,9 +37,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data)
-                    console.log(data.propertyList)
-                    console.log(this.image64)
                     this.propertyList = data.propertyList;
                     this.image64 ="data:image/png;base64," + data.propertyList[0].propertyImage
                 })
@@ -118,7 +113,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data)
                     this.propertyList = data.propertyList
                     if(data.errorCode === '400'){
                         alert(data.message)
@@ -177,7 +171,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data)
                     this.propertyList = data.propertyList
                     if(data.errorCode === '400'){
                         alert(data.message)
@@ -187,9 +180,6 @@ export default {
         },
         searchByKeyWord(res) {
             let condition = null;
-            console.log(res.keyWord);
-            console.log(res.condition);
-
             let body = null;
 
             if (res.condition === "物件名稱") {
@@ -230,7 +220,6 @@ export default {
                     return response.json();
                 })
                 .then((data) => {
-                    console.log(data)
                     this.propertyList = data.propertyList
                 })
         }
@@ -249,7 +238,6 @@ export default {
 
 <template >
     <div class="serch">
-        <!-- <SearchProperty :searchCondition="['物件', '貸主', '借主', '契約コード']" /> -->
         <SearchBar :conditionList="['物件名稱', '貸主姓名', '借主姓名', '契約コード']" @searchResponse="searchByKeyWord" />
     </div>
     <div class="flex">
