@@ -3,8 +3,6 @@ import { RouterLink } from 'vue-router'
 export default {
   components: {},
   
-
-
   data(){
       return{
         ContractList: [],

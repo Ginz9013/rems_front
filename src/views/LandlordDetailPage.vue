@@ -46,7 +46,7 @@ export default {
     upDate() {
 
       let number = this.landlordDetail.phone.toString();
-      this.landlordDetail.phone =number.replace(/-/g, '');
+      this.landlordDetail.phone = number.replace(/-/g, '');
       console.log(this.landlordDetail.phone)
       console.log(this.landlordDetail.firstName)
       return fetch('http://localhost:8080/update_Landlord', {
@@ -68,7 +68,7 @@ export default {
           address: this.landlordDetail.address,
           payment: this.landlordDetail.payment,
           payment_account: this.landlordDetail.paymentAccount
-          
+
         })
       })
         .then((res) => res.json())
@@ -78,11 +78,11 @@ export default {
 
           alert(data.message)
           this.change()
-          if(this.message.message === '新增成功'){
-                    alert(this.message.message); 
-                  } else{
-                    alert(this.message.errorMessage);             
-                }
+          if (this.message.message === '新增成功') {
+            alert(this.message.message);
+          } else {
+            alert(this.message.errorMessage);
+          }
 
         })
         .catch((error) => {
@@ -94,21 +94,19 @@ export default {
     this.getLandlord()
   }
   ,
-  
+
 }
 </script>
 <template>
   <div class="field">
     <div>
-      <h1
-        style="
+      <h1 style="
           width: 615px;
           border: 0;
           border-bottom: 1px;
           border-color: rgb(100, 165, 3);
           border-style: solid;
-        "
-      >
+        ">
         貸主情報
       </h1>
     </div>
@@ -160,37 +158,39 @@ export default {
       </div>
       <div class="flex">
         <p class="phead">住所</p>
-        <p class="pdot">:</p>
+        <p class="pdot  ms-4">:</p>
         <p style="height: 20px"></p>
         <p v-if="isShow" class="soloreadding">{{ landlordDetail.address }}</p>
         <input v-else type="text" class="soloinput" v-model="landlordDetail.address" />
       </div>
       <div class="flex">
         <p class="phead">Email</p>
-        <p class="pdot">:</p>
+        <p class="pdot  ms-4">:</p>
         <p style="height: 20px"></p>
-        <p v-if="isShow" class="soloreadding">{{ landlordDetail.email }}</p>
+        <p v-if="isShow" class="soloreadding ">{{ landlordDetail.email }}</p>
         <input v-else type="email" class="soloinput" v-model="landlordDetail.email" />
       </div>
       <!-- 支付方式 -->
-      <div class="flex">
-        <p class="phead">支払方法</p>
-        <p class="pdot">:</p>
+      <div class="flexsolo">
+        <p class="phead me-4">支払方法</p>
+        <p class="pdot ms-4">:</p>
         <template v-if="isShow" v-model="landlordDetail.payment">
-          <p v-if="landlordDetail.payment === 0" class="readding">現金</p>
+          <p v-if="landlordDetail.payment === 0" class="readding  ms-5">現金</p>
           <p v-else-if="landlordDetail.payment === 1" class="readding" value="1">振り込み</p>
         </template>
-        <select v-else class="twiinput" v-model="landlordDetail.payment" id="group">
+        <select v-else class="twiinput  ms-5" v-model="landlordDetail.payment" id="group">
           <option value="0">現金</option>
           <option value="1">振り込み</option>
         </select>
         <p style="height: 20px"></p>
-        <template v-if="landlordDetail.payment === 1 ">
+        <div class="flexsolo d-flex">
+          <template v-if="landlordDetail.payment === 1 ">
           <p class="pfooter">口座番号</p>
           <p class="pdot2">:</p>
           <p class="readding2">{{ landlordDetail.paymentAccount }}</p>
         </template>  
         <input v-else-if="landlordDetail.payment === '1' && !isShow" v-model="landlordDetail.paymentAccount" type="number" class="twiinput2"/>
+      </div>
       </div>
 
       <div class="flex" style="width: 615px">
@@ -202,15 +202,13 @@ export default {
       </div>
 
       <div>
-        <h1
-          style="
+        <h1 style="
             width: 615px;
             border: 0;
             border-bottom: 1px;
             border-color: rgb(100, 165, 3);
             border-style: solid;
-          "
-        >
+          ">
           物件リスト
         </h1>
       </div>
