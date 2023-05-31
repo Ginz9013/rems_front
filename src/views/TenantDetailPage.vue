@@ -159,7 +159,7 @@ export default {
                     }
 
                   
-                    fetch('http://localhost:8080/AddContractAndContractDetail', {
+                    fetch('http://localhost:8080/addContractAndContractDetail', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
