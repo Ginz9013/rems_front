@@ -240,6 +240,7 @@ export default {
             // //去除多餘字
             this.tenantDetail.phone = number.replace(/-/g, '');
             // this.tenantDetail.paymentAccount =paymentAccount.replace(/-/g, '');
+            
 
             return fetch('http://localhost:8080/reviseTenantInfo', {
                 method: 'POST',
