@@ -28,7 +28,7 @@ export default {
 
             const body = {
                 //進入頁面要帶的值1715
-        "propertyId":1715,
+        // "propertyId":1715,
         "landlordId": 2,
         "prefecture": this.prefecture,
         "district":  this.district,

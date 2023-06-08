@@ -105,9 +105,9 @@ export default {
             this.btnShow = !this.btnShow
             const body = {
                 //也是接上一頁傳進來的ID
-                "propertyId":1,
+                "propertyId":this.propertyId,
 
-                "prefecture": this,prefecture,
+                "prefecture": this.prefecture,
                 "rentalPrice": this.rentalPrice,
                 "keyMoney":this.keyMoney,
                 "deposit": this.deposit,
@@ -127,7 +127,7 @@ export default {
         })
         .then((data) => {
             console.log(data);
-            alert('更新物件：' + this.response.message);
+            alert('更新物件：' + data.message);
         })
         .catch(err =>console.log(err))
         }
@@ -220,7 +220,7 @@ export default {
                     </div>
                     <div class="bbb2">
                         <p>{{response2.landlordFirstName}}{{ response2.landlordLastName }}</p>
-                        <p>{{response2.tenantFirstName}}{{ response2.tenantLastName }}</p>
+                        <p>{{response2.tenantFirstName === ''? '-':response2.tenantFirstName }}{{ response2.tenantLastName === ''? '-':response2.tenantLastName}}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
@@ -257,8 +257,8 @@ export default {
                     </div>
                     <div class="bbb2">
                         <p>{{ response2.propertyName }}</p>
-                        <div><input type="text" v-model="prefecture"></div>
-                        <!-- <p>{{response2.prefecture}}</p> -->
+                        <!-- <div><input type="text" v-model="prefecture"></div> -->
+                        <p>{{response2.prefecture}}</p>
                         <p>{{response2.district}}</p>
                         <p>{{response2.address}}</p>
                         <p>{{ rentalStatus }}</p>
@@ -283,7 +283,7 @@ export default {
                     </div>
                     <div class="bbb2">
                         <p>{{response2.landlordFirstName}}{{ response2.landlordLastName }}</p>
-                        <p>{{response2.tenantFirstName}}{{ response2.tenantLastName }}</p>
+                        <p>{{response2.tenantFirstName === ''? '-':response2.tenantFirstName }}{{ response2.tenantLastName === ''? '-':response2.tenantLastName}}</p>
                         <p>{{type}}</p>
                         <p>{{layout}}</p>
                         <p>{{response2.propertyFloors}} 樓</p>
